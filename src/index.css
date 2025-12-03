@@ -5,22 +5,46 @@
   --color-skyBlue: #8DEBFF;
   --color-bubblePink: #FFB6D5;
   --color-lemonYellow: #FFE86B;
-  --color-creamWhite: #FFF8EC;
+  --color-creamWhite: #F9F7F3;
+  --color-offWhite: #F9F7F3;
   --color-deepGreenText: #004D33;
+  --color-deepInk: #0B2A1B;
+  --color-neonMint: #7CFFB2;
   --color-darkTeal: #006666;
-  --color-softGrayText: #555555;
+  --color-softGrayText: #304037;
 
-  --font-display: 'Fredoka', sans-serif;
-  --font-body: 'Nunito', sans-serif;
+  --font-display: "Bricolage Grotesque", "Fredoka", system-ui, -apple-system, sans-serif;
+  --font-body: "Space Grotesk", "Nunito", system-ui, -apple-system, sans-serif;
+
+  --shadow-lift: 0 14px 40px -10px rgba(0, 77, 51, 0.28);
+  --shadow-neon: 0 0 0 2px #0B2A1B, 0 0 24px rgba(124, 255, 178, 0.65);
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-squish: cubic-bezier(0.7, -0.4, 0.2, 1.4);
+  --duration-snappy: 180ms;
+  --duration-chill: 380ms;
 }
 
 @layer base {
   html {
-    @apply scroll-smooth snap-y snap-mandatory;
+    @apply scroll-smooth snap-y snap-mandatory bg-creamWhite;
   }
 
   body {
     @apply font-body text-softGrayText bg-creamWhite antialiased overflow-x-hidden;
+    color: var(--color-deepInk);
+  }
+
+  @media (min-width: 768px) {
+    body {
+      cursor: none;
+    }
+
+    a,
+    button {
+      cursor: none;
+    }
   }
 
   h1,
@@ -29,6 +53,20 @@
   h4,
   h5,
   h6 {
-    @apply font-display text-deepGreenText;
+    @apply font-display;
+    color: var(--color-deepInk);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    * {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
