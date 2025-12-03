@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --color-mintGreen: #77F0A0;
+  --color-skyBlue: #8DEBFF;
+  --color-bubblePink: #FFB6D5;
+  --color-lemonYellow: #FFE86B;
+  --color-creamWhite: #FFF8EC;
+  --color-deepGreenText: #004D33;
+  --color-darkTeal: #006666;
+  --color-softGrayText: #555555;
+
+  --font-display: 'Fredoka', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth snap-y snap-mandatory;
+  }
+
+  body {
+    @apply font-body text-softGrayText bg-creamWhite antialiased overflow-x-hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display text-deepGreenText;
+  }
+}
