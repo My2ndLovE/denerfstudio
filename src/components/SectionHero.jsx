@@ -1,16 +1,10 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Sparkles, Play, ArrowRight, ShieldCheck } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
+import { Sparkles, Play, ArrowRight } from "lucide-react";
 
 export function SectionHero() {
   const rootRef = useRef(null);
-  const blobRef = useRef(null);
   const magnetRef = useRef(null);
-  const device1Ref = useRef(null);
-  const device2Ref = useRef(null);
   const [verbIndex, setVerbIndex] = useState(0);
   const verbs = ["build", "craft", "animate", "ship"];
   const prefersFinePointer = useRef(
@@ -87,7 +81,6 @@ export function SectionHero() {
     if (!rootRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Initial Entry Animation
       const entryTl = gsap.timeline();
       entryTl.to(".hero-blobs", { opacity: 1, duration: 1, ease: "power2.out" })
         .fromTo(
@@ -103,39 +96,20 @@ export function SectionHero() {
           "-=0.5"
         )
         .fromTo(
-          ".hero-devices",
-          { y: -80, rotation: -8, autoAlpha: 0, scale: 0.85 },
+          ".hero-lottie",
+          { y: -40, autoAlpha: 0 },
           {
             y: 0,
-            rotation: 0,
             autoAlpha: 1,
-            scale: 1,
-            duration: 1.2,
+            duration: 1,
             ease: "back.out(1.7)"
           }
         );
-
-      // Scroll-Driven Progressive Animation (Devices Only)
-      const scrollTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: rootRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.5,
-        }
-      });
-
-      scrollTl
-        .to(".hero-devices", {
-          y: 100,
-          rotation: 5,
-          scale: 0.95,
-          ease: "none"
-        });
-
     }, rootRef);
 
     const handleMouseMove = (e) => {
+      if (window.matchMedia("(hover: none)").matches) return;
+
       const xNorm = (e.clientX / window.innerWidth - 0.5);
       const yNorm = (e.clientY / window.innerHeight - 0.5);
 
@@ -145,46 +119,24 @@ export function SectionHero() {
         duration: 1,
         ease: "power2.out"
       });
-
-      if (device1Ref.current) {
-        gsap.to(device1Ref.current, {
-          rotationY: xNorm * 10,
-          rotationX: -yNorm * 10,
-          x: xNorm * 30,
-          duration: 0.8,
-          ease: "power2.out"
-        });
-      }
-
-      if (device2Ref.current) {
-        gsap.to(device2Ref.current, {
-          rotationY: xNorm * 15,
-          rotationX: -yNorm * 15,
-          x: xNorm * -30,
-          duration: 1,
-          ease: "power2.out"
-        });
-      }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-
-    const floatBlob = blobRef.current;
-    if (floatBlob) {
-      gsap.to(floatBlob, {
-        y: 20,
-        rotation: 3,
-        duration: 4,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      });
-    }
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       ctx.revert();
     };
+  }, []);
+
+  useEffect(() => {
+    const existingScript = document.querySelector("script[src='https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.5/dist/dotlottie-wc.js']");
+    if (existingScript) return;
+
+    const script = document.createElement("script");
+    script.src = "https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.5/dist/dotlottie-wc.js";
+    script.type = "module";
+    document.head.appendChild(script);
   }, []);
 
   const handleMagnetMove = (e) => {
@@ -259,70 +211,35 @@ export function SectionHero() {
           </p>
         </div>
 
-        <div className="hero-ctas flex flex-col sm:flex-row gap-5 items-center justify-center pt-2">
-          <button
-            ref={magnetRef}
-            onMouseMove={handleMagnetMove}
-            onMouseLeave={resetMagnet}
-            className="group relative px-10 py-5 bg-deepInk text-offWhite font-bold text-lg rounded-full border-2 border-deepInk shadow-[8px_8px_0px_0px_rgba(11,42,27,0.3)] hover:shadow-[4px_4px_0px_0px_rgba(11,42,27,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200 overflow-hidden"
-          >
-            <span className="relative z-10 flex items-center gap-3">
-              Start free demo
-              <ArrowRight className="w-6 h-6 transition-transform duration-200 group-hover:translate-x-1" />
-            </span>
-            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
-          </button>
-          <button className="flex items-center gap-3 px-10 py-5 bg-white text-deepInk font-bold text-lg rounded-full border-2 border-deepInk shadow-[8px_8px_0px_0px_rgba(255,232,107,1)] hover:shadow-[4px_4px_0px_0px_rgba(255,232,107,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200">
-            <Play className="w-5 h-5 fill-current" />
-            See it in action
-          </button>
-        </div>
-
-        <div className="hero-devices relative w-full max-w-3xl h-[420px] md:h-[500px] flex items-center justify-center perspective-1000">
-          <div
-            ref={blobRef}
-            className="absolute inset-x-6 top-6 bottom-12 bg-[radial-gradient(circle_at_30%_20%,rgba(255,232,107,0.55),transparent_35%),radial-gradient(circle_at_80%_30%,rgba(141,235,255,0.5),transparent_40%),radial-gradient(circle_at_40%_80%,rgba(124,255,178,0.5),transparent_35%)] rounded-[40px] blur-[16px] opacity-90"
-          ></div>
-
-          <div className="relative w-full h-full flex items-center justify-center">
-            <div
-              ref={device1Ref}
-              className="absolute -left-6 sm:-left-12 -rotate-6 bg-white border-4 border-deepInk rounded-3xl shadow-lift w-56 sm:w-72 md:w-80 h-60 md:h-72 overflow-hidden transform-gpu"
+        <div className="relative w-full flex items-center justify-center pt-0 -mt-16 sm:-mt-8 h-[300px] sm:h-[320px] md:h-[340px]">
+          <div className="hero-lottie absolute inset-x-0 bottom-[-80px] sm:bottom-[-48px] md:bottom-[-20px] flex items-center justify-center pointer-events-none">
+            <dotlottie-wc
+              src="https://lottie.host/5d0fa4c5-4ca6-4419-8117-0c2d62fdf8d6/VOhL48A5qp.lottie"
+              style={{
+                width: "clamp(240px, 76vw, 440px)",
+                height: "clamp(180px, 62vw, 300px)"
+              }}
+              autoplay
+              loop
+            ></dotlottie-wc>
+          </div>
+          <div className="relative z-10 hero-ctas flex flex-col sm:flex-row gap-5 items-center justify-center -translate-y-[212px] sm:-translate-y-32 md:-translate-y-20">
+            <button
+              ref={magnetRef}
+              onMouseMove={handleMagnetMove}
+              onMouseLeave={resetMagnet}
+              className="group relative px-10 py-5 bg-deepInk text-offWhite font-bold text-lg rounded-full border-2 border-deepInk shadow-[8px_8px_0px_0px_rgba(11,42,27,0.3)] hover:shadow-[4px_4px_0px_0px_rgba(11,42,27,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200 overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-lemonYellow/40 via-creamWhite to-skyBlue/40"></div>
-              <div className="absolute inset-4 bg-white/70 backdrop-blur-sm rounded-2xl border-2 border-deepInk/10 flex flex-col justify-center items-start px-6 gap-3">
-                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-deepInk/60">
-                  Storyboard
-                </span>
-                <p className="text-lg font-display text-deepInk leading-tight">
-                  Microinteractions that smile back.
-                </p>
-              </div>
-            </div>
-
-            <div
-              ref={device2Ref}
-              className="absolute right-2 sm:right-6 rotate-3 bg-deepInk text-offWhite border-4 border-deepInk rounded-[32px] shadow-[10px_14px_0_0_rgba(11,42,27,0.4)] w-48 sm:w-64 md:w-72 h-64 md:h-80 overflow-hidden flex flex-col transform-gpu"
-            >
-              <div className="flex-1 bg-gradient-to-b from-deepInk to-deepInk/90 flex flex-col justify-between p-6 relative">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(124,255,178,0.12),transparent_45%),radial-gradient(circle_at_80%_70%,rgba(141,235,255,0.14),transparent_45%)]"></div>
-                <div className="relative space-y-3">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-offWhite/10 border border-offWhite/10 text-xs font-semibold">
-                    Playful SaaS
-                  </div>
-                  <h3 className="text-2xl font-display leading-tight">
-                    Motion-led flows crafted for thumbs.
-                  </h3>
-                </div>
-                <div className="relative flex items-center justify-between text-sm font-semibold">
-                  <span className="text-offWhite/80">Live prototype</span>
-                  <span className="px-3 py-1 rounded-full bg-offWhite text-deepInk">00:12</span>
-                </div>
-              </div>
-              <div className="h-10 bg-offWhite/10 border-t border-offWhite/10 flex items-center justify-center text-sm font-semibold tracking-wide">
-                Tap & drag to orbit
-              </div>
-            </div>
+              <span className="relative z-10 flex items-center gap-3">
+                Start free demo
+                <ArrowRight className="w-6 h-6 transition-transform duration-200 group-hover:translate-x-1" />
+              </span>
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
+            </button>
+            <button className="flex items-center gap-3 px-10 py-5 bg-white text-deepInk font-bold text-lg rounded-full border-2 border-deepInk shadow-[8px_8px_0px_0px_rgba(255,232,107,1)] hover:shadow-[4px_4px_0px_0px_rgba(255,232,107,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200">
+              <Play className="w-5 h-5 fill-current" />
+              See it in action
+            </button>
           </div>
         </div>
       </div>
