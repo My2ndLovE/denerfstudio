@@ -38,7 +38,54 @@ export function SectionTrust() {
 
         }, rootRef);
 
-        return () => ctx.revert();
+
+
+        // 3D Tilt for Pay Later Card
+        const card = rootRef.current.querySelector(".pay-later-card");
+
+        const handleCardMove = (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = ((y - centerY) / centerY) * -15;
+            const rotateY = ((x - centerX) / centerX) * 15;
+
+            gsap.to(card, {
+                rotationX: rotateX,
+                rotationY: rotateY,
+                scale: 1.05,
+                duration: 0.4,
+                ease: "power2.out",
+                transformPerspective: 1000
+            });
+        };
+
+        const handleCardLeave = () => {
+            gsap.to(card, {
+                rotationX: 0,
+                rotationY: 0,
+                scale: 1,
+                rotation: 2, // Return to original CSS rotation
+                duration: 0.5,
+                ease: "elastic.out(1, 0.5)"
+            });
+        };
+
+        if (card) {
+            card.addEventListener("mousemove", handleCardMove);
+            card.addEventListener("mouseleave", handleCardLeave);
+        }
+
+        return () => {
+            if (card) {
+                card.removeEventListener("mousemove", handleCardMove);
+                card.removeEventListener("mouseleave", handleCardLeave);
+            }
+            ctx.revert();
+        };
     }, []);
 
     return (

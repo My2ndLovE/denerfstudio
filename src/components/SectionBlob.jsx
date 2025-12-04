@@ -46,7 +46,32 @@ export function SectionBlob() {
 
         }, rootRef);
 
-        return () => ctx.revert();
+        const handleMouseMove = (e) => {
+            const eyes = document.querySelectorAll(".face-eye");
+            eyes.forEach((eye) => {
+                const rect = eye.getBoundingClientRect();
+                const eyeCenterX = rect.left + rect.width / 2;
+                const eyeCenterY = rect.top + rect.height / 2;
+                const angle = Math.atan2(e.clientY - eyeCenterY, e.clientX - eyeCenterX);
+                const distance = Math.min(3, Math.hypot(e.clientX - eyeCenterX, e.clientY - eyeCenterY) / 10);
+
+                const pupilX = Math.cos(angle) * distance;
+                const pupilY = Math.sin(angle) * distance;
+
+                gsap.to(eye.querySelector(".pupil"), {
+                    x: pupilX,
+                    y: pupilY,
+                    duration: 0.2
+                });
+            });
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
+
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+            ctx.revert();
+        };
     }, []);
 
     return (
@@ -64,10 +89,10 @@ export function SectionBlob() {
                 {/* Face */}
                 <div className="flex gap-12 mb-8 relative z-20">
                     <div className="face-eye w-8 h-12 bg-deepGreenText rounded-full relative overflow-hidden">
-                        <div className="absolute top-2 right-2 w-2 h-2 bg-white rounded-full opacity-50"></div>
+                        <div className="pupil absolute top-2 right-2 w-3 h-3 bg-white rounded-full"></div>
                     </div>
                     <div className="face-eye w-8 h-12 bg-deepGreenText rounded-full relative overflow-hidden">
-                        <div className="absolute top-2 right-2 w-2 h-2 bg-white rounded-full opacity-50"></div>
+                        <div className="pupil absolute top-2 right-2 w-3 h-3 bg-white rounded-full"></div>
                     </div>
                 </div>
                 <div className="face-smile absolute bottom-24 w-32 h-16 border-b-8 border-deepGreenText rounded-full z-20"></div>

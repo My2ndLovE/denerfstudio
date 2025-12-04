@@ -37,7 +37,27 @@ export function SectionLighter() {
 
         }, rootRef);
 
-        return () => ctx.revert();
+
+
+        const handleMouseMove = (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+
+            // Move avatars slightly in opposite directions for depth
+            gsap.to(".lighter-image .absolute.rounded-full", {
+                x: (i) => x * (i + 1) * 0.5,
+                y: (i) => y * (i + 1) * 0.5,
+                duration: 1,
+                ease: "power2.out"
+            });
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
+
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+            ctx.revert();
+        };
     }, []);
 
     return (

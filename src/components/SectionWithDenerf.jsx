@@ -47,7 +47,58 @@ export function SectionWithDenerf() {
 
         }, rootRef);
 
-        return () => ctx.revert();
+        // 3D Tilt Effect for Cards
+        const cards = document.querySelectorAll(".feature-card");
+
+        const handleCardMove = (e) => {
+            const card = e.currentTarget;
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = ((y - centerY) / centerY) * -10; // Max 10deg rotation
+            const rotateY = ((x - centerX) / centerX) * 10;
+
+            gsap.to(card, {
+                rotationX: rotateX,
+                rotationY: rotateY,
+                scale: 1.05,
+                duration: 0.4,
+                ease: "power2.out",
+                transformPerspective: 1000
+            });
+        };
+
+        const handleCardLeave = (e) => {
+            const card = e.currentTarget;
+            // Reset to original rotation (we need to preserve the initial random rotation if possible, 
+            // but for now let's just reset to 0 or maybe the initial rotation from the array? 
+            // Actually the initial rotation was set via CSS/GSAP. 
+            // Let's just reset rotationX/Y and scale, and let the base rotation stay if GSAP handles it correctly.
+            // Wait, GSAP 'rotation' is alias for 'rotationZ'. rotationX/Y are separate.
+            gsap.to(card, {
+                rotationX: 0,
+                rotationY: 0,
+                scale: 1,
+                duration: 0.5,
+                ease: "elastic.out(1, 0.5)"
+            });
+        };
+
+        cards.forEach(card => {
+            card.addEventListener("mousemove", handleCardMove);
+            card.addEventListener("mouseleave", handleCardLeave);
+        });
+
+        return () => {
+            cards.forEach(card => {
+                card.removeEventListener("mousemove", handleCardMove);
+                card.removeEventListener("mouseleave", handleCardLeave);
+            });
+            ctx.revert();
+        };
     }, []);
 
     return (
