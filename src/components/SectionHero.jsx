@@ -1,9 +1,13 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Sparkles, Play, ArrowRight } from "lucide-react";
 
-export function SectionHero() {
+gsap.registerPlugin(ScrollTrigger);
+
+export function SectionHero({ onOpenModal }) {
   const rootRef = useRef(null);
+
   const magnetRef = useRef(null);
   const [verbIndex, setVerbIndex] = useState(0);
   const verbs = ["build", "craft", "animate", "ship"];
@@ -24,7 +28,6 @@ export function SectionHero() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Animate Out
       if (verbRef.current) {
         gsap.to(verbRef.current, {
           y: -20,
@@ -41,7 +44,6 @@ export function SectionHero() {
   }, []);
 
   useLayoutEffect(() => {
-    // Animate In whenever verbIndex changes
     if (verbRef.current) {
       gsap.fromTo(verbRef.current,
         { y: 20, opacity: 0 },
@@ -81,6 +83,7 @@ export function SectionHero() {
     if (!rootRef.current) return;
 
     const ctx = gsap.context(() => {
+      // === ENTRY ANIMATION (plays on load) ===
       const entryTl = gsap.timeline();
       entryTl.to(".hero-blobs", { opacity: 1, duration: 1, ease: "power2.out" })
         .fromTo(
@@ -105,18 +108,94 @@ export function SectionHero() {
             ease: "back.out(1.7)"
           }
         );
+
+      // Continuous Float for Buttons
+      gsap.to(".hero-btn-wrapper", {
+        y: -6,
+        duration: 2,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut",
+        stagger: 0.3
+      });
+
+
+
+      // === LIVING SCRIBBLE ANIMATION ===
+      gsap.fromTo(".logo-scribble",
+        { strokeDasharray: 100, strokeDashoffset: 100 },
+        {
+          strokeDashoffset: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          delay: 0.5
+        }
+      );
+
+      // === SCRUBBED PARALLAX ON SCROLL (award-winning technique) ===
+      // Multi-layer parallax: each blob moves at different speeds
+      gsap.to(".blob-layer-1", {
+        y: -150,
+        ease: "none",
+        scrollTrigger: {
+          trigger: rootRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1.5  // Smooth 1.5s lag for cinematic feel
+        }
+      });
+
+      gsap.to(".blob-layer-2", {
+        y: -300,
+        ease: "none",
+        scrollTrigger: {
+          trigger: rootRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1
+        }
+      });
+
+      gsap.to(".blob-layer-3", {
+        y: -100,
+        scale: 1.1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: rootRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 2
+        }
+      });
+
     }, rootRef);
 
+    // === MOUSE PARALLAX (Desktop only) ===
     const handleMouseMove = (e) => {
       if (window.matchMedia("(hover: none)").matches) return;
 
       const xNorm = (e.clientX / window.innerWidth - 0.5);
       const yNorm = (e.clientY / window.innerHeight - 0.5);
 
-      gsap.to(".hero-blobs", {
-        x: xNorm * 40,
-        y: yNorm * 40,
+      // Different layers move at different intensities
+      gsap.to(".blob-layer-1", {
+        x: xNorm * 30,
+        y: yNorm * 30,
+        duration: 1.2,
+        ease: "power2.out"
+      });
+
+      gsap.to(".blob-layer-2", {
+        x: xNorm * 50,
+        y: yNorm * 50,
         duration: 1,
+        ease: "power2.out"
+      });
+
+      gsap.to(".blob-layer-3", {
+        x: xNorm * 20,
+        y: yNorm * 20,
+        duration: 1.5,
         ease: "power2.out"
       });
     };
@@ -166,12 +245,18 @@ export function SectionHero() {
   return (
     <section
       ref={rootRef}
-      className="min-h-screen snap-start bg-gradient-to-br from-creamWhite via-mintGreen/30 to-skyBlue/40 flex flex-col items-center justify-center px-4 overflow-hidden relative perspective-1000"
+      className="min-h-screen bg-gradient-to-br from-creamWhite via-mintGreen/30 to-skyBlue/40 flex flex-col items-center justify-center px-4 overflow-hidden relative perspective-1000"
     >
-      <div className="hero-blobs absolute inset-0 opacity-0 pointer-events-none">
-        <div className="absolute top-10 left-6 w-64 h-64 bg-lemonYellow rounded-full blur-3xl opacity-50"></div>
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-skyBlue rounded-full blur-3xl opacity-50"></div>
-        <div className="absolute top-1/2 left-1/3 w-72 h-72 bg-neonMint/40 rounded-full blur-[80px] opacity-70"></div>
+      {/* Multi-Layer Parallax Blobs */}
+      <div className="hero-blobs absolute inset-0 opacity-0 pointer-events-none will-change-transform">
+        {/* Layer 1 - Slowest (foreground feel) */}
+        <div className="blob-layer-1 absolute top-10 left-6 w-64 h-64 bg-lemonYellow rounded-full blur-3xl opacity-50"></div>
+
+        {/* Layer 2 - Medium speed */}
+        <div className="blob-layer-2 absolute bottom-10 right-10 w-80 h-80 bg-skyBlue rounded-full blur-3xl opacity-50"></div>
+
+        {/* Layer 3 - Fastest (background) */}
+        <div className="blob-layer-3 absolute top-1/2 left-1/3 w-72 h-72 bg-neonMint/40 rounded-full blur-[80px] opacity-70"></div>
       </div>
 
       {/* Noise Texture Overlay */}
@@ -179,9 +264,21 @@ export function SectionHero() {
         style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}
       ></div>
 
+      {/* Company Logo - Stacked Design */}
+      <div className="absolute top-6 left-6 md:top-8 md:left-8 z-50 pointer-events-auto cursor-pointer select-none">
+        <div className="flex flex-col items-start leading-none">
+          <span className="font-body text-[10px] md:text-xs text-deepInk/50 tracking-[0.3em] uppercase pl-0.5">
+            Studio
+          </span>
+          <span className="font-display font-black text-2xl md:text-4xl text-deepInk tracking-tight uppercase -mt-0.5">
+            Denerf
+          </span>
+        </div>
+      </div>
+
       <div className="z-10 text-center max-w-5xl mx-auto flex flex-col items-center gap-8">
 
-        <div className="hero-content-wrapper space-y-6 flex flex-col items-center">
+        <div className="hero-content-wrapper space-y-6 flex flex-col items-center will-change-transform">
           <div className="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold tracking-wide text-deepInk bg-white/60 rounded-full backdrop-blur-md border border-deepInk/10 shadow-sm hover:scale-105 transition-transform cursor-default">
             <Sparkles className="w-4 h-4 text-neonMint fill-deepInk" />
             ZERO RISK · PAY ONLY IF YOU LOVE IT
@@ -212,7 +309,7 @@ export function SectionHero() {
         </div>
 
         <div className="relative w-full flex items-center justify-center pt-0 -mt-16 sm:-mt-8 h-[300px] sm:h-[320px] md:h-[340px]">
-          <div className="hero-lottie absolute inset-x-0 bottom-[-80px] sm:bottom-[-48px] md:bottom-[-20px] flex items-center justify-center pointer-events-none">
+          <div className="hero-lottie absolute inset-x-0 bottom-[-80px] sm:bottom-[-48px] md:bottom-[-20px] flex items-center justify-center pointer-events-none will-change-transform">
             <dotlottie-wc
               src="https://lottie.host/5d0fa4c5-4ca6-4419-8117-0c2d62fdf8d6/VOhL48A5qp.lottie"
               style={{
@@ -223,23 +320,34 @@ export function SectionHero() {
               loop
             ></dotlottie-wc>
           </div>
-          <div className="relative z-10 hero-ctas flex flex-col sm:flex-row gap-5 items-center justify-center -translate-y-[212px] sm:-translate-y-32 md:-translate-y-20">
-            <button
-              ref={magnetRef}
-              onMouseMove={handleMagnetMove}
-              onMouseLeave={resetMagnet}
-              className="group relative px-10 py-5 bg-deepInk text-offWhite font-bold text-lg rounded-full border-2 border-deepInk shadow-[8px_8px_0px_0px_rgba(11,42,27,0.3)] hover:shadow-[4px_4px_0px_0px_rgba(11,42,27,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200 overflow-hidden"
-            >
-              <span className="relative z-10 flex items-center gap-3">
-                Start free demo
-                <ArrowRight className="w-6 h-6 transition-transform duration-200 group-hover:translate-x-1" />
-              </span>
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
-            </button>
-            <button className="flex items-center gap-3 px-10 py-5 bg-white text-deepInk font-bold text-lg rounded-full border-2 border-deepInk shadow-[8px_8px_0px_0px_rgba(255,232,107,1)] hover:shadow-[4px_4px_0px_0px_rgba(255,232,107,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200">
-              <Play className="w-5 h-5 fill-current" />
-              See it in action
-            </button>
+          <div className="relative z-10 hero-ctas flex flex-col sm:flex-row gap-5 items-center justify-center -translate-y-[212px] sm:-translate-y-32 md:-translate-y-20 will-change-transform">
+            <div className="hero-btn-wrapper">
+              <button
+                ref={magnetRef}
+                onMouseMove={handleMagnetMove}
+                onMouseLeave={resetMagnet}
+                onClick={onOpenModal}
+                className="group relative px-10 py-5 bg-deepInk text-offWhite font-bold text-lg rounded-full border-2 border-deepInk shadow-[8px_8px_0px_0px_rgba(11,42,27,0.3)] hover:shadow-[12px_12px_0px_0px_rgba(11,42,27,0.3)] hover:-translate-x-1 hover:-translate-y-1 active:shadow-[4px_4px_0px_0px_rgba(11,42,27,0.3)] active:translate-x-1 active:translate-y-1 transition-all duration-200 overflow-hidden"
+              >
+                <span className="relative z-10 flex items-center gap-3">
+                  Start free demo
+                  <ArrowRight className="w-6 h-6 transition-transform duration-200 group-hover:translate-x-1" />
+                </span>
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer-auto" />
+              </button>
+            </div>
+            <div className="hero-btn-wrapper">
+              <button
+                onClick={() => document.getElementById('section-denerf')?.scrollIntoView({ behavior: 'smooth' })}
+                className="group relative flex items-center gap-3 px-10 py-5 bg-white text-deepInk font-bold text-lg rounded-full border-2 border-deepInk shadow-[8px_8px_0px_0px_rgba(255,232,107,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,232,107,1)] hover:-translate-x-1 hover:-translate-y-1 active:shadow-[4px_4px_0px_0px_rgba(255,232,107,1)] active:translate-x-1 active:translate-y-1 transition-all duration-200 overflow-hidden"
+              >
+                <span className="relative z-10 flex items-center gap-3">
+                  <Play className="w-5 h-5 fill-current" />
+                  See it in action
+                </span>
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-deepInk/10 to-transparent -translate-x-full animate-shimmer-auto" />
+              </button>
+            </div>
           </div>
         </div>
       </div>

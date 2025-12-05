@@ -1,4 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
+
+:root {
+  --color-mint-green: #77F0A0;
+  --color-sky-blue: #8DEBFF;
+  --color-bubble-pink: #FFB6D5;
+  --color-lemon-yellow: #FFE86B;
+  --color-cream-white: #FFF8EC;
+  --color-deep-green-text: #004D33;
+  --color-dark-teal: #006666;
+  --color-soft-gray-text: #555555;
+}
+
+@theme {
+  --font-display: "Bricolage Grotesque", sans-serif;
+  --font-body: "Space Grotesk", sans-serif;
+
+  --color-mint: var(--color-mint-green);
+  --color-sky: var(--color-sky-blue);
+  --color-pink: var(--color-bubble-pink);
+  --color-yellow: var(--color-lemon-yellow);
+  --color-cream: var(--color-cream-white);
+  --color-deep-green: var(--color-deep-green-text);
+  --color-teal: var(--color-dark-teal);
+  --color-gray-text: var(--color-soft-gray-text);
+}
 
 @theme {
   --color-mintGreen: #77F0A0;
@@ -36,11 +62,11 @@
 
 @layer base {
   html {
-    @apply scroll-smooth snap-y snap-proximity bg-creamWhite;
+    @apply scroll-smooth bg-creamWhite h-full;
   }
 
   body {
-    @apply font-body text-softGrayText bg-creamWhite antialiased overflow-x-hidden;
+    @apply font-body text-softGrayText bg-creamWhite antialiased min-h-screen;
     color: var(--color-deepInk);
   }
 
@@ -77,4 +103,173 @@
       scroll-behavior: auto !important;
     }
   }
+}
+
+/* ========================================
+   AWARD-WINNING SCROLL ANIMATION UTILITIES
+   ======================================== */
+
+/* GPU-Accelerated Animation Layers */
+@utility will-change-transform {
+  will-change: transform;
+}
+
+@utility will-change-opacity {
+  will-change: opacity;
+}
+
+@utility will-change-all {
+  will-change: transform, opacity, clip-path;
+}
+
+/* Clip-Path Reveal Utilities */
+@utility clip-hidden-bottom {
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+}
+
+@utility clip-hidden-left {
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+}
+
+@utility clip-hidden-circle {
+  clip-path: circle(0% at 50% 50%);
+}
+
+@utility clip-visible {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+@utility clip-circle-full {
+  clip-path: circle(75% at 50% 50%);
+}
+
+/* Blur Animation States */
+@utility blur-entrance {
+  filter: blur(20px);
+  opacity: 0;
+}
+
+@utility blur-none {
+  filter: blur(0);
+  opacity: 1;
+}
+
+/* Parallax Depth Layers */
+@utility parallax-slow {
+  --parallax-speed: 0.3;
+}
+
+@utility parallax-medium {
+  --parallax-speed: 0.6;
+}
+
+@utility parallax-fast {
+  --parallax-speed: 1.2;
+}
+
+/* Scroll-Linked Custom Properties (updated via JS) */
+:root {
+  --scroll-progress: 0;
+  --section-progress: 0;
+  --scroll-velocity: 0;
+}
+
+/* Text Split Animation Containers */
+@utility split-text-container {
+  overflow: hidden;
+  display: inline-block;
+}
+
+/* Morphing Blob SVG Container */
+@utility morph-container {
+  transition: d 0.3s ease-out;
+}
+
+/* Horizontal Scroll Section */
+@utility horizontal-scroll-section {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Glow/Pulse Effects */
+@utility glow-pulse {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(124, 255, 178, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(124, 255, 178, 0.6), 0 0 60px rgba(124, 255, 178, 0.3);
+  }
+}
+
+/* Confetti/Particle Base */
+@utility confetti-particle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 2px;
+}
+
+/* Smooth Scrub Easing */
+@utility scrub-smooth {
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Mobile Quick Bar Visibility Control */
+body.hide-mobile-bar .mobile-quick-bar {
+  transform: translateY(150%);
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition-delay: 0s;
+  /* Hide immediately */
+}
+
+body:not(.hide-mobile-bar) .mobile-quick-bar {
+  transform: translateY(0);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition-delay: 0s;
+  /* Show immediately */
+}
+
+/* Continuous Button Animations */
+@keyframes shimmer-auto {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  40% {
+    transform: translateX(200%);
+  }
+
+  /* Slower pass */
+  100% {
+    transform: translateX(200%);
+  }
+
+  /* Wait */
+}
+
+@utility animate-shimmer-auto {
+  animation: shimmer-auto 4s ease-in-out infinite;
+}
+
+@keyframes float-gentle {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@utility animate-float {
+  animation: float-gentle 3s ease-in-out infinite;
 }
