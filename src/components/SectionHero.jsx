@@ -272,18 +272,6 @@ export function SectionHero({ onOpenModal }) {
         <path d="M5 25 C25 5, 45 35, 65 12 S95 30, 85 20" />
       </svg>
 
-      {/* Company Logo - Stacked Design */}
-      <div className="absolute top-6 left-6 md:top-8 md:left-8 z-50 pointer-events-auto cursor-pointer select-none">
-        <div className="flex flex-col items-start leading-none">
-          <span className="font-body text-[10px] md:text-xs text-deepInk/50 tracking-[0.3em] uppercase pl-0.5">
-            Studio
-          </span>
-          <span className="font-display font-black text-2xl md:text-4xl text-deepInk tracking-tight uppercase -mt-0.5">
-            Denerf
-          </span>
-        </div>
-      </div>
-
       <div className="z-10 text-center max-w-5xl mx-auto flex flex-col items-center gap-8">
 
         <div className="hero-content-wrapper space-y-6 flex flex-col items-center will-change-transform">

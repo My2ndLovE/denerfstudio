@@ -251,22 +251,22 @@ function App() {
       )}
       <main className="w-full overflow-hidden">
         {/* Hanging logo plaque (non-blocking) */}
-        <div className="brand-plaque fixed top-2 left-2 md:top-4 md:left-4 z-[40] scale-90 md:scale-100 origin-top-left">
+        <div className="brand-plaque fixed top-1 left-2 md:top-4 md:left-4 z-[40] scale-100 md:scale-[1.15] origin-top-left">
           <div className="rope left"></div>
           <div className="rope right"></div>
           <div className="knot left"></div>
           <div className="knot right"></div>
-          <div className="tag relative wood rounded-[14px] px-3 py-2 flex items-center gap-2 transition-all duration-200 border border-deepGreenText/20 overflow-hidden">
+          <div className="tag relative wood rounded-[16px] px-3.5 py-2.5 flex items-center gap-3 transition-all duration-200 border border-deepGreenText/20 overflow-hidden">
             <div className="grain absolute inset-0 opacity-60 pointer-events-none"></div>
             <div className="sticker star">✦</div>
             <div className="sticker heart">❤</div>
-            <div className="relative flex items-center justify-center w-6 h-6 rounded-full bg-white/70 border border-deepGreenText/10 shadow-[0_2px_0_rgba(0,77,51,0.16)]">
-              <span className="absolute w-2 h-2 rounded-full bg-neonMint shadow-[0_0_0_1px_rgba(0,77,51,0.45)]"></span>
-              <span className="absolute w-[6px] h-[6px] rounded-full bg-lemonYellow translate-x-[4px] translate-y-[3px] opacity-70"></span>
+            <div className="relative flex items-center justify-center w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/70 border border-deepGreenText/10 shadow-[0_2px_0_rgba(0,77,51,0.16)]">
+              <span className="absolute w-2.5 h-2.5 rounded-full bg-neonMint shadow-[0_0_0_1px_rgba(0,77,51,0.45)]"></span>
+              <span className="absolute w-[7px] h-[7px] rounded-full bg-lemonYellow translate-x-[5px] translate-y-[3px] opacity-70"></span>
             </div>
             <div className="relative flex flex-col leading-tight">
-              <span className="text-[11px] md:text-xs font-black tracking-[0.08em] text-deepGreenText">DENERF STUDIO</span>
-              <span className="text-[8.5px] md:text-[9.5px] font-semibold tracking-[0.08em] text-deepGreenText/80">(003751888-X)</span>
+              <span className="text-[12px] md:text-sm font-black tracking-[0.08em] text-deepGreenText">DENERF STUDIO</span>
+              <span className="text-[9px] md:text-[11px] font-semibold tracking-[0.08em] text-deepGreenText/80">(003751888-X)</span>
             </div>
           </div>
         </div>
