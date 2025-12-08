@@ -244,7 +244,7 @@ function App() {
             .brand-plaque .sticker.star { top: 4px; right: 6px; background: #FFB6D5; color: #0B2A1B; box-shadow: 0 2px 0 rgba(0,77,51,0.18); }
             .brand-plaque .sticker.heart { bottom: 4px; left: 6px; background: #8DEBFF; color: #0B2A1B; box-shadow: 0 2px 0 rgba(0,77,51,0.18); }
             @media (max-width: 767px) {
-              .brand-plaque { transform: scale(0.7) rotate(-1deg); }
+              .brand-plaque { transform: scale(0.8) rotate(-1deg); }
             }
           `}
         </style>
