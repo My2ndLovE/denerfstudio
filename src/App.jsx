@@ -51,7 +51,9 @@ function App() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.to(".floating-nav-btn", {
+      const btns = gsap.utils.toArray(".floating-nav-btn");
+      if (!btns.length) return;
+      gsap.to(btns, {
         y: -8,
         duration: 2,
         yoyo: true,
@@ -227,10 +229,47 @@ function App() {
             .scroll-signal .idle-dots span:nth-child(2) { animation-delay: 0.12s; background: rgba(255,182,213,0.8); }
             .scroll-signal .idle-dots span:nth-child(3) { animation-delay: 0.24s; background: rgba(141,235,255,0.8); }
 
+            /* Hanging logo plaque */
+            .brand-plaque { pointer-events: none; transform: rotate(-1.2deg); }
+            .brand-plaque .tag { box-shadow: 0 8px 18px rgba(0,77,51,0.14), 0 2px 0 rgba(0,77,51,0.16), 0 0 0 1px rgba(0,77,51,0.08); }
+            .brand-plaque .rope { position: absolute; width: 3px; background: linear-gradient(180deg, #0B2A1B, #0B2A1B); border-radius: 99px; }
+            .brand-plaque .rope.left { left: 10px; top: -16px; height: 24px; }
+            .brand-plaque .rope.right { right: 14px; top: -28px; height: 38px; }
+            .brand-plaque .knot { position: absolute; width: 9px; height: 9px; background: #0B2A1B; border-radius: 99px; box-shadow: 0 2px 0 rgba(0,0,0,0.1); }
+            .brand-plaque .knot.left { left: 6px; top: -19px; }
+            .brand-plaque .knot.right { right: 9px; top: -31px; }
+            .brand-plaque .wood { background: linear-gradient(90deg, rgba(255,232,189,0.95), rgba(255,248,220,0.95)); }
+            .brand-plaque .grain { background-image: repeating-linear-gradient(90deg, rgba(0,77,51,0.05) 0, rgba(0,77,51,0.05) 4px, transparent 4px, transparent 10px); mix-blend-mode: multiply; }
+            .brand-plaque .sticker { position: absolute; width: 11px; height: 11px; border-radius: 999px; display: grid; place-items: center; font-size: 8px; font-weight: 800; }
+            .brand-plaque .sticker.star { top: 4px; right: 6px; background: #FFB6D5; color: #0B2A1B; box-shadow: 0 2px 0 rgba(0,77,51,0.18); }
+            .brand-plaque .sticker.heart { bottom: 4px; left: 6px; background: #8DEBFF; color: #0B2A1B; box-shadow: 0 2px 0 rgba(0,77,51,0.18); }
+            @media (max-width: 767px) {
+              .brand-plaque { transform: scale(0.7) rotate(-1deg); }
+            }
           `}
         </style>
       )}
       <main className="w-full overflow-hidden">
+        {/* Hanging logo plaque (non-blocking) */}
+        <div className="brand-plaque fixed top-2 left-2 md:top-4 md:left-4 z-[40] scale-90 md:scale-100 origin-top-left">
+          <div className="rope left"></div>
+          <div className="rope right"></div>
+          <div className="knot left"></div>
+          <div className="knot right"></div>
+          <div className="tag relative wood rounded-[14px] px-3 py-2 flex items-center gap-2 transition-all duration-200 border border-deepGreenText/20 overflow-hidden">
+            <div className="grain absolute inset-0 opacity-60 pointer-events-none"></div>
+            <div className="sticker star">✦</div>
+            <div className="sticker heart">❤</div>
+            <div className="relative flex items-center justify-center w-6 h-6 rounded-full bg-white/70 border border-deepGreenText/10 shadow-[0_2px_0_rgba(0,77,51,0.16)]">
+              <span className="absolute w-2 h-2 rounded-full bg-neonMint shadow-[0_0_0_1px_rgba(0,77,51,0.45)]"></span>
+              <span className="absolute w-[6px] h-[6px] rounded-full bg-lemonYellow translate-x-[4px] translate-y-[3px] opacity-70"></span>
+            </div>
+            <div className="relative flex flex-col leading-tight">
+              <span className="text-[11px] md:text-xs font-black tracking-[0.08em] text-deepGreenText">DENERF STUDIO</span>
+              <span className="text-[8.5px] md:text-[9.5px] font-semibold tracking-[0.08em] text-deepGreenText/80">(003751888-X)</span>
+            </div>
+          </div>
+        </div>
         <div id="section-hero" data-nav-section>
           <SectionHero onOpenModal={() => setIsModalOpen(true)} />
         </div>

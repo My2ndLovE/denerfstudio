@@ -122,15 +122,18 @@ export function SectionHero({ onOpenModal }) {
 
 
       // === LIVING SCRIBBLE ANIMATION ===
-      gsap.fromTo(".logo-scribble",
-        { strokeDasharray: 100, strokeDashoffset: 100 },
-        {
-          strokeDashoffset: 0,
-          duration: 0.8,
-          ease: "power2.out",
-          delay: 0.5
-        }
-      );
+      const scribble = document.querySelector(".logo-scribble");
+      if (scribble) {
+        gsap.fromTo(".logo-scribble",
+          { strokeDasharray: 100, strokeDashoffset: 100 },
+          {
+            strokeDashoffset: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            delay: 0.5
+          }
+        );
+      }
 
       // === SCRUBBED PARALLAX ON SCROLL (award-winning technique) ===
       // Multi-layer parallax: each blob moves at different speeds
@@ -263,6 +266,11 @@ export function SectionHero({ onOpenModal }) {
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 mix-blend-overlay"
         style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}
       ></div>
+
+      {/* Scribble accent for logo anim hook */}
+      <svg className="logo-scribble absolute top-4 left-5 w-12 h-6 text-deepInk/60 pointer-events-none" viewBox="0 0 100 40" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round">
+        <path d="M5 25 C25 5, 45 35, 65 12 S95 30, 85 20" />
+      </svg>
 
       {/* Company Logo - Stacked Design */}
       <div className="absolute top-6 left-6 md:top-8 md:left-8 z-50 pointer-events-auto cursor-pointer select-none">
