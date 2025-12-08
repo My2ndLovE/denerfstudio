@@ -227,45 +227,10 @@ function App() {
             .scroll-signal .idle-dots span:nth-child(2) { animation-delay: 0.12s; background: rgba(255,182,213,0.8); }
             .scroll-signal .idle-dots span:nth-child(3) { animation-delay: 0.24s; background: rgba(141,235,255,0.8); }
 
-            /* Sticky brand plaque */
-            .brand-plaque { pointer-events: auto; }
-            .brand-plaque .tag { box-shadow: 0 14px 26px rgba(0,77,51,0.16), 0 3px 0 rgba(0,77,51,0.18), 0 0 0 1px rgba(0,77,51,0.08); transform: rotate(-1.5deg) translateY(1px); }
-            .brand-plaque:hover .tag { transform: rotate(-0.2deg) translateY(-1px); box-shadow: 0 16px 32px rgba(0,77,51,0.2), 0 3px 0 rgba(0,77,51,0.22), 0 0 0 1px rgba(0,77,51,0.12); }
-            .brand-plaque .rope { position: absolute; width: 4px; background: linear-gradient(180deg, #0B2A1B, #0B2A1B); border-radius: 99px; }
-            .brand-plaque .rope.left { left: 14px; top: -22px; height: 32px; }
-            .brand-plaque .rope.right { right: 18px; top: -38px; height: 50px; }
-            .brand-plaque .knot { position: absolute; width: 12px; height: 12px; background: #0B2A1B; border-radius: 99px; box-shadow: 0 2px 0 rgba(0,0,0,0.1); }
-            .brand-plaque .knot.left { left: 8px; top: -26px; }
-            .brand-plaque .knot.right { right: 12px; top: -42px; }
-            .brand-plaque .wood { background: linear-gradient(90deg, rgba(255,232,189,0.95), rgba(255,248,220,0.95)); }
-            .brand-plaque .grain { background-image: repeating-linear-gradient(90deg, rgba(0,77,51,0.06) 0, rgba(0,77,51,0.06) 4px, transparent 4px, transparent 10px); mix-blend-mode: multiply; }
-            .brand-plaque .sticker { position: absolute; width: 14px; height: 14px; border-radius: 999px; display: grid; place-items: center; font-size: 9px; font-weight: 800; }
-            .brand-plaque .sticker.star { top: 6px; right: 8px; background: #FFB6D5; color: #0B2A1B; box-shadow: 0 2px 0 rgba(0,77,51,0.2); }
-            .brand-plaque .sticker.heart { bottom: 6px; left: 8px; background: #8DEBFF; color: #0B2A1B; box-shadow: 0 2px 0 rgba(0,77,51,0.2); }
           `}
         </style>
       )}
       <main className="w-full overflow-hidden">
-        {/* Sticky logo plaque */}
-        <div className="brand-plaque fixed top-3 left-3 md:top-4 md:left-4 z-[48]">
-          <div className="rope left"></div>
-          <div className="rope right"></div>
-          <div className="knot left"></div>
-          <div className="knot right"></div>
-          <div className="tag relative wood rounded-[18px] px-4 py-3 flex items-center gap-3 transition-all duration-200 border border-deepGreenText/20 overflow-hidden">
-            <div className="grain absolute inset-0 opacity-60 pointer-events-none"></div>
-            <div className="sticker star">✦</div>
-            <div className="sticker heart">❤</div>
-            <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-white/70 border border-deepGreenText/10 shadow-[0_2px_0_rgba(0,77,51,0.16)]">
-              <span className="absolute w-3 h-3 rounded-full bg-neonMint shadow-[0_0_0_1px_rgba(0,77,51,0.45)]"></span>
-              <span className="absolute w-2 h-2 rounded-full bg-lemonYellow translate-x-[6px] translate-y-[4px] opacity-70"></span>
-            </div>
-            <div className="relative flex flex-col leading-tight">
-              <span className="text-[13px] md:text-sm font-black tracking-[0.08em] text-deepGreenText">DENERF STUDIO</span>
-              <span className="text-[10px] font-semibold tracking-[0.08em] text-deepGreenText/80">(003751888-X)</span>
-            </div>
-          </div>
-        </div>
         <div id="section-hero" data-nav-section>
           <SectionHero onOpenModal={() => setIsModalOpen(true)} />
         </div>

@@ -205,7 +205,7 @@ export function SectionWithDenerf() {
         <section
             id="section-denerf"
             ref={rootRef}
-            className="min-h-screen bg-mintGreen flex items-center justify-center px-4 overflow-hidden relative"
+            className="min-h-screen bg-mintGreen flex items-start md:items-center justify-center px-4 pt-16 md:pt-0 overflow-hidden relative"
         >
             {/* Background Doodles */}
             <svg className="doodle-svg absolute top-10 left-10 w-32 h-32 opacity-40 pointer-events-none will-change-transform" viewBox="0 0 100 100">

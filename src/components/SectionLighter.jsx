@@ -92,7 +92,7 @@ export function SectionLighter() {
     return (
         <section
             ref={rootRef}
-            className="bg-creamWhite flex flex-col md:flex-row items-start md:items-center justify-start md:justify-center px-4 md:px-20 py-10 md:py-20 gap-6 md:gap-12 overflow-hidden min-h-screen"
+            className="bg-creamWhite flex flex-col md:flex-row items-start md:items-center justify-start md:justify-center px-4 md:px-20 pt-16 pb-10 md:pt-20 md:pb-20 gap-6 md:gap-12 overflow-hidden min-h-screen"
             style={{ perspective: "1200px" }}
         >
             <div className="lighter-text-container w-full md:flex-1 max-w-xl will-change-transform">
