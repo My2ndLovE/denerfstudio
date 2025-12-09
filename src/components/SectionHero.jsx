@@ -5,7 +5,7 @@ import { Sparkles, Play, ArrowRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function SectionHero({ onOpenModal }) {
+export function SectionHero({ onOpenModal, onSeeAction }) {
   const rootRef = useRef(null);
 
   const magnetRef = useRef(null);
@@ -334,7 +334,7 @@ export function SectionHero({ onOpenModal }) {
             </div>
             <div className="hero-btn-wrapper">
               <button
-                onClick={() => document.getElementById('section-denerf')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={onSeeAction}
                 className="group relative flex items-center gap-3 px-10 py-5 bg-white text-deepInk font-bold text-lg rounded-full border-2 border-deepInk shadow-[8px_8px_0px_0px_rgba(255,232,107,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,232,107,1)] hover:-translate-x-1 hover:-translate-y-1 active:shadow-[4px_4px_0px_0px_rgba(255,232,107,1)] active:translate-x-1 active:translate-y-1 transition-all duration-200 overflow-hidden"
               >
                 <span className="relative z-10 flex items-center gap-3">

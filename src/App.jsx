@@ -142,6 +142,30 @@ function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleSeeAction = () => {
+    const showreel = document.getElementById("section-showreel");
+    if (!showreel) return;
+    const targetY = Math.max(showreel.offsetTop - 24, 0);
+    window.scrollTo({ top: targetY, behavior: "smooth" });
+
+    const firstCard = showreel.querySelector(".reel-card");
+    if (firstCard) {
+      gsap.fromTo(firstCard,
+        { filter: "drop-shadow(0 0 0 rgba(124,255,178,0))", scale: 1 },
+        {
+          filter: "drop-shadow(0 0 14px rgba(124,255,178,0.6))",
+          scale: 1.04,
+          duration: 0.25,
+          ease: "power2.out",
+          yoyo: true,
+          repeat: 3,
+          delay: 0.4,
+          clearProps: "filter,scale"
+        }
+      );
+    }
+  };
+
   return (
     <>
       {isMounted && typeof document !== "undefined" && (
@@ -271,7 +295,7 @@ function App() {
           </div>
         </div>
         <div id="section-hero" data-nav-section>
-          <SectionHero onOpenModal={() => setIsModalOpen(true)} />
+          <SectionHero onOpenModal={() => setIsModalOpen(true)} onSeeAction={handleSeeAction} />
         </div>
         <div id="section-denerf" data-nav-section>
           <SectionWithDenerf />
