@@ -5,23 +5,75 @@ import gsap from "gsap";
 export function ContactModal({ isOpen, onClose }) {
     const modalRef = useRef(null);
     const backdropRef = useRef(null);
+    const lastFocusedRef = useRef(null);
 
     useEffect(() => {
+        const backdropEl = backdropRef.current;
+        const modalEl = modalRef.current;
+        if (!backdropEl || !modalEl) return;
+
+        const focusableSelectors = [
+            "a[href]",
+            "button:not([disabled])",
+            "textarea",
+            "input",
+            "select",
+            "[tabindex]:not([tabindex='-1'])"
+        ].join(", ");
+
+        const handleKeydown = (e) => {
+            if (e.key === "Escape") {
+                e.preventDefault();
+                onClose?.();
+            }
+            if (e.key === "Tab") {
+                const focusable = modalEl.querySelectorAll(focusableSelectors);
+                if (!focusable.length) return;
+
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        };
+
         if (isOpen) {
+            lastFocusedRef.current = document.activeElement;
             // Animate In
-            gsap.to(backdropRef.current, { opacity: 1, duration: 0.3, pointerEvents: "all" });
-            gsap.fromTo(modalRef.current,
+            gsap.to(backdropEl, { opacity: 1, duration: 0.3, pointerEvents: "all" });
+            gsap.fromTo(modalEl,
                 { scale: 0.8, opacity: 0, y: 20 },
                 { scale: 1, opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.5)" }
             );
+
+            document.addEventListener("keydown", handleKeydown);
+
+            // Move focus into the dialog
+            setTimeout(() => {
+                const firstFocusable = modalEl.querySelector(focusableSelectors);
+                (firstFocusable || modalEl).focus();
+            }, 10);
         } else {
             // Animate Out
-            gsap.to(backdropRef.current, { opacity: 0, duration: 0.3, pointerEvents: "none" });
-            gsap.to(modalRef.current, { scale: 0.8, opacity: 0, y: 20, duration: 0.3, ease: "power2.in" });
+            gsap.to(backdropEl, { opacity: 0, duration: 0.3, pointerEvents: "none" });
+            gsap.to(modalEl, { scale: 0.8, opacity: 0, y: 20, duration: 0.3, ease: "power2.in" });
+            document.removeEventListener("keydown", handleKeydown);
+
+            // Restore focus to the element that opened the modal
+            if (lastFocusedRef.current && typeof lastFocusedRef.current.focus === "function") {
+                lastFocusedRef.current.focus();
+            }
         }
-    }, [isOpen]);
 
-
+        return () => {
+            document.removeEventListener("keydown", handleKeydown);
+        };
+    }, [isOpen, onClose]);
 
     return (
         <div
@@ -32,19 +84,25 @@ export function ContactModal({ isOpen, onClose }) {
             <div
                 ref={modalRef}
                 className="bg-creamWhite w-[90vw] max-w-md p-8 rounded-[2rem] border-4 border-deepGreenText shadow-[8px_8px_0px_0px_rgba(0,77,51,1)] relative"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="contact-modal-title"
+                aria-describedby="contact-modal-desc"
+                tabIndex={-1}
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 p-2 text-deepGreenText hover:bg-deepGreenText/10 rounded-full transition-colors"
+                    aria-label="Close contact modal"
                 >
                     <X size={24} />
                 </button>
 
-                <h3 className="text-3xl font-display font-bold text-deepGreenText mb-4 text-center">
+                <h3 id="contact-modal-title" className="text-3xl font-display font-bold text-deepGreenText mb-4 text-center">
                     Let's Build It.
                 </h3>
-                <p className="text-center text-softGrayText mb-8">
+                <p id="contact-modal-desc" className="text-center text-softGrayText mb-8">
                     Ready to start your MVP? We're ready to help. <br />
                     Choose how you want to connect.
                 </p>

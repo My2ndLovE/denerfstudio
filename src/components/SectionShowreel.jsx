@@ -1,6 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef, useEffect, useState } from "react";
 
 // Import portfolio images
 import winesLoungeImg from "../assets/portfolio/wineslounge.webp";
@@ -9,8 +7,6 @@ import codAutoProImg from "../assets/portfolio/codautopro.webp";
 import kepongHondaImg from "../assets/portfolio/keponghonda.webp";
 import hkFunCasinoImg from "../assets/portfolio/hkfuncasinoonline.webp";
 import hkTrustedGroupsImg from "../assets/portfolio/hktrustedgroups.webp";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const reels = [
   {
@@ -68,148 +64,44 @@ export function SectionShowreel({ onOpenModal }) {
   const pinWrapperRef = useRef(null);
   const containerRef = useRef(null);
   const headerRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  useLayoutEffect(() => {
-    if (!rootRef.current || !containerRef.current || !pinWrapperRef.current) return;
+  // Track active slide for dots
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
 
-    const ctx = gsap.context(() => {
-      const container = containerRef.current;
-      const cards = gsap.utils.toArray(".reel-card");
+    const handleScroll = () => {
+      const firstCard = container.querySelector(".reel-card");
+      if (!firstCard) return;
+      const cardWidth = firstCard.getBoundingClientRect().width;
+      const gap = parseFloat(getComputedStyle(container).columnGap || getComputedStyle(container).gap || "0");
+      const segment = cardWidth + gap;
+      const idx = Math.round(container.scrollLeft / (segment || 1));
+      setActiveIndex(Math.min(reels.length, Math.max(0, idx)));
+    };
 
-      // === HORIZONTAL SCROLL TUNNEL (Award-winning Awwwards technique) ===
-      // Pin the wrapper while scrolling horizontally through cards
-      // Calculation: Total width of cards - viewport width + padding
-      const getScrollAmount = () => {
-        return -(container.scrollWidth - window.innerWidth + 40);
-      };
-
-      const horizontalScroll = gsap.to(container, {
-        x: getScrollAmount,
-        ease: "none",
-        scrollTrigger: {
-          trigger: pinWrapperRef.current, // Trigger on the wrapper
-          start: "top top",
-          end: () => `+=${container.scrollWidth}`,
-          pin: true,
-          pinSpacing: true, // Ensure section grows
-          scrub: 1,
-          anticipatePin: 1,
-          invalidateOnRefresh: true
-        }
-      });
-
-      // === PARALLAX HEADER (Disabled to prevent cutoff) ===
-      // Kept the ScrollTrigger for potential future use or just removed the animation
-      // gsap.to(headerRef.current, {
-      //   x: () => -(container.scrollWidth * 0.05),
-      //   ease: "none",
-      //   scrollTrigger: {
-      //     trigger: rootRef.current,
-      //     start: "top top",
-      //     end: () => `+=${container.scrollWidth}`,
-      //     scrub: 1.5
-      //   }
-      // });
-
-      // === CARD ANIMATIONS ON SCROLL ===
-      cards.forEach((card, i) => {
-        // Cards zoom from small to full as they enter viewport center
-        gsap.fromTo(card,
-          { scale: 0.85, opacity: 0.5 },
-          {
-            scale: 1,
-            opacity: 1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: card,
-              containerAnimation: horizontalScroll,
-              start: "left 80%",
-              end: "left 40%",
-              scrub: true
-            }
-          }
-        );
-
-        // Image reveal with circular mask
-        const image = card.querySelector(".reel-image");
-        if (image) {
-          gsap.fromTo(image,
-            { clipPath: "circle(0% at 50% 50%)" },
-            {
-              clipPath: "circle(100% at 50% 50%)",
-              ease: "none",
-              scrollTrigger: {
-                trigger: card,
-                containerAnimation: horizontalScroll,
-                start: "left 70%",
-                end: "left 30%",
-                scrub: true
-              }
-            }
-          );
-        }
-
-        // Tags stagger in
-        const tags = card.querySelectorAll(".reel-tag");
-        if (tags.length > 0) {
-          gsap.fromTo(tags,
-            { y: 20, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              stagger: 0.1,
-              scrollTrigger: {
-                trigger: card,
-                containerAnimation: horizontalScroll,
-                start: "left 60%",
-                end: "left 40%",
-                scrub: true
-              }
-            }
-          );
-        }
-      });
-
-      // === ENTRY ANIMATION (initial reveal) ===
-      gsap.fromTo(".reel-intro",
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: rootRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-
-      // === TOGGLE MOBILE BAR VISIBILITY ===
-      // Now using the section as trigger, which has grown due to pinSpacing
-      ScrollTrigger.create({
-        trigger: rootRef.current,
-        start: "top bottom", // When section top enters viewport
-        end: "bottom top",   // When section bottom leaves viewport
-        toggleClass: { targets: "body", className: "hide-mobile-bar" }
-      });
-
-    }, rootRef);
-
-    return () => ctx.revert();
+    handleScroll();
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => container.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <section
       ref={rootRef}
-      className="section-showreel min-h-screen bg-offWhite overflow-hidden relative"
+      className="section-showreel bg-offWhite overflow-hidden relative py-10"
     >
       {/* Pinned content wrapper */}
-      <div ref={pinWrapperRef} className="h-[100dvh] flex flex-col justify-center py-4 md:py-0">
+      <div
+        ref={pinWrapperRef}
+        className="flex flex-col gap-6"
+      >
 
         {/* Header with parallax */}
-        <div ref={headerRef} className="reel-intro px-6 md:px-20 lg:px-32 mb-4 md:mb-8 will-change-transform">
+        <div
+          ref={headerRef}
+          className="reel-intro px-4 md:px-16 lg:px-24 mb-4 md:mb-8 will-change-transform"
+        >
           <p className="text-xs uppercase tracking-[0.3em] font-semibold text-deepInk/60 mb-2 md:mb-3">
             SELECTED WORKS
           </p>
@@ -225,15 +117,19 @@ export function SectionShowreel({ onOpenModal }) {
         {/* Horizontal scrolling container */}
         <div
           ref={containerRef}
-          className="flex gap-4 md:gap-8 px-6 md:px-16 will-change-transform"
-          style={{ width: "fit-content" }}
+          className="flex gap-4 md:gap-6 px-4 md:px-8 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth"
+          style={{
+            width: "100%",
+            scrollSnapType: "x mandatory",
+            WebkitOverflowScrolling: "touch"
+          }}
         >
           {reels.map((item, index) => (
             <article
               key={index}
-              className="reel-card shrink-0 w-[70vw] sm:w-[400px] lg:w-[450px] bg-white border-2 border-deepInk rounded-[24px] md:rounded-[28px] shadow-[6px_8px_0_0_rgba(11,42,27,0.2)] md:shadow-[10px_12px_0_0_rgba(11,42,27,0.2)] overflow-hidden will-change-transform hover:shadow-[10px_12px_0_0_rgba(11,42,27,0.3)] md:hover:shadow-[14px_16px_0_0_rgba(11,42,27,0.3)] transition-shadow duration-300"
+              className="reel-card shrink-0 w-[82vw] sm:w-[320px] md:w-[360px] lg:w-[420px] bg-white border-2 border-deepInk rounded-[24px] md:rounded-[28px] shadow-[6px_8px_0_0_rgba(11,42,27,0.2)] md:shadow-[10px_12px_0_0_rgba(11,42,27,0.2)] overflow-hidden will-change-transform hover:shadow-[10px_12px_0_0_rgba(11,42,27,0.3)] md:hover:shadow-[14px_16px_0_0_rgba(11,42,27,0.3)] transition-shadow duration-300 snap-start"
             >
-              <div className="relative aspect-[4/5] overflow-hidden group">
+              <div className="relative aspect-[3/4] overflow-hidden group">
                 {/* Gradient background */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${item.color}`}></div>
 
@@ -274,13 +170,15 @@ export function SectionShowreel({ onOpenModal }) {
 
               {/* Card footer */}
               <div className="p-3 md:p-4 flex items-center justify-between text-xs md:text-sm font-semibold text-deepInk/80">
-                <button
-                  onClick={() => window.open(item.link, "_blank")}
-                  className="relative overflow-hidden group px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-deepInk text-offWhite shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all duration-200"
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative overflow-hidden group px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-deepInk text-offWhite shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all duration-200 inline-flex items-center justify-center"
                 >
                   <span className="relative z-10">View Site</span>
                   <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-shimmer-auto" />
-                </button>
+                </a>
                 <span className="px-2 py-1 md:px-3 md:py-1 rounded-full bg-neonMint text-deepInk border border-deepInk/20">
                   Live
                 </span>
@@ -290,7 +188,7 @@ export function SectionShowreel({ onOpenModal }) {
 
           {/* ETC... Card */}
           <article
-            className="reel-card shrink-0 w-[70vw] sm:w-[400px] lg:w-[450px] bg-deepInk border-2 border-deepInk rounded-[24px] md:rounded-[28px] shadow-[6px_8px_0_0_rgba(11,42,27,0.2)] md:shadow-[10px_12px_0_0_rgba(11,42,27,0.2)] overflow-hidden will-change-transform flex flex-col items-center justify-center text-center p-6 md:p-8"
+            className="reel-card shrink-0 w-[82vw] sm:w-[320px] md:w-[360px] lg:w-[420px] bg-deepInk border-2 border-deepInk rounded-[24px] md:rounded-[28px] shadow-[6px_8px_0_0_rgba(11,42,27,0.2)] md:shadow-[10px_12px_0_0_rgba(11,42,27,0.2)] overflow-hidden will-change-transform flex flex-col items-center justify-center text-center p-6 md:p-8 snap-start"
           >
             <div className="text-offWhite space-y-4">
               <h3 className="text-3xl md:text-5xl font-display font-bold">And Etc...</h3>
@@ -308,7 +206,16 @@ export function SectionShowreel({ onOpenModal }) {
           </article>
 
           {/* End spacer for smooth ending */}
-          <div className="shrink-0 w-[10vw] md:w-[20vw]"></div>
+        </div>
+
+        {/* Slider dots */}
+        <div className="flex items-center justify-center gap-2 mt-4 px-4">
+          {reels.map((_, idx) => (
+            <span
+              key={idx}
+              className={`w-2 h-2 rounded-full transition-colors duration-200 ${activeIndex === idx ? "bg-deepInk" : "bg-deepInk/20"}`}
+            />
+          ))}
         </div>
       </div>
     </section>

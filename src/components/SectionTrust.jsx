@@ -11,14 +11,22 @@ export function SectionTrust({ onOpenModal }) {
 
     useLayoutEffect(() => {
         if (!rootRef.current) return;
+        const prefersReducedMotion = typeof window !== "undefined" &&
+            window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (prefersReducedMotion) return;
 
         const ctx = gsap.context(() => {
+            const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 1080;
+            const contentHeight = rootRef.current?.offsetHeight || viewportHeight;
+            const scrollDistance = `+=${Math.max(viewportHeight * 1.5, contentHeight + viewportHeight * 0.25)}`;
+
             // === PINNED SCROLL SEQUENCE ===
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: rootRef.current,
                     start: "top top",
-                    end: "+=150%", // Pin for 1.5x screen height
+                    end: scrollDistance, // Pin long enough for the content height
                     pin: true,
                     scrub: 1,
                     anticipatePin: 1,

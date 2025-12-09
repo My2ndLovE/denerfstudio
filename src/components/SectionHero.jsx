@@ -81,6 +81,10 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
 
   useLayoutEffect(() => {
     if (!rootRef.current) return;
+    const prefersReducedMotion = typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
       // === ENTRY ANIMATION (plays on load) ===

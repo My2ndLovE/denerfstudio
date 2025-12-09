@@ -30,11 +30,15 @@ export function SectionWhoIs() {
       );
 
       // === 2. PINNED CONTENT SEQUENCE ===
+      const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 1080;
+      const contentHeight = rootRef.current?.offsetHeight || viewportHeight;
+      const scrollDistance = `+=${Math.max(viewportHeight * 1.5, contentHeight + viewportHeight * 0.25)}`;
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: rootRef.current,
           start: "top top",
-          end: "+=150%", // Pin for 1.5x screen height
+          end: scrollDistance, // Pin long enough for the content height
           pin: true,
           scrub: 1,
           anticipatePin: 1
@@ -111,6 +115,13 @@ export function SectionWhoIs() {
 
     return () => ctx.revert();
   }, []);
+
+  const handleSeeProjects = () => {
+    const showreel = typeof document !== "undefined" ? document.getElementById("section-showreel") : null;
+    if (!showreel) return;
+    const targetY = Math.max(showreel.offsetTop - 16, 0);
+    window.scrollTo({ top: targetY, behavior: "smooth" });
+  };
 
   // === MAGNETIC PILL HOVER EFFECT ===
   useEffect(() => {
@@ -189,7 +200,11 @@ export function SectionWhoIs() {
           ))}
         </div>
 
-        <button className="who-cta group px-8 py-4 bg-deepGreenText text-white font-bold rounded-full hover:scale-105 transition-transform flex items-center gap-2 shadow-[4px_4px_0px_0px_rgba(255,232,107,1)] will-change-transform">
+        <button
+          type="button"
+          onClick={handleSeeProjects}
+          className="who-cta group px-8 py-4 bg-deepGreenText text-white font-bold rounded-full hover:scale-105 transition-transform flex items-center gap-2 shadow-[4px_4px_0px_0px_rgba(255,232,107,1)] will-change-transform"
+        >
           See Example Projects
           <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
         </button>

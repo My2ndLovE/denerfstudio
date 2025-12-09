@@ -12,14 +12,22 @@ export function SectionBlob() {
 
     useLayoutEffect(() => {
         if (!rootRef.current) return;
+        const prefersReducedMotion = typeof window !== "undefined" &&
+            window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (prefersReducedMotion) return;
 
         const ctx = gsap.context(() => {
+            const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 1080;
+            const contentHeight = rootRef.current?.offsetHeight || viewportHeight;
+            const scrollDistance = `+=${Math.max(viewportHeight * 1.5, contentHeight + viewportHeight * 0.25)}`;
+
             // === PINNED SCROLL SEQUENCE ===
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: rootRef.current,
                     start: "top top",
-                    end: "+=150%",
+                    end: scrollDistance,
                     pin: true,
                     scrub: 1,
                     anticipatePin: 1
@@ -99,7 +107,7 @@ export function SectionBlob() {
 
             <div
                 ref={blobRef}
-                className="giant-blob w-[80vw] h-[80vw] md:w-[500px] md:h-[500px] bg-skyBlue rounded-full flex items-center justify-center relative border-4 border-deepGreenText shadow-[8px_8px_0px_0px_rgba(0,77,51,1)] will-change-transform"
+                className="giant-blob w-[78vw] h-[78vw] max-w-[320px] max-h-[320px] md:max-w-none md:max-h-none md:w-[500px] md:h-[500px] bg-skyBlue rounded-full flex items-center justify-center relative border-4 border-deepGreenText shadow-[8px_8px_0px_0px_rgba(0,77,51,1)] will-change-transform"
             >
                 {/* Lottie Animation - centered in blob, absolute to avoid flex distortion */}
                 <div className="lottie-container absolute inset-0 z-20 will-change-transform flex items-center justify-center pointer-events-none">
@@ -108,7 +116,13 @@ export function SectionBlob() {
                         loop
                         autoplay
                         renderConfig={{ autoResize: true }}
-                        style={{ width: '100%', height: 'auto' }}
+                        style={{
+                            width: "100%",
+                            height: "auto",
+                            objectFit: "contain",
+                            overflow: "hidden",
+                            transform: "translateZ(0)"
+                        }}
                     />
                 </div>
 

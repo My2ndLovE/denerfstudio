@@ -28,7 +28,7 @@ const options = [
 
 const quickActions = [
   { label: "WhatsApp", href: "https://wa.me/60165271501", icon: MessageCircle },
-  { label: "Telegram", href: "https://t.me/yourhandle", icon: Send },
+  { label: "Telegram", href: "https://t.me/my2ndlove", icon: Send },
   { label: "Email", href: "mailto:sam@denerf.studio", icon: Send }
 ];
 
@@ -37,14 +37,24 @@ export function SectionContact() {
 
   useLayoutEffect(() => {
     if (!rootRef.current) return;
+    const prefersReducedMotion = typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
+      const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 1080;
+      const contentHeight = rootRef.current?.offsetHeight || viewportHeight;
+      const availableHeight = viewportHeight * 0.92;
+      const shouldPin = contentHeight <= availableHeight;
+      const scrollDistance = shouldPin ? "+=150%" : "+=110%";
+
       // === PINNED SCROLL SEQUENCE ===
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: rootRef.current,
           start: "top top",
-          end: "+=150%", // Pin for 1.5x screen height
+          end: scrollDistance, // Pin long enough for the content height
           pin: true,
           scrub: 1,
           anticipatePin: 1
@@ -166,10 +176,13 @@ export function SectionContact() {
                 </span>
                 <h3 className="text-xl font-display font-bold text-deepInk leading-tight">{option.title}</h3>
                 <p className="text-sm text-deepInk/70">{option.desc}</p>
-                <button className="inline-flex items-center gap-2 text-sm font-bold text-deepInk group-hover:translate-x-2 transition-transform">
+                <a
+                  className="inline-flex items-center gap-2 text-sm font-bold text-deepInk group-hover:translate-x-2 transition-transform"
+                  href="mailto:sam@denerf.studio?subject=Project%20brief&body=Tell%20us%20a%20bit%20about%20your%20project%2C%20timeline%2C%20and%20budget."
+                >
                   Start this brief
                   <span aria-hidden="true" className="text-lg">↗</span>
-                </button>
+                </a>
               </div>
             </div>
           ))}
@@ -219,9 +232,14 @@ export function SectionContact() {
               <h4 className="text-lg font-display font-bold text-deepInk">Book a 15-min intro</h4>
               <p className="text-sm text-deepInk/70">Live or async—your choice. We'll prep ideas before the call.</p>
             </div>
-            <button className="w-full px-4 py-3 rounded-full bg-deepInk text-offWhite font-bold border-2 border-deepInk hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(124,255,178,0.5)] transition-all duration-[var(--duration-snappy)]">
-              Open calendar
-            </button>
+            <a
+              className="w-full px-4 py-3 rounded-full bg-deepInk text-offWhite font-bold border-2 border-deepInk hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(124,255,178,0.5)] transition-all duration-[var(--duration-snappy)] text-center block"
+              href="https://wa.me/60165271501?text=I'd%20like%20to%20book%20a%2015-min%20intro%20call%20with%20Denerf%20Studio."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Book a slot
+            </a>
           </div>
         </div>
       </div>

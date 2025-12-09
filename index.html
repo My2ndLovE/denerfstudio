@@ -13,30 +13,46 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Denerf Studio — Bold motion-first product design" />
     <meta property="og:description" content="We craft playful, high-converting digital experiences with scroll magic, Lottie, and rapid MVP builds. Pay only if you love it." />
-    <meta property="og:url" content="https://denerf.studio/" />
+    <meta property="og:url" content="/" data-dynamic-og-url />
     <meta property="og:image" content="/og-cover.svg" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Denerf Studio — Bold motion-first product design" />
     <meta name="twitter:description" content="Playful, motion-led product design, MVP previews, and scroll stories you only pay for if you love." />
     <meta name="twitter:image" content="/og-cover.svg" />
-    <link rel="canonical" href="https://denerf.studio/" />
+    <link rel="canonical" href="/" data-dynamic-canonical />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <title>DENERF Studio</title>
-    <script type="application/ld+json">
-      {
+    <script type="application/ld+json" id="org-jsonld"></script>
+    <script type="module">
+      const envUrl = (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_SITE_URL)
+        ? import.meta.env.VITE_SITE_URL
+        : undefined;
+      const siteUrl = (envUrl || window.location.origin || "").replace(/\/+$/, "");
+      const canonicalHref = siteUrl ? `${siteUrl}/` : "/";
+
+      document.querySelectorAll("[data-dynamic-og-url]").forEach((el) => {
+        el.setAttribute("content", canonicalHref);
+      });
+      const canonicalLink = document.querySelector("[data-dynamic-canonical]");
+      if (canonicalLink) canonicalLink.setAttribute("href", canonicalHref);
+
+      const jsonLd = {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Denerf Studio",
-        "url": "https://denerf.studio/",
-        "logo": "https://denerf.studio/og-cover.svg",
-        "sameAs": [],
+        "url": canonicalHref,
+        "logo": siteUrl ? `${siteUrl}/og-cover.svg` : "/og-cover.svg",
         "description": "Denerf Studio designs joyful, high-converting product experiences with bold motion systems and rapid MVP previews.",
         "address": {
           "@type": "PostalAddress",
           "addressCountry": "MY"
         }
+      };
+      const jsonLdEl = document.getElementById("org-jsonld");
+      if (jsonLdEl) {
+        jsonLdEl.textContent = JSON.stringify(jsonLd);
       }
     </script>
   </head>
