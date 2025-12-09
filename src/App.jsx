@@ -301,7 +301,7 @@ function App() {
           <SectionWithDenerf />
         </div>
         <div id="section-showreel" data-nav-section>
-          <SectionShowreel />
+          <SectionShowreel onOpenModal={() => setIsModalOpen(true)} />
         </div>
         <div id="section-blob" data-nav-section>
           <SectionBlob />

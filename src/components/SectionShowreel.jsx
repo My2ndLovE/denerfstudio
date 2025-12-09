@@ -63,7 +63,7 @@ const reels = [
   }
 ];
 
-export function SectionShowreel() {
+export function SectionShowreel({ onOpenModal }) {
   const rootRef = useRef(null);
   const pinWrapperRef = useRef(null);
   const containerRef = useRef(null);
@@ -298,7 +298,9 @@ export function SectionShowreel() {
                 We have built many more projects. <br />
                 Let's discuss yours next.
               </p>
-              <button className="relative overflow-hidden group mt-6 md:mt-8 px-6 py-3 md:px-8 md:py-4 bg-neonMint text-deepInk font-bold rounded-full shadow-[4px_4px_0px_0px_rgba(0,77,51,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,77,51,1)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[2px_2px_0px_0px_rgba(0,77,51,1)] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-200 text-sm md:text-base">
+              <button
+                onClick={onOpenModal}
+                className="relative overflow-hidden group mt-6 md:mt-8 px-6 py-3 md:px-8 md:py-4 bg-neonMint text-deepInk font-bold rounded-full shadow-[4px_4px_0px_0px_rgba(0,77,51,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,77,51,1)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[2px_2px_0px_0px_rgba(0,77,51,1)] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-200 text-sm md:text-base">
                 <span className="relative z-10">Start Your Project</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer-auto" />
               </button>
