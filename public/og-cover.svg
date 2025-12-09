@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Denerf Studio – Motion-first Product Design</title>
+  <desc id="desc">Placeholder social cover for Denerf Studio with gradient and playful dots.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8EC"/>
+      <stop offset="50%" stop-color="#C9F7D8"/>
+      <stop offset="100%" stop-color="#9EE3FF"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="30%" cy="35%" r="50%">
+      <stop offset="0%" stop-color="#FFE86B" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#FFE86B" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="220" cy="180" r="180" fill="url(#glow)"/>
+  <circle cx="950" cy="480" r="220" fill="#8DEBFF" fill-opacity="0.18"/>
+  <circle cx="1020" cy="140" r="120" fill="#FFB6D5" fill-opacity="0.25"/>
+
+  <g transform="translate(150 180)">
+    <rect x="0" y="0" width="900" height="280" rx="28" fill="#FFFFFF" fill-opacity="0.9" stroke="#0B2A1B" stroke-opacity="0.08"/>
+    <text x="60" y="110" fill="#0B2A1B" font-family="Space Grotesk, 'Helvetica Neue', Arial, sans-serif" font-size="62" font-weight="700" letter-spacing="1.5">
+      DENERF STUDIO
+    </text>
+    <text x="60" y="170" fill="#0B2A1B" font-family="Space Grotesk, 'Helvetica Neue', Arial, sans-serif" font-size="26" font-weight="600" letter-spacing="1.2">
+      Bold, joyful, motion-first product design
+    </text>
+    <text x="60" y="215" fill="#0B2A1B" font-family="Space Grotesk, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="500" letter-spacing="0.5">
+      MVP previews • Scroll stories • Pay only if you love it
+    </text>
+    <circle cx="770" cy="95" r="18" fill="#7CFFB2" stroke="#0B2A1B" stroke-opacity="0.35" stroke-width="2"/>
+    <circle cx="820" cy="160" r="12" fill="#FFE86B" stroke="#0B2A1B" stroke-opacity="0.25" stroke-width="2"/>
+    <circle cx="690" cy="190" r="10" fill="#FFB6D5" stroke="#0B2A1B" stroke-opacity="0.2" stroke-width="2"/>
+  </g>
+</svg>
