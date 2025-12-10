@@ -78,7 +78,7 @@ export function SectionShowreel({ onOpenModal }) {
       const gap = parseFloat(getComputedStyle(container).columnGap || getComputedStyle(container).gap || "0");
       const segment = cardWidth + gap;
       const idx = Math.round(container.scrollLeft / (segment || 1));
-      setActiveIndex(Math.min(reels.length, Math.max(0, idx)));
+      setActiveIndex(Math.min(reels.length - 1, Math.max(0, idx)));
     };
 
     handleScroll();
