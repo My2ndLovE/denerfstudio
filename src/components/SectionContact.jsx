@@ -134,6 +134,19 @@ export function SectionContact() {
         );
       });
 
+      // 5. WHAT HAPPENS NEXT CARD
+      tl.fromTo(".what-next-card",
+        { y: 60, opacity: 0, rotateX: -10 },
+        {
+          y: 0,
+          opacity: 1,
+          rotateX: 0,
+          duration: 0.8,
+          ease: "back.out(1.4)"
+        },
+        "-=0.6"
+      );
+
       // Buffer
       tl.to({}, { duration: 0.5 });
 
@@ -186,6 +199,15 @@ export function SectionContact() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="what-next-card rounded-[20px] border-2 border-deepInk bg-white/80 shadow-[6px_6px_0px_0px_rgba(0,77,51,0.2)] p-5 space-y-2 text-sm text-deepInk/80">
+          <p className="font-bold text-deepInk">What happens next?</p>
+          <ul className="list-disc list-inside space-y-1">
+            <li>We reply within 2 hours with a quick plan and motion idea.</li>
+            <li>You get a 48-hour prototype to approve before any payment.</li>
+            <li>We ship the MVP, then you decide to pay when you love it.</li>
+          </ul>
         </div>
 
         <div className="flex flex-col md:flex-row items-center md:items-stretch gap-4" style={{ perspective: "1000px" }}>

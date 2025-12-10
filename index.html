@@ -25,6 +25,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <title>DENERF Studio</title>
     <script type="application/ld+json" id="org-jsonld"></script>
+    <script type="application/ld+json" id="faq-jsonld"></script>
     <script type="module">
       const envUrl = (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_SITE_URL)
         ? import.meta.env.VITE_SITE_URL
@@ -54,6 +55,55 @@
       if (jsonLdEl) {
         jsonLdEl.textContent = JSON.stringify(jsonLd);
       }
+
+      const faqJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does the pay-later model work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We deliver the prototype/MVP first. You only pay when you approve the shipped build. If you don’t love it, you walk away with no fee."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How fast can we launch?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Discovery to shipped MVP usually runs 7–12 days: 0–1 day for the brief, 2 days for AI prototype, and 5–9 days to build with motion polish."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What tech stack do you use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "React/Vite for front-end, Tailwind for styling, GSAP/Lottie for motion, and API-ready handoff. We can pair with your backend or deliver a static build."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What’s included in the first delivery?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Hero and scroll story, CTA funnels, responsive layouts, motion system, and a handoff package (assets, tokens, and notes) tuned for fast LCP."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do we collaborate?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We work async-first with Loom, Figma links, and short calls. You get a single channel for feedback with under 2 hour response time."
+            }
+          }
+        ]
+      };
+      const faqEl = document.getElementById("faq-jsonld");
+      if (faqEl) faqEl.textContent = JSON.stringify(faqJsonLd);
     </script>
   </head>
   <body>

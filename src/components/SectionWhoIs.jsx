@@ -10,6 +10,10 @@ export function SectionWhoIs() {
 
   useLayoutEffect(() => {
     if (!rootRef.current) return;
+    const prefersReducedMotion = typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
       // === 1. CARD ENTRANCE (Plays BEFORE pinning) ===

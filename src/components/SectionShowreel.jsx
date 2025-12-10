@@ -137,7 +137,9 @@ export function SectionShowreel({ onOpenModal }) {
                 <img
                   className="reel-image absolute inset-0 w-full h-full object-cover mix-blend-overlay transition-transform duration-700 group-hover:scale-110"
                   src={item.image}
-                  alt={item.title}
+                  alt={`${item.title} ${item.type} preview`}
+                  width="900"
+                  height="1200"
                   loading="lazy"
                 />
 

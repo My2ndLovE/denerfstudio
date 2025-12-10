@@ -12,6 +12,9 @@ import { SectionShowreel } from "./components/SectionShowreel";
 import { SectionToolbelt } from "./components/SectionToolbelt";
 import { SectionTrust } from "./components/SectionTrust";
 import { SectionContact } from "./components/SectionContact";
+import { SectionProcess } from "./components/SectionProcess";
+import { SectionFaq } from "./components/SectionFaq";
+import { SectionFooter } from "./components/SectionFooter";
 import { MobileQuickBar } from "./components/MobileQuickBar";
 import { ContactModal } from "./components/ContactModal";
 import { ArrowDown, ArrowUp } from "lucide-react";
@@ -27,8 +30,11 @@ function App() {
     "section-lighter",
     "section-who",
     "section-toolbelt",
+    "section-process",
     "section-contact",
-    "section-trust"
+    "section-trust",
+    "section-faq",
+    "section-footer"
   ];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -139,7 +145,13 @@ function App() {
   };
 
   const handleScrollTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const hero = typeof document !== "undefined" ? document.getElementById("section-hero") : null;
+    const targetTop = hero ? hero.offsetTop : 0;
+    // Force an immediate jump, then smooth-scroll to avoid pin interference
+    window.scrollTo({ top: targetTop, behavior: "auto" });
+    window.setTimeout(() => {
+      window.scrollTo({ top: targetTop, behavior: "smooth" });
+    }, 10);
   };
 
   const handleSeeAction = () => {
@@ -168,6 +180,7 @@ function App() {
 
   return (
     <>
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       {isMounted && typeof document !== "undefined" && (
         <style>
           {`
@@ -175,83 +188,73 @@ function App() {
             .floating-nav-container button, .floating-nav-container .hint { pointer-events: auto; }
 
             .scroll-signal { pointer-events: none; }
-            .scroll-signal .capsule { pointer-events: auto; transition: transform 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft), border-color 0.3s var(--ease-soft), background 0.3s var(--ease-soft); }
-            .scroll-signal .capsule.idle { box-shadow: 0 6px 14px rgba(0,77,51,0.12), 0 0 0 1px rgba(0,77,51,0.06); background: rgba(255,255,255,0.9); }
-            .scroll-signal .capsule.running { transform: translateY(-1px) scale(1.01); box-shadow: 0 12px 24px rgba(0,77,51,0.18), 0 0 0 1px rgba(0,77,51,0.2); border-color: rgba(0,77,51,0.26); background: linear-gradient(140deg, rgba(124,255,178,0.92), rgba(255,255,255,0.95) 60%, rgba(141,235,255,0.9)); }
-
-            @keyframes haloFloat {
-              0% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(124,255,178,0.22); opacity: 0.9; }
-              45% { transform: scale(1); box-shadow: 0 0 0 12px rgba(255,232,107,0.18); opacity: 1; }
-              100% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(124,255,178,0.1); opacity: 0.85; }
+            .scroll-signal .capsule {
+              pointer-events: auto;
+              background: white;
+              border: 2px solid var(--color-deepInk, #0B2A1B);
+              box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+              transition: transform 0.25s var(--ease-soft), box-shadow 0.25s var(--ease-soft), background 0.25s var(--ease-soft);
             }
-
-            @keyframes orbitSpin {
+            .scroll-signal .capsule.idle { transform: translateY(0); }
+            .scroll-signal .capsule.running { transform: translateY(-2px); background: linear-gradient(120deg, rgba(255,232,107,0.9), rgba(124,255,178,0.9)); box-shadow: 0 10px 18px rgba(0,0,0,0.12); }
+            .scroll-signal .wagon {
+              display: flex; align-items: center; gap: 6px;
+              animation: wagon-bob 1.8s ease-in-out infinite;
+            }
+            .scroll-signal .capsule.running .wagon { animation: wagon-run 0.7s ease-in-out infinite; }
+            .scroll-signal .wheels { display: flex; gap: 4px; }
+            .scroll-signal .wheel {
+              width: 9px; height: 9px;
+              border-radius: 999px;
+              border: 2px solid #0B2A1B;
+              position: relative;
+              background: radial-gradient(circle at 50% 50%, rgba(0,77,51,0.2) 35%, transparent 36%);
+            }
+            .scroll-signal .wheel:after {
+              content: "";
+              position: absolute;
+              inset: 1px;
+              border-radius: 999px;
+              border: 2px solid rgba(0,77,51,0.4);
+            }
+            .scroll-signal .capsule.running .wheel { animation: wheel-spin 0.5s linear infinite; }
+            .scroll-signal .capsule.idle .wheel { animation: wheel-spin 2.4s linear infinite; opacity: 0.8; }
+            .scroll-signal .arrow {
+              width: 14px; height: 14px;
+              color: #0B2A1B;
+              animation: arrow-bounce 1.8s ease-in-out infinite;
+            }
+            .scroll-signal .label {
+              font-size: 10px;
+              letter-spacing: 0.12em;
+              text-transform: uppercase;
+              color: #0B2A1B;
+              font-weight: 900;
+              display: inline-flex;
+              align-items: center;
+              gap: 6px;
+            }
+            .scroll-signal .dot {
+              width: 6px; height: 6px; border-radius: 999px;
+              background: #FFB6D5;
+              box-shadow: 0 0 0 5px rgba(124,255,178,0.12);
+            }
+            @keyframes wheel-spin {
               from { transform: rotate(0deg); }
               to { transform: rotate(360deg); }
             }
-
-            @keyframes labelIdle {
-              0%,100% { letter-spacing: 0.26em; opacity: 0.82; }
-              50% { letter-spacing: 0.32em; opacity: 1; }
-            }
-
-            @keyframes runnerIdle {
-              0% { transform: translateX(-12%); opacity: 0.55; }
-              50% { transform: translateX(6%); opacity: 0.85; }
-              100% { transform: translateX(-12%); opacity: 0.55; }
-            }
-
-            @keyframes runnerActive {
-              0% { transform: translateX(-70%) scaleX(0.9); opacity: 0.95; filter: blur(0px); }
-              35% { filter: blur(0.6px); }
-              100% { transform: translateX(110%) scaleX(1.08); opacity: 1; filter: blur(0.2px); }
-            }
-
-            @keyframes sparkDrift {
-              from { background-position: 0 0, 60% 0, 120% 0; }
-              to { background-position: 140% 0, 200% 0, 260% 0; }
-            }
-
-            @keyframes dashSweep {
-              0% { stroke-dashoffset: 50; opacity: 0.3; }
-              50% { stroke-dashoffset: 0; opacity: 1; }
-              100% { stroke-dashoffset: -50; opacity: 0.3; }
-            }
-
-            @keyframes arrowNudge {
+            @keyframes wagon-bob {
               0%,100% { transform: translateY(0); }
-              50% { transform: translateY(3px); }
+              50% { transform: translateY(-3px); }
             }
-
-            .scroll-signal .halo { animation: haloFloat 2.4s ease-in-out infinite; filter: drop-shadow(0 10px 18px rgba(0,77,51,0.14)); }
-            .scroll-signal .capsule.running .halo { animation-duration: 1.4s; }
-            .scroll-signal .orbit { animation: orbitSpin 4.2s linear infinite; opacity: 0; transition: opacity 0.24s var(--ease-soft); }
-            .scroll-signal .capsule.running .orbit { animation-duration: 3s; opacity: 1; }
-            .scroll-signal .orbit .orb { position: absolute; top: 50%; left: 50%; width: 5px; height: 5px; border-radius: 9999px; background: linear-gradient(145deg, #7CFFB2, #004D33); transform: translate(-50%, -50%) translateY(-12px); box-shadow: 0 0 0 5px rgba(124,255,178,0.16); }
-            .scroll-signal .orbit .orb.alt { transform: translate(-50%, -50%) translateY(-12px) rotate(160deg); opacity: 0.55; box-shadow: 0 0 0 5px rgba(0,77,51,0.12); }
-            .scroll-signal .core { background: radial-gradient(circle at 30% 30%, rgba(124,255,178,0.85), #004D33); }
-            .scroll-signal .core.idle { opacity: 0; box-shadow: none; }
-            .scroll-signal .label { animation: labelIdle 3s ease-in-out infinite; }
-            .scroll-signal .capsule.running .label { animation: none; letter-spacing: 0.24em; }
-            .scroll-signal .track { position: relative; overflow: hidden; }
-            .scroll-signal .runner { position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(0,77,51,0.16), rgba(0,77,51,0.7), rgba(124,255,178,0.85), rgba(255,232,107,0.8), transparent); transform: translateX(-20%); animation: runnerIdle 2.3s ease-in-out infinite; }
-            .scroll-signal .capsule.running .runner { animation: runnerActive 0.72s cubic-bezier(0.2, 0.8, 0.3, 1) infinite; }
-            .scroll-signal .sparks { position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 50%, rgba(124,255,178,0.45) 0, rgba(124,255,178,0.0) 45%), radial-gradient(circle at 60% 50%, rgba(255,182,213,0.35) 0, rgba(255,182,213,0.0) 35%), radial-gradient(circle at 100% 50%, rgba(141,235,255,0.45) 0, rgba(141,235,255,0.0) 40%); background-size: 26% 100%, 18% 100%, 30% 100%; background-repeat: no-repeat; opacity: 0.42; animation: sparkDrift 1.4s linear infinite; }
-            .scroll-signal .capsule.running .sparks { opacity: 0.78; animation-duration: 0.62s; }
-            .scroll-signal .ring-svg { position: absolute; inset: 0; transform: rotate(-90deg); opacity: 0; transition: opacity 0.24s var(--ease-soft); }
-            .scroll-signal .ring-svg circle { fill: none; stroke-linecap: round; stroke-width: 3; stroke: rgba(0,77,51,0.2); }
-            .scroll-signal .capsule.running .ring-svg { opacity: 1; }
-            .scroll-signal .capsule.running .ring-svg circle { stroke: rgba(0,77,51,0.38); animation: dashSweep 1.4s ease-in-out infinite; }
-            .scroll-signal .confetti { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.24s var(--ease-soft); }
-            .scroll-signal .confetti span { position: absolute; width: 5px; height: 5px; border-radius: 9999px; opacity: 0.8; }
-            .scroll-signal .capsule.running .confetti { opacity: 1; }
-            .scroll-signal .idle-inner { display: grid; place-items: center; width: 100%; height: 100%; }
-            .scroll-signal .capsule.running .idle-inner { display: none; }
-            .scroll-signal .idle-arrow { display: inline-block; color: #0B2A1B; animation: arrowNudge 1.3s ease-in-out infinite; }
-            .scroll-signal .idle-dots { position: absolute; bottom: 18%; left: 50%; display: flex; gap: 4px; transform: translateX(-50%); }
-            .scroll-signal .idle-dots span { width: 4px; height: 4px; border-radius: 9999px; background: rgba(0,77,51,0.4); animation: runnerIdle 2s ease-in-out infinite; }
-            .scroll-signal .idle-dots span:nth-child(2) { animation-delay: 0.12s; background: rgba(255,182,213,0.8); }
-            .scroll-signal .idle-dots span:nth-child(3) { animation-delay: 0.24s; background: rgba(141,235,255,0.8); }
+            @keyframes wagon-run {
+              0%,100% { transform: translateY(-1px); }
+              50% { transform: translateY(1px); }
+            }
+            @keyframes arrow-bounce {
+              0%, 100% { transform: translateY(0); opacity: 0.7; }
+              50% { transform: translateY(3px); opacity: 1; }
+            }
 
             /* Hanging logo plaque */
             .brand-plaque { pointer-events: none; transform: rotate(-1.2deg); }
@@ -273,7 +276,7 @@ function App() {
           `}
         </style>
       )}
-      <main className="w-full overflow-hidden">
+      <main id="main-content" className="w-full overflow-hidden">
         {/* Hanging logo plaque (non-blocking) */}
         <div className="brand-plaque fixed top-1 left-2 md:top-4 md:left-4 z-[40] scale-100 md:scale-[1.15] origin-top-left">
           <div className="rope left"></div>
@@ -315,11 +318,20 @@ function App() {
         <div id="section-toolbelt" data-nav-section>
           <SectionToolbelt />
         </div>
+        <div id="section-process" data-nav-section>
+          <SectionProcess />
+        </div>
         <div id="section-contact" data-nav-section>
           <SectionContact />
         </div>
         <div id="section-trust" data-nav-section>
           <SectionTrust onOpenModal={() => setIsModalOpen(true)} />
+        </div>
+        <div id="section-faq" data-nav-section>
+          <SectionFaq onOpenModal={() => setIsModalOpen(true)} />
+        </div>
+        <div id="section-footer" data-nav-section>
+          <SectionFooter />
         </div>
       </main>
       <MobileQuickBar />
@@ -329,50 +341,19 @@ function App() {
         <>
           {!isAtEnd && (
             <div className="scroll-signal fixed left-3 bottom-4 md:left-1/2 md:bottom-6 md:-translate-x-1/2 z-[28]">
-              <div className={`capsule ${isScrolling ? "running" : "idle"} flex items-center gap-2.5 bg-white/95 backdrop-blur-lg border border-deepGreenText/25 rounded-full px-2.5 py-1.5 shadow-[2px_2px_0px_0px_rgba(0,77,51,0.16)] md:px-3 md:py-1 md:gap-2.5`}>
-                <div className="relative w-8 h-8 md:w-9 md:h-9 shrink-0">
-                  {isScrolling && (
-                    <>
-                      <span className="halo absolute inset-0 rounded-full bg-gradient-to-br from-neonMint/60 via-white to-lemonYellow/25"></span>
-                      <span className="ring absolute inset-[6px] rounded-full border border-deepGreenText/25"></span>
-                      <svg className="ring-svg" viewBox="0 0 44 44">
-                        <circle cx="22" cy="22" r="18" pathLength="100" strokeDasharray="50 50" />
-                      </svg>
-                      <span className="orbit absolute inset-0">
-                        <span className="orb"></span>
-                        <span className="orb alt"></span>
-                      </span>
-                    </>
-                  )}
-                  <span className={`core absolute inset-[10px] md:inset-[11px] rounded-full shadow-[0_10px_18px_rgba(0,77,51,0.22)] ${isScrolling ? "" : "idle"}`}></span>
-                  {!isScrolling && (
-                    <span className="idle-inner">
-                      <span className="idle-arrow">
-                        <ArrowDown className="w-3 h-3 md:w-3.5 md:h-3.5" />
-                      </span>
-                      <span className="idle-dots">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                      </span>
-                    </span>
-                  )}
-                  {isScrolling && (
-                    <div className="confetti">
-                      <span style={{ top: "22%", left: "18%", background: "var(--color-lemonYellow)" }}></span>
-                      <span style={{ top: "12%", right: "12%", background: "var(--color-skyBlue)" }}></span>
-                      <span style={{ bottom: "14%", left: "28%", background: "var(--color-bubblePink)" }}></span>
-                    </div>
-                  )}
-                </div>
-                <div className="flex flex-col gap-0.5 leading-tight">
-                  <span className="label text-[9px] md:text-[10px] font-black uppercase tracking-[0.22em] text-deepGreenText/90 select-none">
-                    {isScrolling ? "Content revealing" : "Scroll to reveal"}
-                  </span>
-                  <div className="track relative w-24 md:w-26 h-[6px] md:h-[7px] rounded-full bg-deepGreenText/10 overflow-hidden">
-                    <span className="runner rounded-full"></span>
-                    <span className="sparks"></span>
+              <div className={`capsule ${isScrolling ? "running" : "idle"} flex items-center gap-2 bg-white/95 backdrop-blur-lg rounded-full px-3 py-1.5 shadow-[2px_2px_0px_0px_rgba(0,77,51,0.18)] md:gap-2`}>
+                <div className="wagon">
+                  <div className="wheels">
+                    <span className="wheel"></span>
+                    <span className="wheel"></span>
                   </div>
+                </div>
+                <div className="flex items-center gap-1.5 pr-1">
+                  {!isScrolling && <ArrowDown className="arrow" />}
+                  {isScrolling && <span className="dot"></span>}
+                  <span className="label select-none">
+                    {isScrolling ? "Keep rolling!" : "Scroll to reveal"}
+                  </span>
                 </div>
               </div>
             </div>
@@ -382,6 +363,7 @@ function App() {
             {/* Floating Back to Top Button */}
             <button
               onClick={handleScrollTop}
+              type="button"
               className="floating-nav-btn relative overflow-hidden group bg-white border-2 border-deepGreenText rounded-full p-3 md:p-4 shadow-[4px_4px_0px_0px_rgba(0,77,51,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,77,51,1)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[2px_2px_0px_0px_rgba(0,77,51,1)] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-200"
               aria-label="Back to Top"
             >
