@@ -145,13 +145,20 @@ function App() {
   };
 
   const handleScrollTop = () => {
-    const hero = typeof document !== "undefined" ? document.getElementById("section-hero") : null;
-    const targetTop = hero ? hero.offsetTop : 0;
-    // Force an immediate jump, then smooth-scroll to avoid pin interference
-    window.scrollTo({ top: targetTop, behavior: "auto" });
-    window.setTimeout(() => {
-      window.scrollTo({ top: targetTop, behavior: "smooth" });
-    }, 10);
+    if (typeof document === "undefined") return;
+
+    const html = document.documentElement;
+    const prevScrollBehavior = html.style.scrollBehavior;
+
+    // Force an immediate jump to the real top (some pinned ScrollTriggers + CSS smooth scroll
+    // can otherwise "step" back through sections).
+    html.style.scrollBehavior = "auto";
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+    window.requestAnimationFrame(() => {
+      html.style.scrollBehavior = prevScrollBehavior;
+      ScrollTrigger.refresh();
+    });
   };
 
   const handleSeeAction = () => {
