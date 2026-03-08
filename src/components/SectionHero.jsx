@@ -325,7 +325,7 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
               src="https://lottie.host/5d0fa4c5-4ca6-4419-8117-0c2d62fdf8d6/VOhL48A5qp.lottie"
               loop
               autoplay
-              renderConfig={{ autoResize: true }}
+              renderConfig={{ autoResize: false }}
               style={{
                 width: "clamp(240px, 76vw, 440px)",
                 height: "clamp(180px, 62vw, 300px)"

@@ -116,7 +116,7 @@ export function SectionBlob() {
                         src="https://lottie.host/933cc748-8833-4c8f-a20a-f7be423c2d75/y4FWRipyMk.lottie"
                         loop
                         autoplay
-                        renderConfig={{ autoResize: true }}
+                        renderConfig={{ autoResize: false }}
                         style={{
                             width: "100%",
                             height: "auto",
