@@ -93,7 +93,7 @@ export function ContactModal({ isOpen, onClose }) {
             >
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 p-2 text-deepGreenText hover:bg-deepGreenText/10 rounded-full transition-colors"
+                    className="absolute top-4 right-4 p-2.5 text-deepGreenText hover:bg-deepGreenText/10 rounded-full transition-colors"
                     aria-label="Close contact modal"
                 >
                     <X size={24} />

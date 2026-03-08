@@ -210,7 +210,7 @@ export function SectionWhoIs() {
           onClick={handleSeeProjects}
           className="who-cta group px-8 py-4 bg-deepGreenText text-white font-bold rounded-full hover:scale-105 transition-transform flex items-center gap-2 shadow-[--shadow-brutal-sm-yellow] will-change-transform"
         >
-          See Example Projects
+          See example projects
           <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
         </button>
       </div>

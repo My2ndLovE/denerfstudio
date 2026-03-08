@@ -27,7 +27,7 @@ export function MobileQuickBar() {
         {/* Minimize Button */}
         <button
           onClick={() => setIsMinimized(true)}
-          className="absolute top-3 right-3 p-1 text-offWhite/50 hover:text-offWhite hover:bg-white/10 rounded-full transition-colors z-10"
+          className="absolute top-3 right-3 p-3 text-offWhite/50 hover:text-offWhite hover:bg-white/10 rounded-full transition-colors z-10"
           aria-label="Minimize"
         >
           <ChevronDown size={20} />
@@ -57,12 +57,12 @@ export function MobileQuickBar() {
           </a>
         </div>
 
-        <button
-          onClick={() => window.location.href = "mailto:sam@denerf.studio"}
-          className="w-full py-3 bg-offWhite text-deepInk font-bold text-center tracking-wide hover:bg-creamWhite transition-colors border-t border-deepInk/10"
+        <a
+          href="mailto:sam@denerf.studio"
+          className="block w-full py-3 bg-offWhite text-deepInk font-bold text-center tracking-wide hover:bg-creamWhite transition-colors border-t border-deepInk/10"
         >
-          Start Your Project
-        </button>
+          Start your project
+        </a>
       </div>
     </div>
   );

@@ -257,10 +257,11 @@ export function SectionTrust({ onOpenModal }) {
 
             <div className="trust-btn-wrapper relative">
                 <button
+                    type="button"
                     onClick={onOpenModal}
                     className="group relative trust-cta px-8 py-4 md:px-12 md:py-6 bg-lemonYellow border-4 border-deepGreenText text-xl md:text-2xl font-bold text-deepGreenText rounded-full shadow-[--shadow-brutal-sm] md:shadow-[--shadow-brutal-md] hover:shadow-[--shadow-brutal-lg] md:hover:shadow-[--shadow-brutal-xl] hover:-translate-x-1 hover:-translate-y-1 active:shadow-[--shadow-brutal-xs] active:translate-x-1 active:translate-y-1 transition-all duration-[--duration-snappy] will-change-transform glow-pulse overflow-hidden"
                 >
-                    <span className="relative z-10">Start Free Demo</span>
+                    <span className="relative z-10">Start free demo</span>
                     <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer-auto" />
                 </button>
             </div>

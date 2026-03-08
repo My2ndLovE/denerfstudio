@@ -1,4 +1,8 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useLayoutEffect, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Import portfolio images
 import winesLoungeImg from "../assets/portfolio/wineslounge.webp";
@@ -65,6 +69,52 @@ export function SectionShowreel({ onOpenModal }) {
   const containerRef = useRef(null);
   const headerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  // Scroll-triggered entrance
+  useLayoutEffect(() => {
+    if (!rootRef.current) return;
+    const prefersReducedMotion = typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      // Header slide in
+      gsap.fromTo(".reel-intro",
+        { x: -60, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: rootRef.current,
+            start: "top 75%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Cards stagger entrance
+      gsap.fromTo(".reel-card",
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: "power2.out",
+          stagger: 0.1,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    }, rootRef);
+
+    return () => ctx.revert();
+  }, []);
 
   // Track active slide for dots
   useEffect(() => {
@@ -218,9 +268,10 @@ export function SectionShowreel({ onOpenModal }) {
                 Let's discuss yours next.
               </p>
               <button
+                type="button"
                 onClick={onOpenModal}
                 className="relative overflow-hidden group mt-6 md:mt-8 px-6 py-3 md:px-8 md:py-4 bg-neonMint text-deepInk font-bold rounded-full shadow-[--shadow-brutal-sm] hover:shadow-[--shadow-brutal-md] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[--shadow-brutal-xs] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-[--duration-snappy] text-sm md:text-base">
-                <span className="relative z-10">Start Your Project</span>
+                <span className="relative z-10">Start your project</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer-auto" />
               </button>
             </div>
