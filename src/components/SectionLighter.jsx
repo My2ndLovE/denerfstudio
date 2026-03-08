@@ -122,7 +122,7 @@ export function SectionLighter() {
                 </p>
             </div>
 
-            <div className="lighter-image w-full md:flex-1 max-w-[230px] md:max-w-lg aspect-square bg-mintGreen rounded-3xl border-4 border-deepGreenText shadow-[8px_8px_0px_0px_rgba(0,77,51,1)] md:shadow-[12px_12px_0px_0px_rgba(0,77,51,1)] overflow-hidden relative flex items-center justify-center group will-change-transform mx-auto">
+            <div className="lighter-image w-full md:flex-1 max-w-[230px] md:max-w-lg aspect-square bg-mintGreen rounded-3xl border-4 border-deepGreenText shadow-[--shadow-brutal-lg] md:shadow-[--shadow-brutal-xl] overflow-hidden relative flex items-center justify-center group will-change-transform mx-auto">
                 <div className="lighter-image-inner absolute inset-0 w-full h-full will-change-transform">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--color-lemonYellow)_0%,_transparent_70%)] opacity-50"></div>
                 </div>
@@ -136,7 +136,7 @@ export function SectionLighter() {
                     ].map((avatar, i) => (
                         <div
                             key={i}
-                            className={`team-avatar absolute w-28 h-28 md:w-32 md:h-32 ${avatar.color} rounded-full border-4 border-deepGreenText shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform duration-300 will-change-transform`}
+                            className={`team-avatar absolute w-28 h-28 md:w-32 md:h-32 ${avatar.color} rounded-full border-4 border-deepGreenText shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform duration-[--duration-chill] will-change-transform`}
                             style={{
                                 left: `${avatar.x}px`,
                                 top: `${avatar.y}px`,

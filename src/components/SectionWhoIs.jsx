@@ -179,7 +179,7 @@ export function SectionWhoIs() {
       style={{ perspective: "1500px" }}
     >
       <div
-        className="who-card w-full max-w-5xl bg-bubblePink rounded-[3rem] p-8 md:p-20 shadow-xl border-4 border-deepGreenText flex flex-col items-start will-change-transform"
+        className="who-card w-full max-w-5xl bg-bubblePink rounded-[--radius-card-xl] p-8 md:p-20 shadow-xl border-4 border-deepGreenText flex flex-col items-start will-change-transform"
         style={{ transformStyle: "preserve-3d" }}
       >
         <h2 className="who-headline text-4xl md:text-6xl font-display font-bold text-deepGreenText mb-12 leading-tight will-change-transform">
@@ -195,7 +195,7 @@ export function SectionWhoIs() {
           ].map((text, i) => (
             <div
               key={i}
-              className="who-pill bg-white px-6 py-4 rounded-full border-2 border-deepGreenText text-lg md:text-xl font-bold text-deepGreenText shadow-[4px_4px_0px_0px_rgba(0,77,51,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,77,51,1)] transition-all flex items-center gap-4 w-fit cursor-pointer will-change-transform"
+              className="who-pill bg-white px-6 py-4 rounded-full border-2 border-deepGreenText text-lg md:text-xl font-bold text-deepGreenText shadow-[--shadow-brutal-sm] hover:shadow-[--shadow-brutal-md] transition-all flex items-center gap-4 w-fit cursor-pointer will-change-transform"
             >
               <div className="check-icon w-8 h-8 rounded-full bg-lemonYellow border-2 border-deepGreenText flex items-center justify-center will-change-transform">
                 <Check className="w-5 h-5 text-deepGreenText" />
@@ -208,7 +208,7 @@ export function SectionWhoIs() {
         <button
           type="button"
           onClick={handleSeeProjects}
-          className="who-cta group px-8 py-4 bg-deepGreenText text-white font-bold rounded-full hover:scale-105 transition-transform flex items-center gap-2 shadow-[4px_4px_0px_0px_rgba(255,232,107,1)] will-change-transform"
+          className="who-cta group px-8 py-4 bg-deepGreenText text-white font-bold rounded-full hover:scale-105 transition-transform flex items-center gap-2 shadow-[--shadow-brutal-sm-yellow] will-change-transform"
         >
           See Example Projects
           <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />

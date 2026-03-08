@@ -12,7 +12,7 @@ const reels = [
   {
     title: "Wine Lounge",
     tags: ["Pure HTML", "NextJs", "Client App"],
-    color: "from-purple-900/60 to-red-900/50",
+    gradient: "var(--gradient-portfolio-1)",
     image: winesLoungeImg,
     type: "Landing Page + Web App",
     link: "https://wineslounge.com/"
@@ -20,7 +20,7 @@ const reels = [
   {
     title: "SuperOH",
     tags: ["NextJs", "iGaming", "Frontend"],
-    color: "from-blue-600/70 to-purple-600/60",
+    gradient: "var(--gradient-portfolio-2)",
     image: superOhImg,
     type: "Platform",
     link: "https://igaming-platform.vercel.app/"
@@ -28,7 +28,7 @@ const reels = [
   {
     title: "COD Auto Pro",
     tags: ["Pure HTML", "Corporate", "Services"],
-    color: "from-gray-800/70 to-black/70",
+    gradient: "var(--gradient-portfolio-3)",
     image: codAutoProImg,
     type: "Landing Page",
     link: "https://codautopro.com.my/"
@@ -36,7 +36,7 @@ const reels = [
   {
     title: "Kepong Honda",
     tags: ["Pure HTML", "Automotive", "Landing Page"],
-    color: "from-red-600/70 to-red-900/70",
+    gradient: "var(--gradient-portfolio-4)",
     image: kepongHondaImg,
     type: "Landing Page",
     link: "https://keponghonda.com/"
@@ -44,7 +44,7 @@ const reels = [
   {
     title: "HK Fun Casino",
     tags: ["Wordpress", "Blog", "Reviews"],
-    color: "from-yellow-500/70 to-orange-600/60",
+    gradient: "var(--gradient-portfolio-5)",
     image: hkFunCasinoImg,
     type: "Blog",
     link: "https://hkfuncasinoonline.com/"
@@ -52,7 +52,7 @@ const reels = [
   {
     title: "HK Trusted Groups",
     tags: ["Review Platform", "Referral", "Web"],
-    color: "from-green-600/70 to-emerald-800/70",
+    gradient: "var(--gradient-portfolio-6)",
     image: hkTrustedGroupsImg,
     type: "Landing Page",
     link: "https://hktrustedgroups.com/"
@@ -98,7 +98,7 @@ export function SectionShowreel({ onOpenModal }) {
         className="flex flex-col gap-6"
       >
 
-        {/* Header with parallax */}
+        {/* Header */}
         <div
           ref={headerRef}
           className="reel-intro px-4 md:px-16 lg:px-24 mb-4 md:mb-8"
@@ -147,15 +147,15 @@ export function SectionShowreel({ onOpenModal }) {
           {reels.map((item, index) => (
             <article
               key={index}
-              className="reel-card shrink-0 w-[82vw] sm:w-[320px] md:w-[360px] lg:w-[420px] bg-white border-2 border-deepInk rounded-[24px] md:rounded-[28px] shadow-[6px_8px_0_0_rgba(11,42,27,0.2)] md:shadow-[10px_12px_0_0_rgba(11,42,27,0.2)] overflow-hidden hover:shadow-[10px_12px_0_0_rgba(11,42,27,0.3)] md:hover:shadow-[14px_16px_0_0_rgba(11,42,27,0.3)] transition-shadow duration-300 snap-start"
+              className="reel-card shrink-0 w-[82vw] sm:w-[320px] md:w-[360px] lg:w-[420px] bg-white border-2 border-deepInk rounded-[--radius-card] md:rounded-[--radius-card-lg] shadow-[--shadow-brutal-md-ink] md:shadow-[--shadow-brutal-lg-ink] overflow-hidden hover:shadow-[--shadow-brutal-lg-ink] transition-shadow duration-[--duration-chill] snap-start"
             >
               <div className="relative aspect-[3/4] overflow-hidden group">
                 {/* Gradient background */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.color}`}></div>
+                <div className="absolute inset-0" style={{ background: item.gradient }}></div>
 
-                {/* Image with circular reveal mask */}
+                {/* Image */}
                 <img
-                  className="reel-image absolute inset-0 w-full h-full object-cover mix-blend-overlay transition-transform duration-700 group-hover:scale-110"
+                  className="reel-image absolute inset-0 w-full h-full object-cover mix-blend-overlay transition-transform duration-[--duration-chill] group-hover:scale-110"
                   src={item.image}
                   alt={`${item.title} ${item.type} preview`}
                   width="900"
@@ -196,9 +196,9 @@ export function SectionShowreel({ onOpenModal }) {
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative overflow-hidden group px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-deepInk text-offWhite shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all duration-200 inline-flex items-center justify-center"
+                  className="px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-deepInk text-offWhite shadow-[--shadow-brutal-sm-ink] hover:shadow-[--shadow-brutal-sm] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all duration-[--duration-snappy] inline-flex items-center justify-center"
                 >
-                  <span className="relative z-10">View Site</span>
+                  View Site
                 </a>
                 <span className="px-2 py-1 md:px-3 md:py-1 rounded-full bg-neonMint text-deepInk border border-deepInk/20">
                   Live
@@ -209,7 +209,7 @@ export function SectionShowreel({ onOpenModal }) {
 
           {/* ETC... Card */}
           <article
-            className="reel-card shrink-0 w-[82vw] sm:w-[320px] md:w-[360px] lg:w-[420px] bg-deepInk border-2 border-deepInk rounded-[24px] md:rounded-[28px] shadow-[6px_8px_0_0_rgba(11,42,27,0.2)] md:shadow-[10px_12px_0_0_rgba(11,42,27,0.2)] overflow-hidden flex flex-col items-center justify-center text-center p-6 md:p-8 snap-start"
+            className="reel-card shrink-0 w-[82vw] sm:w-[320px] md:w-[360px] lg:w-[420px] bg-deepInk border-2 border-deepInk rounded-[--radius-card] md:rounded-[--radius-card-lg] shadow-[--shadow-brutal-md-ink] md:shadow-[--shadow-brutal-lg-ink] overflow-hidden flex flex-col items-center justify-center text-center p-6 md:p-8 snap-start"
           >
             <div className="text-offWhite space-y-4">
               <h3 className="text-3xl md:text-5xl font-display font-bold">And Etc...</h3>
@@ -219,14 +219,12 @@ export function SectionShowreel({ onOpenModal }) {
               </p>
               <button
                 onClick={onOpenModal}
-                className="relative overflow-hidden group mt-6 md:mt-8 px-6 py-3 md:px-8 md:py-4 bg-neonMint text-deepInk font-bold rounded-full shadow-[4px_4px_0px_0px_rgba(0,77,51,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,77,51,1)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[2px_2px_0px_0px_rgba(0,77,51,1)] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-200 text-sm md:text-base">
+                className="relative overflow-hidden group mt-6 md:mt-8 px-6 py-3 md:px-8 md:py-4 bg-neonMint text-deepInk font-bold rounded-full shadow-[--shadow-brutal-sm] hover:shadow-[--shadow-brutal-md] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[--shadow-brutal-xs] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-[--duration-snappy] text-sm md:text-base">
                 <span className="relative z-10">Start Your Project</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer-auto" />
               </button>
             </div>
           </article>
-
-          {/* End spacer for smooth ending */}
         </div>
 
         {/* Slider dots */}
@@ -247,7 +245,7 @@ export function SectionShowreel({ onOpenModal }) {
                 const gap = parseFloat(getComputedStyle(container).columnGap || getComputedStyle(container).gap || "0");
                 container.scrollTo({ left: idx * (cardWidth + gap), behavior: "smooth" });
               }}
-              className={`rounded-full transition-all duration-200 ${activeIndex === idx ? "w-3 h-3 bg-deepInk" : "w-2 h-2 bg-deepInk/20"} min-w-[44px] min-h-[44px] flex items-center justify-center`}
+              className={`rounded-full transition-all duration-[--duration-snappy] ${activeIndex === idx ? "w-3 h-3 bg-deepInk" : "w-2 h-2 bg-deepInk/20"} min-w-[44px] min-h-[44px] flex items-center justify-center`}
             >
               <span className={`block rounded-full ${activeIndex === idx ? "w-3 h-3 bg-deepInk" : "w-2 h-2 bg-deepInk/20"}`} />
             </button>

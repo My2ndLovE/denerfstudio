@@ -24,7 +24,7 @@ export function SectionProcess() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {steps.map((step) => (
-            <div key={step.title} className="rounded-[24px] border-2 border-deepGreenText bg-white shadow-[8px_8px_0px_0px_rgba(0,77,51,0.2)] p-6 space-y-3 hover:-translate-y-1 transition-transform duration-200">
+            <div key={step.title} className="rounded-[--radius-card] border-2 border-deepGreenText bg-white shadow-[--shadow-brutal-lg-subtle] p-6 space-y-3 hover:-translate-y-1 transition-transform duration-[--duration-snappy]">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lemonYellow text-deepGreenText text-xs font-bold border border-deepGreenText/30">
                 {step.timing}
               </div>
@@ -36,7 +36,7 @@ export function SectionProcess() {
 
         <div className="flex flex-wrap justify-center gap-3">
           {proof.map((item) => (
-            <div key={item.label} className="px-4 py-3 rounded-full bg-deepInk text-offWhite border-2 border-deepGreenText shadow-[4px_4px_0px_0px_rgba(255,232,107,1)] text-sm md:text-base font-bold flex items-center gap-2">
+            <div key={item.label} className="px-4 py-3 rounded-full bg-deepInk text-offWhite border-2 border-deepGreenText shadow-[--shadow-brutal-sm-yellow] text-sm md:text-base font-bold flex items-center gap-2">
               <span className="text-lemonYellow">●</span>
               <span>{item.label}:</span>
               <span className="text-neonMint">{item.value}</span>

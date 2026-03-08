@@ -44,7 +44,7 @@ export function SectionFaq({ onOpenModal }) {
             const panelId = `faq-panel-${idx}`;
             const buttonId = `faq-button-${idx}`;
             return (
-              <div key={item.q} className="border-2 border-deepGreenText bg-white rounded-2xl shadow-[6px_6px_0px_0px_rgba(0,77,51,0.2)] overflow-hidden">
+              <div key={item.q} className="border-2 border-deepGreenText bg-white rounded-2xl shadow-[--shadow-brutal-md-subtle] overflow-hidden">
                 <button
                   id={buttonId}
                   type="button"
@@ -71,7 +71,7 @@ export function SectionFaq({ onOpenModal }) {
           })}
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-between gap-3 rounded-[20px] border-2 border-deepGreenText bg-deepInk text-offWhite p-5 shadow-[8px_8px_0px_0px_rgba(255,232,107,1)]">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-3 rounded-[--radius-card] border-2 border-deepGreenText bg-deepInk text-offWhite p-5 shadow-[--shadow-brutal-lg-yellow]">
           <div className="space-y-1">
             <p className="text-sm uppercase tracking-[0.2em] text-offWhite/70">Still wondering?</p>
             <p className="text-xl font-display font-bold">Talk to a human in under 2 hours.</p>
@@ -79,7 +79,7 @@ export function SectionFaq({ onOpenModal }) {
           <button
             type="button"
             onClick={onOpenModal}
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-neonMint text-deepInk font-bold border-2 border-deepGreenText hover:-translate-y-1 transition-transform shadow-[4px_4px_0px_0px_rgba(0,77,51,1)]"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-neonMint text-deepInk font-bold border-2 border-deepGreenText hover:-translate-y-1 transition-transform shadow-[--shadow-brutal-sm]"
           >
             <MessageCircle className="w-5 h-5" />
             Start a chat

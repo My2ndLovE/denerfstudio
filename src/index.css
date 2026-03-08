@@ -28,9 +28,48 @@
   --font-display: "Bricolage Grotesque", "Fredoka", system-ui, -apple-system, sans-serif;
   --font-body: "Space Grotesk", "Nunito", system-ui, -apple-system, sans-serif;
 
+  /* Ambient shadows */
   --shadow-lift: 0 14px 40px -10px rgba(0, 77, 51, 0.28);
   --shadow-neon: 0 0 0 2px #0B2A1B, 0 0 24px rgba(124, 255, 178, 0.65);
   --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  /* Neo-brutalist offset shadows — deepGreenText solid */
+  --shadow-brutal-xs: 2px 2px 0px 0px rgba(0, 77, 51, 1);
+  --shadow-brutal-sm: 4px 4px 0px 0px rgba(0, 77, 51, 1);
+  --shadow-brutal-md: 6px 6px 0px 0px rgba(0, 77, 51, 1);
+  --shadow-brutal-lg: 8px 8px 0px 0px rgba(0, 77, 51, 1);
+  --shadow-brutal-xl: 10px 12px 0px 0px rgba(0, 77, 51, 1);
+
+  /* Neo-brutalist offset shadows — subtle (20% opacity) */
+  --shadow-brutal-xs-subtle: 2px 2px 0px 0px rgba(0, 77, 51, 0.2);
+  --shadow-brutal-sm-subtle: 4px 4px 0px 0px rgba(0, 77, 51, 0.2);
+  --shadow-brutal-md-subtle: 6px 6px 0px 0px rgba(0, 77, 51, 0.2);
+  --shadow-brutal-lg-subtle: 8px 8px 0px 0px rgba(0, 77, 51, 0.2);
+  --shadow-brutal-xl-subtle: 10px 12px 0px 0px rgba(0, 77, 51, 0.2);
+
+  /* Neo-brutalist offset shadows — deepInk for dark-border components */
+  --shadow-brutal-sm-ink: 4px 4px 0px 0px rgba(11, 42, 27, 0.25);
+  --shadow-brutal-md-ink: 6px 8px 0px 0px rgba(11, 42, 27, 0.2);
+  --shadow-brutal-lg-ink: 10px 12px 0px 0px rgba(11, 42, 27, 0.2);
+
+  /* Neo-brutalist offset shadows — accent (lemonYellow solid) */
+  --shadow-brutal-sm-yellow: 4px 4px 0px 0px rgba(255, 232, 107, 1);
+  --shadow-brutal-lg-yellow: 8px 8px 0px 0px rgba(255, 232, 107, 1);
+  --shadow-brutal-xl-yellow: 12px 12px 0px 0px rgba(255, 232, 107, 1);
+
+  /* Portfolio card overlay gradients */
+  --gradient-portfolio-1: linear-gradient(to bottom right, rgba(0, 77, 51, 0.6), rgba(11, 42, 27, 0.5));
+  --gradient-portfolio-2: linear-gradient(to bottom right, rgba(0, 102, 102, 0.7), rgba(0, 77, 51, 0.6));
+  --gradient-portfolio-3: linear-gradient(to bottom right, rgba(11, 42, 27, 0.7), rgba(11, 42, 27, 0.85));
+  --gradient-portfolio-4: linear-gradient(to bottom right, rgba(0, 77, 51, 0.7), rgba(11, 42, 27, 0.7));
+  --gradient-portfolio-5: linear-gradient(to bottom right, rgba(255, 232, 107, 0.6), rgba(255, 182, 213, 0.5));
+  --gradient-portfolio-6: linear-gradient(to bottom right, rgba(119, 240, 160, 0.7), rgba(0, 77, 51, 0.7));
+
+  /* Border radius tokens */
+  --radius-pill: 9999px;
+  --radius-card: 24px;
+  --radius-card-lg: 32px;
+  --radius-card-xl: 48px;
 
   --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-squish: cubic-bezier(0.7, -0.4, 0.2, 1.4);

@@ -108,7 +108,7 @@ export function SectionBlob() {
 
             <div
                 ref={blobRef}
-                className="giant-blob w-[78vw] h-[78vw] max-w-[320px] max-h-[320px] md:max-w-none md:max-h-none md:w-[500px] md:h-[500px] bg-skyBlue rounded-full flex items-center justify-center relative border-4 border-deepGreenText shadow-[8px_8px_0px_0px_rgba(0,77,51,1)] will-change-transform"
+                className="giant-blob w-[78vw] h-[78vw] max-w-[320px] max-h-[320px] md:max-w-none md:max-h-none md:w-[500px] md:h-[500px] bg-skyBlue rounded-full flex items-center justify-center relative border-4 border-deepGreenText shadow-[--shadow-brutal-lg] will-change-transform"
             >
                 {/* Lottie Animation - centered in blob, absolute to avoid flex distortion */}
                 <div className="lottie-container absolute inset-0 z-20 will-change-transform flex items-center justify-center pointer-events-none" aria-hidden="true">
@@ -137,7 +137,7 @@ export function SectionBlob() {
                                 className="absolute top-1/2 left-1/2 w-0 h-0"
                                 style={{ transform: `rotate(${deg}deg)` }}
                             >
-                                <div className={`tech-icon absolute -top-5 -left-5 w-10 h-10 md:-top-8 md:-left-8 md:w-16 md:h-16 ${colors[i]} border-2 border-deepGreenText rounded-full flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,77,51,1)] md:shadow-[4px_4px_0px_0px_rgba(0,77,51,1)] translate-x-[38vw] md:translate-x-[300px] will-change-transform`}>
+                                <div className={`tech-icon absolute -top-5 -left-5 w-10 h-10 md:-top-8 md:-left-8 md:w-16 md:h-16 ${colors[i]} border-2 border-deepGreenText rounded-full flex items-center justify-center shadow-[--shadow-brutal-xs] md:shadow-[--shadow-brutal-sm] translate-x-[38vw] md:translate-x-[300px] will-change-transform`}>
                                     <div className="tech-icon-inner" style={{ transform: `rotate(${-deg}deg)` }}>
                                         <Icon className="w-5 h-5 md:w-8 md:h-8 text-deepGreenText" />
                                     </div>

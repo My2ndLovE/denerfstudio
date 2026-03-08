@@ -341,11 +341,11 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
                 onMouseMove={handleMagnetMove}
                 onMouseLeave={resetMagnet}
                 onClick={onOpenModal}
-                className="group relative px-10 py-5 bg-deepInk text-offWhite font-bold text-lg rounded-full border-2 border-deepInk shadow-[8px_8px_0px_0px_rgba(11,42,27,0.3)] hover:shadow-[12px_12px_0px_0px_rgba(11,42,27,0.3)] hover:-translate-x-1 hover:-translate-y-1 active:shadow-[4px_4px_0px_0px_rgba(11,42,27,0.3)] active:translate-x-1 active:translate-y-1 transition-all duration-200 overflow-hidden"
+                className="group relative px-10 py-5 bg-deepInk text-offWhite font-bold text-lg rounded-full border-2 border-deepInk shadow-[8px_8px_0px_0px_rgba(11,42,27,0.3)] hover:shadow-[12px_12px_0px_0px_rgba(11,42,27,0.3)] hover:-translate-x-1 hover:-translate-y-1 active:shadow-[4px_4px_0px_0px_rgba(11,42,27,0.3)] active:translate-x-1 active:translate-y-1 transition-all duration-[--duration-snappy] overflow-hidden"
               >
                 <span className="relative z-10 flex items-center gap-3">
                   Start free demo
-                  <ArrowRight className="w-6 h-6 transition-transform duration-200 group-hover:translate-x-1" />
+                  <ArrowRight className="w-6 h-6 transition-transform duration-[--duration-snappy] group-hover:translate-x-1" />
                 </span>
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer-auto" />
               </button>
@@ -353,7 +353,7 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
             <div className="hero-btn-wrapper">
               <button
                 onClick={onSeeAction}
-                className="group relative flex items-center gap-3 px-10 py-5 bg-white text-deepInk font-bold text-lg rounded-full border-2 border-deepInk shadow-[8px_8px_0px_0px_rgba(255,232,107,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,232,107,1)] hover:-translate-x-1 hover:-translate-y-1 active:shadow-[4px_4px_0px_0px_rgba(255,232,107,1)] active:translate-x-1 active:translate-y-1 transition-all duration-200 overflow-hidden"
+                className="group relative flex items-center gap-3 px-10 py-5 bg-white text-deepInk font-bold text-lg rounded-full border-2 border-deepInk shadow-[--shadow-brutal-lg-yellow] hover:shadow-[--shadow-brutal-xl-yellow] hover:-translate-x-1 hover:-translate-y-1 active:shadow-[--shadow-brutal-sm-yellow] active:translate-x-1 active:translate-y-1 transition-all duration-[--duration-snappy] overflow-hidden"
               >
                 <span className="relative z-10 flex items-center gap-3">
                   <Play className="w-5 h-5 fill-current" />

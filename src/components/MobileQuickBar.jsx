@@ -6,10 +6,10 @@ export function MobileQuickBar() {
 
   if (isMinimized) {
     return (
-      <div className="mobile-quick-bar fixed right-4 bottom-4 z-40 will-change-transform transition-all duration-300 ease-in-out">
+      <div className="mobile-quick-bar fixed right-4 bottom-4 z-40 will-change-transform transition-all duration-[--duration-chill] ease-in-out">
         <button
           onClick={() => setIsMinimized(false)}
-          className="relative overflow-hidden group flex items-center gap-2 px-5 py-3 rounded-full bg-deepInk text-offWhite shadow-[4px_6px_0_0_rgba(11,42,27,0.45)] border-2 border-deepInk font-bold text-sm hover:shadow-[6px_8px_0_0_rgba(11,42,27,0.45)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[2px_4px_0_0_rgba(11,42,27,0.45)] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-200"
+          className="relative overflow-hidden group flex items-center gap-2 px-5 py-3 rounded-full bg-deepInk text-offWhite shadow-[4px_6px_0_0_rgba(11,42,27,0.45)] border-2 border-deepInk font-bold text-sm hover:shadow-[6px_8px_0_0_rgba(11,42,27,0.45)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[2px_4px_0_0_rgba(11,42,27,0.45)] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-[--duration-snappy]"
         >
           <span className="relative z-10 flex items-center gap-2">
             <MessageCircle size={18} />
@@ -21,7 +21,7 @@ export function MobileQuickBar() {
   }
 
   return (
-    <div className="mobile-quick-bar fixed inset-x-4 md:inset-x-auto md:right-4 bottom-4 z-40 md:w-80 will-change-transform transition-all duration-300 ease-in-out">
+    <div className="mobile-quick-bar fixed inset-x-4 md:inset-x-auto md:right-4 bottom-4 z-40 md:w-80 will-change-transform transition-all duration-[--duration-chill] ease-in-out">
       <div className="relative rounded-3xl bg-deepInk text-offWhite shadow-[8px_10px_0_0_rgba(11,42,27,0.45)] border-2 border-deepInk overflow-hidden">
 
         {/* Minimize Button */}

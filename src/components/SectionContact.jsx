@@ -180,7 +180,7 @@ export function SectionContact() {
           {options.map((option, i) => (
             <div
               key={option.title}
-              className="option-card group relative rounded-[24px] border-2 border-deepInk bg-white shadow-[10px_12px_0_0_rgba(11,42,27,0.2)] overflow-hidden hover:-translate-y-2 transition-transform duration-[var(--duration-snappy)] will-change-transform cursor-pointer"
+              className="option-card group relative rounded-[--radius-card] border-2 border-deepInk bg-white shadow-[--shadow-brutal-lg-ink] overflow-hidden hover:-translate-y-2 transition-transform duration-[--duration-snappy] will-change-transform cursor-pointer"
               style={{ transformStyle: "preserve-3d" }}
             >
               <div className={`absolute inset-0 ${option.accent} blur-3xl opacity-40 pointer-events-none`}></div>
@@ -202,7 +202,7 @@ export function SectionContact() {
           ))}
         </div>
 
-        <div className="what-next-card rounded-[20px] border-2 border-deepInk bg-white/80 shadow-[6px_6px_0px_0px_rgba(0,77,51,0.2)] p-5 space-y-2 text-sm text-deepInk/80">
+        <div className="what-next-card rounded-[--radius-card] border-2 border-deepInk bg-white/80 shadow-[--shadow-brutal-md-subtle] p-5 space-y-2 text-sm text-deepInk/80">
           <p className="font-bold text-deepInk">What happens next?</p>
           <ul className="list-disc list-inside space-y-1">
             <li>We reply within 2 hours with a quick plan and motion idea.</li>
@@ -213,7 +213,7 @@ export function SectionContact() {
 
         <div className="flex flex-col md:flex-row items-center md:items-stretch gap-4" style={{ perspective: "1000px" }}>
           <div
-            className="quick-actions-panel flex-1 rounded-[24px] border-2 border-deepInk bg-deepInk text-offWhite p-6 shadow-[10px_12px_0_0_rgba(11,42,27,0.35)] flex flex-col gap-4 will-change-transform"
+            className="quick-actions-panel flex-1 rounded-[--radius-card] border-2 border-deepInk bg-deepInk text-offWhite p-6 shadow-[--shadow-brutal-lg-ink] flex flex-col gap-4 will-change-transform"
             style={{ transformStyle: "preserve-3d" }}
           >
             <div className="flex items-center justify-between">
@@ -244,7 +244,7 @@ export function SectionContact() {
           </div>
 
           <div
-            className="calendar-panel w-full md:w-60 rounded-[24px] border-2 border-deepInk bg-white p-6 shadow-[10px_12px_0_0_rgba(11,42,27,0.2)] flex flex-col gap-4 justify-between will-change-transform"
+            className="calendar-panel w-full md:w-60 rounded-[--radius-card] border-2 border-deepInk bg-white p-6 shadow-[--shadow-brutal-lg-ink] flex flex-col gap-4 justify-between will-change-transform"
             style={{ transformStyle: "preserve-3d" }}
           >
             <div className="space-y-2">
@@ -256,7 +256,7 @@ export function SectionContact() {
               <p className="text-sm text-deepInk/70">Live or async—your choice. We'll prep ideas before the call.</p>
             </div>
             <a
-              className="w-full px-4 py-3 rounded-full bg-deepInk text-offWhite font-bold border-2 border-deepInk hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(124,255,178,0.5)] transition-all duration-[var(--duration-snappy)] text-center block"
+              className="w-full px-4 py-3 rounded-full bg-deepInk text-offWhite font-bold border-2 border-deepInk hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(124,255,178,0.5)] transition-all duration-[--duration-snappy] text-center block"
               href="https://wa.me/60165271501?text=I'd%20like%20to%20book%20a%2015-min%20intro%20call%20with%20Denerf%20Studio."
               target="_blank"
               rel="noopener noreferrer"

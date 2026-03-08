@@ -203,7 +203,7 @@ function App() {
           <div className="rope right"></div>
           <div className="knot left"></div>
           <div className="knot right"></div>
-          <div className="tag relative wood rounded-[16px] px-3.5 py-2.5 flex items-center gap-3 transition-all duration-200 border border-deepGreenText/20 overflow-hidden">
+          <div className="tag relative wood rounded-[16px] px-3.5 py-2.5 flex items-center gap-3 transition-all duration-[--duration-snappy] border border-deepGreenText/20 overflow-hidden">
             <div className="grain absolute inset-0 opacity-60 pointer-events-none"></div>
             <div className="sticker star">✦</div>
             <div className="sticker heart">❤</div>
@@ -284,7 +284,7 @@ function App() {
             <button
               onClick={handleScrollTop}
               type="button"
-              className="floating-nav-btn relative overflow-hidden group bg-white border-2 border-deepGreenText rounded-full p-3 md:p-4 shadow-[4px_4px_0px_0px_rgba(0,77,51,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,77,51,1)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[2px_2px_0px_0px_rgba(0,77,51,1)] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-200"
+              className="floating-nav-btn relative overflow-hidden group bg-white border-2 border-deepGreenText rounded-full p-3 md:p-4 shadow-[--shadow-brutal-sm] hover:shadow-[--shadow-brutal-md] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[--shadow-brutal-xs] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-[--duration-snappy]"
               aria-label="Back to Top"
             >
               <span className="relative z-10"><ArrowUp className="w-5 h-5 md:w-6 md:h-6 text-deepGreenText" /></span>
@@ -294,7 +294,7 @@ function App() {
             <button
               onClick={scrollToNextSection}
               type="button"
-              className="floating-nav-btn relative overflow-hidden group bg-white border-2 border-deepGreenText rounded-full p-3 md:p-4 shadow-[4px_4px_0px_0px_rgba(0,77,51,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,77,51,1)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[2px_2px_0px_0px_rgba(0,77,51,1)] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-200"
+              className="floating-nav-btn relative overflow-hidden group bg-white border-2 border-deepGreenText rounded-full p-3 md:p-4 shadow-[--shadow-brutal-sm] hover:shadow-[--shadow-brutal-md] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[--shadow-brutal-xs] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-[--duration-snappy]"
               aria-label="Next Section"
             >
               <span className="relative z-10"><ArrowDown className="w-5 h-5 md:w-6 md:h-6 text-deepGreenText" /></span>

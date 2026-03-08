@@ -83,7 +83,7 @@ export function ContactModal({ isOpen, onClose }) {
         >
             <div
                 ref={modalRef}
-                className="bg-creamWhite w-[90vw] max-w-md p-8 rounded-[2rem] border-4 border-deepGreenText shadow-[8px_8px_0px_0px_rgba(0,77,51,1)] relative"
+                className="bg-creamWhite w-[90vw] max-w-md p-8 rounded-[--radius-card-lg] border-4 border-deepGreenText shadow-[--shadow-brutal-lg] relative"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="contact-modal-title"
@@ -110,7 +110,7 @@ export function ContactModal({ isOpen, onClose }) {
                 <div className="space-y-4">
                     <a
                         href="https://wa.me/60165271501"
-                        className="flex items-center justify-center gap-3 w-full py-4 bg-offWhite border-2 border-deepGreenText rounded-xl font-bold text-deepGreenText hover:bg-white shadow-[4px_4px_0px_0px_rgba(0,77,51,0.2)] hover:shadow-[6px_6px_0px_0px_rgba(0,77,51,0.2)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[2px_2px_0px_0px_rgba(0,77,51,0.2)] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-200"
+                        className="flex items-center justify-center gap-3 w-full py-4 bg-offWhite border-2 border-deepGreenText rounded-xl font-bold text-deepGreenText hover:bg-white shadow-[--shadow-brutal-sm-subtle] hover:shadow-[--shadow-brutal-md-subtle] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[--shadow-brutal-xs-subtle] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-[--duration-snappy]"
                     >
                         <MessageCircle size={20} />
                         Chat on WhatsApp
@@ -118,7 +118,7 @@ export function ContactModal({ isOpen, onClose }) {
 
                     <a
                         href="mailto:sam@denerf.studio"
-                        className="flex items-center justify-center gap-3 w-full py-4 bg-neonMint border-2 border-deepGreenText rounded-xl font-bold text-deepGreenText hover:bg-neonMint/90 shadow-[4px_4px_0px_0px_rgba(0,77,51,0.2)] hover:shadow-[6px_6px_0px_0px_rgba(0,77,51,0.2)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[2px_2px_0px_0px_rgba(0,77,51,0.2)] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-200"
+                        className="flex items-center justify-center gap-3 w-full py-4 bg-neonMint border-2 border-deepGreenText rounded-xl font-bold text-deepGreenText hover:bg-neonMint/90 shadow-[--shadow-brutal-sm-subtle] hover:shadow-[--shadow-brutal-md-subtle] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[--shadow-brutal-xs-subtle] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-[--duration-snappy]"
                     >
                         <Mail size={20} />
                         Send an Email

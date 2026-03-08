@@ -227,9 +227,9 @@ export function SectionWithDenerf() {
                 <path className="doodle-path" d="M20,80 Q50,20 80,80" fill="none" stroke="#004D33" strokeWidth="2" strokeLinecap="round" />
             </svg>
 
-            <div className="pink-card w-full max-w-6xl bg-bubblePink rounded-[2rem] md:rounded-[3rem] px-4 py-8 md:p-16 shadow-xl border-4 border-deepGreenText relative perspective-1000 will-change-transform mt-8 mx-4">
+            <div className="pink-card w-full max-w-6xl bg-bubblePink rounded-[--radius-card-lg] md:rounded-[--radius-card-xl] px-4 py-8 md:p-16 shadow-xl border-4 border-deepGreenText relative perspective-1000 will-change-transform mt-8 mx-4">
 
-                <div className="absolute -top-4 -right-4 md:-top-6 md:-right-6 bg-lemonYellow text-deepGreenText font-bold px-4 py-1 md:px-6 md:py-2 text-sm md:text-base rounded-full border-4 border-deepGreenText shadow-[4px_4px_0px_0px_rgba(0,77,51,1)] rotate-12 z-20 glow-pulse">
+                <div className="absolute -top-4 -right-4 md:-top-6 md:-right-6 bg-lemonYellow text-deepGreenText font-bold px-4 py-1 md:px-6 md:py-2 text-sm md:text-base rounded-full border-4 border-deepGreenText shadow-[--shadow-brutal-sm] rotate-12 z-20 glow-pulse">
                     New!
                 </div>
 
@@ -245,7 +245,7 @@ export function SectionWithDenerf() {
                     ].map((item, i) => (
                         <div
                             key={i}
-                            className={`feature-card group relative ${item.color} p-4 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border-4 border-deepGreenText shadow-[6px_6px_0px_0px_rgba(0,77,51,1)] md:shadow-[8px_8px_0px_0px_rgba(0,77,51,1)] flex flex-col items-center text-center overflow-hidden will-change-transform`}
+                            className={`feature-card group relative ${item.color} p-4 md:p-8 rounded-[--radius-card] md:rounded-[--radius-card-lg] border-4 border-deepGreenText shadow-[--shadow-brutal-md] md:shadow-[--shadow-brutal-lg] flex flex-col items-center text-center overflow-hidden will-change-transform`}
                             style={{
                                 transform: `rotate(${item.rotate}deg)`,
                                 transformStyle: "preserve-3d"
@@ -253,7 +253,7 @@ export function SectionWithDenerf() {
                         >
                             <div className="card-glare absolute -inset-full w-[300%] h-[300%] bg-gradient-to-br from-white/50 via-transparent to-transparent opacity-0 pointer-events-none z-20 blur-md hidden md:block"></div>
 
-                            <div className="relative z-10 w-12 h-12 md:w-24 md:h-24 bg-white rounded-full border-4 border-deepGreenText flex items-center justify-center mb-3 md:mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                            <div className="relative z-10 w-12 h-12 md:w-24 md:h-24 bg-white rounded-full border-4 border-deepGreenText flex items-center justify-center mb-3 md:mb-6 shadow-sm group-hover:scale-110 transition-transform duration-[--duration-chill]">
                                 <item.icon className="w-6 h-6 md:w-12 md:h-12 text-deepGreenText" />
                             </div>
                             <h3 className="relative z-10 text-lg md:text-2xl font-bold text-deepGreenText font-display leading-tight">{item.text}</h3>
@@ -271,7 +271,7 @@ export function SectionWithDenerf() {
                         { text: "Smart Code", Icon: Bot, color: "bg-skyBlue" },
                         { text: "Affordable", Icon: Coins, color: "bg-creamWhite" }
                     ].map((item, i) => (
-                        <div key={i} className={`emoji-pill px-3 py-2 md:px-8 md:py-4 ${item.color} border-2 border-deepGreenText rounded-full text-deepGreenText font-bold shadow-[3px_3px_0px_0px_rgba(0,77,51,1)] md:shadow-[4px_4px_0px_0px_rgba(0,77,51,1)] hover:scale-110 hover:-rotate-3 transition-all duration-300 cursor-pointer flex items-center gap-2 md:gap-3 will-change-transform`}>
+                        <div key={i} className={`emoji-pill px-3 py-2 md:px-8 md:py-4 ${item.color} border-2 border-deepGreenText rounded-full text-deepGreenText font-bold shadow-[--shadow-brutal-xs] md:shadow-[--shadow-brutal-sm] hover:scale-110 hover:-rotate-3 transition-all duration-[--duration-chill] cursor-pointer flex items-center gap-2 md:gap-3 will-change-transform`}>
                             <item.Icon className="w-4 h-4 md:w-6 md:h-6 text-deepGreenText" />
                             <span className="text-xs md:text-base tracking-wide">{item.text}</span>
                         </div>

@@ -235,7 +235,7 @@ export function SectionTrust({ onOpenModal }) {
                         { step: "4", label: "Launch & Pay" }
                     ].map((item, i) => (
                         <div key={i} className="progress-step flex flex-col items-center gap-2 will-change-transform">
-                            <div className="step-circle w-8 h-8 md:w-12 md:h-12 bg-white border-2 md:border-4 border-deepGreenText rounded-full flex items-center justify-center font-bold text-deepGreenText z-10 shadow-sm text-sm md:text-base transition-shadow duration-300">
+                            <div className="step-circle w-8 h-8 md:w-12 md:h-12 bg-white border-2 md:border-4 border-deepGreenText rounded-full flex items-center justify-center font-bold text-deepGreenText z-10 shadow-sm text-sm md:text-base transition-shadow duration-[--duration-chill]">
                                 {item.step}
                             </div>
                             <span className="text-[10px] md:text-sm font-bold text-deepGreenText bg-white/90 px-1 md:px-2 py-0.5 md:py-1 rounded backdrop-blur-sm whitespace-nowrap shadow-sm">
@@ -246,11 +246,11 @@ export function SectionTrust({ onOpenModal }) {
                 </div>
             </div>
 
-            <div className="pay-later-card bg-mintGreen p-6 md:p-8 rounded-3xl border-4 border-deepGreenText shadow-[6px_6px_0px_0px_rgba(0,77,51,1)] md:shadow-[8px_8px_0px_0px_rgba(0,77,51,1)] mb-12 transform rotate-2 cursor-pointer group max-w-xs md:max-w-none will-change-transform"
+            <div className="pay-later-card bg-mintGreen p-6 md:p-8 rounded-3xl border-4 border-deepGreenText shadow-[--shadow-brutal-md] md:shadow-[--shadow-brutal-lg] mb-12 transform rotate-2 cursor-pointer group max-w-xs md:max-w-none will-change-transform"
                 style={{ transformStyle: "preserve-3d" }}
             >
                 <p className="text-xl md:text-2xl font-bold text-deepGreenText flex items-center gap-3 md:gap-4">
-                    <span className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full border-2 border-deepGreenText flex items-center justify-center group-hover:scale-125 transition-transform duration-300"><SmilePlus className="w-5 h-5 md:w-6 md:h-6 text-deepGreenText" /></span>
+                    <span className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full border-2 border-deepGreenText flex items-center justify-center group-hover:scale-125 transition-transform duration-[--duration-chill]"><SmilePlus className="w-5 h-5 md:w-6 md:h-6 text-deepGreenText" /></span>
                     <span>Satisfaction Guaranteed</span>
                 </p>
             </div>
@@ -258,7 +258,7 @@ export function SectionTrust({ onOpenModal }) {
             <div className="trust-btn-wrapper relative">
                 <button
                     onClick={onOpenModal}
-                    className="group relative trust-cta px-8 py-4 md:px-12 md:py-6 bg-lemonYellow border-4 border-deepGreenText text-xl md:text-2xl font-bold text-deepGreenText rounded-full shadow-[4px_4px_0px_0px_rgba(0,77,51,1)] md:shadow-[6px_6px_0px_0px_rgba(0,77,51,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,77,51,1)] md:hover:shadow-[10px_10px_0px_0px_rgba(0,77,51,1)] hover:-translate-x-1 hover:-translate-y-1 active:shadow-[2px_2px_0px_0px_rgba(0,77,51,1)] md:active:shadow-[2px_2px_0px_0px_rgba(0,77,51,1)] active:translate-x-1 active:translate-y-1 transition-all duration-200 will-change-transform glow-pulse overflow-hidden"
+                    className="group relative trust-cta px-8 py-4 md:px-12 md:py-6 bg-lemonYellow border-4 border-deepGreenText text-xl md:text-2xl font-bold text-deepGreenText rounded-full shadow-[--shadow-brutal-sm] md:shadow-[--shadow-brutal-md] hover:shadow-[--shadow-brutal-lg] md:hover:shadow-[--shadow-brutal-xl] hover:-translate-x-1 hover:-translate-y-1 active:shadow-[--shadow-brutal-xs] active:translate-x-1 active:translate-y-1 transition-all duration-[--duration-snappy] will-change-transform glow-pulse overflow-hidden"
                 >
                     <span className="relative z-10">Start Free Demo</span>
                     <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer-auto" />
