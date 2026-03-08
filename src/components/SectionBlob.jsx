@@ -97,6 +97,7 @@ export function SectionBlob() {
     return (
         <section
             ref={rootRef}
+            aria-label="Tech stack adaptability"
             className="min-h-screen bg-creamWhite flex flex-col items-center justify-center px-4 overflow-hidden relative"
         >
             <div className="blob-title absolute top-10 md:top-20 z-10 text-center will-change-transform">
@@ -110,7 +111,7 @@ export function SectionBlob() {
                 className="giant-blob w-[78vw] h-[78vw] max-w-[320px] max-h-[320px] md:max-w-none md:max-h-none md:w-[500px] md:h-[500px] bg-skyBlue rounded-full flex items-center justify-center relative border-4 border-deepGreenText shadow-[8px_8px_0px_0px_rgba(0,77,51,1)] will-change-transform"
             >
                 {/* Lottie Animation - centered in blob, absolute to avoid flex distortion */}
-                <div className="lottie-container absolute inset-0 z-20 will-change-transform flex items-center justify-center pointer-events-none">
+                <div className="lottie-container absolute inset-0 z-20 will-change-transform flex items-center justify-center pointer-events-none" aria-hidden="true">
                     <DotLottieReact
                         src="https://lottie.host/933cc748-8833-4c8f-a20a-f7be423c2d75/y4FWRipyMk.lottie"
                         loop

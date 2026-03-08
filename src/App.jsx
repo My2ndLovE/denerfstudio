@@ -72,17 +72,23 @@ function App() {
   }, []);
 
   useEffect(() => {
+    let rafId = null;
     const updateEndState = () => {
-      const scrollBottom = window.scrollY + window.innerHeight;
-      const docHeight = document.documentElement.scrollHeight;
-      setIsAtEnd(scrollBottom >= docHeight - 10);
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        const scrollBottom = window.scrollY + window.innerHeight;
+        const docHeight = document.documentElement.scrollHeight;
+        setIsAtEnd(scrollBottom >= docHeight - 10);
+        rafId = null;
+      });
     };
     updateEndState();
-    window.addEventListener("scroll", updateEndState);
+    window.addEventListener("scroll", updateEndState, { passive: true });
     window.addEventListener("resize", updateEndState);
     return () => {
       window.removeEventListener("scroll", updateEndState);
       window.removeEventListener("resize", updateEndState);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
@@ -140,9 +146,6 @@ function App() {
     });
   };
 
-  const handleNext = () => {
-    scrollToNextSection();
-  };
 
   const handleScrollTop = () => {
     if (typeof document === "undefined") return;
@@ -188,101 +191,6 @@ function App() {
   return (
     <>
       <a href="#main-content" className="skip-link">Skip to main content</a>
-      {isMounted && typeof document !== "undefined" && (
-        <style>
-          {`
-            .floating-nav-container { pointer-events: none; }
-            .floating-nav-container button, .floating-nav-container .hint { pointer-events: auto; }
-
-            .scroll-signal { pointer-events: none; }
-            .scroll-signal .capsule {
-              pointer-events: auto;
-              background: white;
-              border: 2px solid var(--color-deepInk, #0B2A1B);
-              box-shadow: 0 6px 12px rgba(0,0,0,0.08);
-              transition: transform 0.25s var(--ease-soft), box-shadow 0.25s var(--ease-soft), background 0.25s var(--ease-soft);
-            }
-            .scroll-signal .capsule.idle { transform: translateY(0); }
-            .scroll-signal .capsule.running { transform: translateY(-2px); background: linear-gradient(120deg, rgba(255,232,107,0.9), rgba(124,255,178,0.9)); box-shadow: 0 10px 18px rgba(0,0,0,0.12); }
-            .scroll-signal .wagon {
-              display: flex; align-items: center; gap: 6px;
-              animation: wagon-bob 1.8s ease-in-out infinite;
-            }
-            .scroll-signal .capsule.running .wagon { animation: wagon-run 0.7s ease-in-out infinite; }
-            .scroll-signal .wheels { display: flex; gap: 4px; }
-            .scroll-signal .wheel {
-              width: 9px; height: 9px;
-              border-radius: 999px;
-              border: 2px solid #0B2A1B;
-              position: relative;
-              background: radial-gradient(circle at 50% 50%, rgba(0,77,51,0.2) 35%, transparent 36%);
-            }
-            .scroll-signal .wheel:after {
-              content: "";
-              position: absolute;
-              inset: 1px;
-              border-radius: 999px;
-              border: 2px solid rgba(0,77,51,0.4);
-            }
-            .scroll-signal .capsule.running .wheel { animation: wheel-spin 0.5s linear infinite; }
-            .scroll-signal .capsule.idle .wheel { animation: wheel-spin 2.4s linear infinite; opacity: 0.8; }
-            .scroll-signal .arrow {
-              width: 14px; height: 14px;
-              color: #0B2A1B;
-              animation: arrow-bounce 1.8s ease-in-out infinite;
-            }
-            .scroll-signal .label {
-              font-size: 10px;
-              letter-spacing: 0.12em;
-              text-transform: uppercase;
-              color: #0B2A1B;
-              font-weight: 900;
-              display: inline-flex;
-              align-items: center;
-              gap: 6px;
-            }
-            .scroll-signal .dot {
-              width: 6px; height: 6px; border-radius: 999px;
-              background: #FFB6D5;
-              box-shadow: 0 0 0 5px rgba(124,255,178,0.12);
-            }
-            @keyframes wheel-spin {
-              from { transform: rotate(0deg); }
-              to { transform: rotate(360deg); }
-            }
-            @keyframes wagon-bob {
-              0%,100% { transform: translateY(0); }
-              50% { transform: translateY(-3px); }
-            }
-            @keyframes wagon-run {
-              0%,100% { transform: translateY(-1px); }
-              50% { transform: translateY(1px); }
-            }
-            @keyframes arrow-bounce {
-              0%, 100% { transform: translateY(0); opacity: 0.7; }
-              50% { transform: translateY(3px); opacity: 1; }
-            }
-
-            /* Hanging logo plaque */
-            .brand-plaque { pointer-events: none; transform: rotate(-1.2deg); }
-            .brand-plaque .tag { box-shadow: 0 8px 18px rgba(0,77,51,0.14), 0 2px 0 rgba(0,77,51,0.16), 0 0 0 1px rgba(0,77,51,0.08); }
-            .brand-plaque .rope { position: absolute; width: 3px; background: linear-gradient(180deg, #0B2A1B, #0B2A1B); border-radius: 99px; }
-            .brand-plaque .rope.left { left: 10px; top: -16px; height: 24px; }
-            .brand-plaque .rope.right { right: 14px; top: -28px; height: 38px; }
-            .brand-plaque .knot { position: absolute; width: 9px; height: 9px; background: #0B2A1B; border-radius: 99px; box-shadow: 0 2px 0 rgba(0,0,0,0.1); }
-            .brand-plaque .knot.left { left: 6px; top: -19px; }
-            .brand-plaque .knot.right { right: 9px; top: -31px; }
-            .brand-plaque .wood { background: linear-gradient(90deg, rgba(255,232,189,0.95), rgba(255,248,220,0.95)); }
-            .brand-plaque .grain { background-image: repeating-linear-gradient(90deg, rgba(0,77,51,0.05) 0, rgba(0,77,51,0.05) 4px, transparent 4px, transparent 10px); mix-blend-mode: multiply; }
-            .brand-plaque .sticker { position: absolute; width: 11px; height: 11px; border-radius: 999px; display: grid; place-items: center; font-size: 8px; font-weight: 800; }
-            .brand-plaque .sticker.star { top: 4px; right: 6px; background: #FFB6D5; color: #0B2A1B; box-shadow: 0 2px 0 rgba(0,77,51,0.18); }
-            .brand-plaque .sticker.heart { bottom: 4px; left: 6px; background: #8DEBFF; color: #0B2A1B; box-shadow: 0 2px 0 rgba(0,77,51,0.18); }
-            @media (max-width: 767px) {
-              .brand-plaque { transform: scale(0.9) rotate(-1deg); }
-            }
-          `}
-        </style>
-      )}
       <main id="main-content" className="w-full overflow-hidden">
         {/* Hanging logo plaque (non-blocking) */}
         <div className="brand-plaque fixed top-1 left-2 md:top-4 md:left-4 z-[40] scale-100 md:scale-[1.15] origin-top-left">
@@ -375,17 +283,16 @@ function App() {
               aria-label="Back to Top"
             >
               <span className="relative z-10"><ArrowUp className="w-5 h-5 md:w-6 md:h-6 text-deepGreenText" /></span>
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-deepGreenText/10 to-transparent -translate-x-full animate-shimmer-auto" />
             </button>
 
             {/* Floating Next Button */}
             <button
-              onClick={handleNext}
+              onClick={scrollToNextSection}
+              type="button"
               className="floating-nav-btn relative overflow-hidden group bg-white border-2 border-deepGreenText rounded-full p-3 md:p-4 shadow-[4px_4px_0px_0px_rgba(0,77,51,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,77,51,1)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[2px_2px_0px_0px_rgba(0,77,51,1)] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-200"
               aria-label="Next Section"
             >
               <span className="relative z-10"><ArrowDown className="w-5 h-5 md:w-6 md:h-6 text-deepGreenText" /></span>
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-deepGreenText/10 to-transparent -translate-x-full animate-shimmer-auto" />
             </button>
           </div>
         </>,

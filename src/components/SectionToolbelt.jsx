@@ -11,6 +11,10 @@ export function SectionToolbelt() {
 
     useLayoutEffect(() => {
         if (!rootRef.current) return;
+        const prefersReducedMotion = typeof window !== "undefined" &&
+            window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (prefersReducedMotion) return;
 
         const ctx = gsap.context(() => {
             const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 1080;
@@ -123,6 +127,7 @@ export function SectionToolbelt() {
     return (
         <section
             ref={rootRef}
+            aria-label="AI toolbelt"
             className="min-h-screen bg-skyBlue flex flex-col items-center justify-center px-4 overflow-hidden relative"
             style={{ perspective: "1200px" }}
         >
@@ -190,7 +195,7 @@ export function SectionToolbelt() {
                 </div>
 
                 {/* Lottie - larger than card for 3D pop-out effect, animates with card */}
-                <div className="toolbelt-lottie absolute z-20 h-64 md:h-96 pointer-events-none flex items-center justify-center will-change-transform">
+                <div className="toolbelt-lottie absolute z-20 h-64 md:h-96 pointer-events-none flex items-center justify-center will-change-transform" aria-hidden="true">
                     <DotLottieReact
                         src="https://lottie.host/94360e93-cf10-4d0c-9a57-22e2546eeb01/4RlAvZgm1y.lottie"
                         loop

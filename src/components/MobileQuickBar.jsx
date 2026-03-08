@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MessageCircle, ChevronDown, X } from "lucide-react";
+import { MessageCircle, ChevronDown } from "lucide-react";
 
 export function MobileQuickBar() {
   const [isMinimized, setIsMinimized] = useState(true);
@@ -15,7 +15,6 @@ export function MobileQuickBar() {
             <MessageCircle size={18} />
             <span>Talk to us</span>
           </span>
-          <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-shimmer-auto" />
         </button>
       </div>
     );
@@ -60,7 +59,7 @@ export function MobileQuickBar() {
 
         <button
           onClick={() => window.location.href = "mailto:sam@denerf.studio"}
-          className="w-full py-3 bg-offWhite text-deepInk font-bold text-center tracking-wide hover:bg-gray-100 transition-colors border-t border-deepInk/10"
+          className="w-full py-3 bg-offWhite text-deepInk font-bold text-center tracking-wide hover:bg-creamWhite transition-colors border-t border-deepInk/10"
         >
           Start Your Project
         </button>

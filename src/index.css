@@ -5,24 +5,11 @@
   --color-sky-blue: #8DEBFF;
   --color-bubble-pink: #FFB6D5;
   --color-lemon-yellow: #FFE86B;
-  --color-cream-white: #FFF8EC;
+  --color-cream-white: #F9F7F3;
   --color-deep-green-text: #004D33;
+  --color-deep-ink: #0B2A1B;
   --color-dark-teal: #006666;
-  --color-soft-gray-text: #555555;
-}
-
-@theme {
-  --font-display: "Bricolage Grotesque", sans-serif;
-  --font-body: "Space Grotesk", sans-serif;
-
-  --color-mint: var(--color-mint-green);
-  --color-sky: var(--color-sky-blue);
-  --color-pink: var(--color-bubble-pink);
-  --color-yellow: var(--color-lemon-yellow);
-  --color-cream: var(--color-cream-white);
-  --color-deep-green: var(--color-deep-green-text);
-  --color-teal: var(--color-dark-teal);
-  --color-gray-text: var(--color-soft-gray-text);
+  --color-soft-gray-text: #304037;
 }
 
 @theme {
@@ -85,8 +72,7 @@
     }
 
     * {
-      animation-duration: 0.001ms !important;
-      animation-iteration-count: 1 !important;
+      animation: none !important;
       transition-duration: 0.001ms !important;
       scroll-behavior: auto !important;
     }
@@ -108,11 +94,11 @@
     position: absolute;
     left: -999px;
     top: 8px;
-    background: #0B2A1B;
-    color: #F9F7F3;
+    background: var(--color-deep-ink, #0B2A1B);
+    color: var(--color-cream-white, #F9F7F3);
     padding: 10px 14px;
     border-radius: 9999px;
-    border: 2px solid #FFE86B;
+    border: 2px solid var(--color-lemon-yellow, #FFE86B);
     z-index: 9999;
     transition: left 0.2s var(--ease-soft), transform 0.2s var(--ease-soft);
   }
@@ -120,7 +106,8 @@
   .skip-link:focus {
     left: 12px;
     transform: translateY(0);
-    outline: none;
+    outline: 3px solid var(--color-lemon-yellow);
+    outline-offset: 2px;
   }
 }
 
@@ -291,4 +278,148 @@ body:not(.hide-mobile-bar) .mobile-quick-bar {
 
 @utility animate-float {
   animation: float-gentle 3s ease-in-out infinite;
+}
+
+/* ========================================
+   FLOATING NAV & SCROLL SIGNAL
+   ======================================== */
+.floating-nav-container { pointer-events: none; }
+.floating-nav-container button,
+.floating-nav-container .hint { pointer-events: auto; }
+
+.scroll-signal { pointer-events: none; }
+.scroll-signal .capsule {
+  pointer-events: auto;
+  background: white;
+  border: 2px solid var(--color-deepInk, #0B2A1B);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  transition: transform 0.25s var(--ease-soft), box-shadow 0.25s var(--ease-soft), background 0.25s var(--ease-soft);
+}
+.scroll-signal .capsule.idle { transform: translateY(0); }
+.scroll-signal .capsule.running {
+  transform: translateY(-2px);
+  background: linear-gradient(120deg, rgba(255,232,107,0.9), rgba(124,255,178,0.9));
+  box-shadow: 0 10px 18px rgba(0,0,0,0.12);
+}
+.scroll-signal .wagon {
+  display: flex; align-items: center; gap: 6px;
+  animation: wagon-bob 1.8s ease-in-out infinite;
+}
+.scroll-signal .capsule.running .wagon { animation: wagon-run 0.7s ease-in-out infinite; }
+.scroll-signal .wheels { display: flex; gap: 4px; }
+.scroll-signal .wheel {
+  width: 9px; height: 9px;
+  border-radius: 999px;
+  border: 2px solid var(--color-deepInk, #0B2A1B);
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, rgba(0,77,51,0.2) 35%, transparent 36%);
+}
+.scroll-signal .wheel::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 999px;
+  border: 2px solid rgba(0,77,51,0.4);
+}
+.scroll-signal .capsule.running .wheel { animation: wheel-spin 0.5s linear infinite; }
+.scroll-signal .capsule.idle .wheel { animation: wheel-spin 2.4s linear infinite; opacity: 0.8; }
+.scroll-signal .arrow {
+  width: 14px; height: 14px;
+  color: var(--color-deepInk, #0B2A1B);
+  animation: arrow-bounce 1.8s ease-in-out infinite;
+}
+.scroll-signal .label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-deepInk, #0B2A1B);
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.scroll-signal .dot {
+  width: 6px; height: 6px; border-radius: 999px;
+  background: var(--color-bubble-pink, #FFB6D5);
+  box-shadow: 0 0 0 5px rgba(124,255,178,0.12);
+}
+
+@keyframes wheel-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes wagon-bob {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes wagon-run {
+  0%,100% { transform: translateY(-1px); }
+  50% { transform: translateY(1px); }
+}
+@keyframes arrow-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(3px); opacity: 1; }
+}
+
+/* ========================================
+   BRAND PLAQUE
+   ======================================== */
+.brand-plaque { pointer-events: none; transform: rotate(-1.2deg); }
+.brand-plaque .tag {
+  box-shadow: 0 8px 18px rgba(0,77,51,0.14), 0 2px 0 rgba(0,77,51,0.16), 0 0 0 1px rgba(0,77,51,0.08);
+}
+.brand-plaque .rope {
+  position: absolute; width: 3px;
+  background: linear-gradient(180deg, var(--color-deepInk, #0B2A1B), var(--color-deepInk, #0B2A1B));
+  border-radius: 99px;
+}
+.brand-plaque .rope.left { left: 10px; top: -16px; height: 24px; }
+.brand-plaque .rope.right { right: 14px; top: -28px; height: 38px; }
+.brand-plaque .knot {
+  position: absolute; width: 9px; height: 9px;
+  background: var(--color-deepInk, #0B2A1B);
+  border-radius: 99px;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.1);
+}
+.brand-plaque .knot.left { left: 6px; top: -19px; }
+.brand-plaque .knot.right { right: 9px; top: -31px; }
+.brand-plaque .wood {
+  background: linear-gradient(90deg, rgba(255,232,189,0.95), rgba(255,248,220,0.95));
+}
+.brand-plaque .grain {
+  background-image: repeating-linear-gradient(90deg, rgba(0,77,51,0.05) 0, rgba(0,77,51,0.05) 4px, transparent 4px, transparent 10px);
+  mix-blend-mode: multiply;
+}
+.brand-plaque .sticker {
+  position: absolute; width: 11px; height: 11px; border-radius: 999px;
+  display: grid; place-items: center; font-size: 8px; font-weight: 800;
+}
+.brand-plaque .sticker.star {
+  top: 4px; right: 6px;
+  background: var(--color-bubble-pink, #FFB6D5);
+  color: var(--color-deepInk, #0B2A1B);
+  box-shadow: 0 2px 0 rgba(0,77,51,0.18);
+}
+.brand-plaque .sticker.heart {
+  bottom: 4px; left: 6px;
+  background: var(--color-sky-blue, #8DEBFF);
+  color: var(--color-deepInk, #0B2A1B);
+  box-shadow: 0 2px 0 rgba(0,77,51,0.18);
+}
+@media (max-width: 767px) {
+  .brand-plaque { transform: scale(0.9) rotate(-1deg); }
+}
+
+/* ========================================
+   CONFETTI ANIMATION
+   ======================================== */
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
 }

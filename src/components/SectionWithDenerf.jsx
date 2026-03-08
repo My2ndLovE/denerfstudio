@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Check, Zap, DollarSign } from "lucide-react";
+import { Check, Zap, DollarSign, Rocket, Bot, Coins } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -211,19 +211,19 @@ export function SectionWithDenerf() {
 
     return (
         <section
-            id="section-denerf"
             ref={rootRef}
+            aria-label="What you can do with Denerf"
             className="min-h-screen bg-mintGreen flex items-start md:items-center justify-center px-4 pt-16 md:pt-0 overflow-hidden relative"
         >
             {/* Background Doodles */}
-            <svg className="doodle-svg absolute top-10 left-10 w-32 h-32 opacity-40 pointer-events-none will-change-transform" viewBox="0 0 100 100">
+            <svg className="doodle-svg absolute top-10 left-10 w-32 h-32 opacity-40 pointer-events-none will-change-transform" viewBox="0 0 100 100" aria-hidden="true">
                 <path className="doodle-path" d="M10,50 Q30,10 50,50 T90,50" fill="none" stroke="#004D33" strokeWidth="3" strokeLinecap="round" />
             </svg>
-            <svg className="doodle-svg absolute bottom-20 right-10 w-40 h-40 opacity-40 pointer-events-none will-change-transform" viewBox="0 0 100 100">
+            <svg className="doodle-svg absolute bottom-20 right-10 w-40 h-40 opacity-40 pointer-events-none will-change-transform" viewBox="0 0 100 100" aria-hidden="true">
                 <circle className="doodle-path" cx="50" cy="50" r="40" fill="none" stroke="#004D33" strokeWidth="3" strokeDasharray="10 5" />
             </svg>
 
-            <svg className="doodle-svg absolute top-1/3 right-5 w-24 h-24 opacity-30 pointer-events-none" viewBox="0 0 100 100">
+            <svg className="doodle-svg absolute top-1/3 right-5 w-24 h-24 opacity-30 pointer-events-none" viewBox="0 0 100 100" aria-hidden="true">
                 <path className="doodle-path" d="M20,80 Q50,20 80,80" fill="none" stroke="#004D33" strokeWidth="2" strokeLinecap="round" />
             </svg>
 
@@ -267,12 +267,12 @@ export function SectionWithDenerf() {
 
                 <div className="flex justify-center gap-4 md:gap-6 flex-wrap relative z-10">
                     {[
-                        { text: "Fast Delivery", icon: "🚀", color: "bg-lemonYellow" },
-                        { text: "Smart Code", icon: "🤖", color: "bg-skyBlue" },
-                        { text: "Affordable", icon: "💰", color: "bg-creamWhite" }
+                        { text: "Fast Delivery", Icon: Rocket, color: "bg-lemonYellow" },
+                        { text: "Smart Code", Icon: Bot, color: "bg-skyBlue" },
+                        { text: "Affordable", Icon: Coins, color: "bg-creamWhite" }
                     ].map((item, i) => (
                         <div key={i} className={`emoji-pill px-3 py-2 md:px-8 md:py-4 ${item.color} border-2 border-deepGreenText rounded-full text-deepGreenText font-bold shadow-[3px_3px_0px_0px_rgba(0,77,51,1)] md:shadow-[4px_4px_0px_0px_rgba(0,77,51,1)] hover:scale-110 hover:-rotate-3 transition-all duration-300 cursor-pointer flex items-center gap-2 md:gap-3 will-change-transform`}>
-                            <span className="text-base md:text-2xl filter drop-shadow-sm">{item.icon}</span>
+                            <item.Icon className="w-4 h-4 md:w-6 md:h-6 text-deepGreenText" />
                             <span className="text-xs md:text-base tracking-wide">{item.text}</span>
                         </div>
                     ))}

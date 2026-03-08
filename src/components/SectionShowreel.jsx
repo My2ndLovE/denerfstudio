@@ -89,6 +89,7 @@ export function SectionShowreel({ onOpenModal }) {
   return (
     <section
       ref={rootRef}
+      aria-label="Portfolio"
       className="section-showreel bg-offWhite overflow-hidden relative py-10"
     >
       {/* Pinned content wrapper */}
@@ -100,7 +101,7 @@ export function SectionShowreel({ onOpenModal }) {
         {/* Header with parallax */}
         <div
           ref={headerRef}
-          className="reel-intro px-4 md:px-16 lg:px-24 mb-4 md:mb-8 will-change-transform"
+          className="reel-intro px-4 md:px-16 lg:px-24 mb-4 md:mb-8"
         >
           <p className="text-xs uppercase tracking-[0.3em] font-semibold text-deepInk/60 mb-2 md:mb-3">
             SELECTED WORKS
@@ -117,7 +118,26 @@ export function SectionShowreel({ onOpenModal }) {
         {/* Horizontal scrolling container */}
         <div
           ref={containerRef}
-          className="flex gap-4 md:gap-6 px-4 md:px-8 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth"
+          role="region"
+          aria-label="Portfolio projects"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            const container = containerRef.current;
+            if (!container) return;
+            const firstCard = container.querySelector(".reel-card");
+            if (!firstCard) return;
+            const cardWidth = firstCard.getBoundingClientRect().width;
+            const gap = parseFloat(getComputedStyle(container).columnGap || getComputedStyle(container).gap || "0");
+            const segment = cardWidth + gap;
+            if (e.key === "ArrowRight") {
+              e.preventDefault();
+              container.scrollBy({ left: segment, behavior: "smooth" });
+            } else if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              container.scrollBy({ left: -segment, behavior: "smooth" });
+            }
+          }}
+          className="flex gap-4 md:gap-6 px-4 md:px-8 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth focus:outline-2 focus:outline-offset-2 focus:outline-deepGreenText"
           style={{
             width: "100%",
             scrollSnapType: "x mandatory",
@@ -127,7 +147,7 @@ export function SectionShowreel({ onOpenModal }) {
           {reels.map((item, index) => (
             <article
               key={index}
-              className="reel-card shrink-0 w-[82vw] sm:w-[320px] md:w-[360px] lg:w-[420px] bg-white border-2 border-deepInk rounded-[24px] md:rounded-[28px] shadow-[6px_8px_0_0_rgba(11,42,27,0.2)] md:shadow-[10px_12px_0_0_rgba(11,42,27,0.2)] overflow-hidden will-change-transform hover:shadow-[10px_12px_0_0_rgba(11,42,27,0.3)] md:hover:shadow-[14px_16px_0_0_rgba(11,42,27,0.3)] transition-shadow duration-300 snap-start"
+              className="reel-card shrink-0 w-[82vw] sm:w-[320px] md:w-[360px] lg:w-[420px] bg-white border-2 border-deepInk rounded-[24px] md:rounded-[28px] shadow-[6px_8px_0_0_rgba(11,42,27,0.2)] md:shadow-[10px_12px_0_0_rgba(11,42,27,0.2)] overflow-hidden hover:shadow-[10px_12px_0_0_rgba(11,42,27,0.3)] md:hover:shadow-[14px_16px_0_0_rgba(11,42,27,0.3)] transition-shadow duration-300 snap-start"
             >
               <div className="relative aspect-[3/4] overflow-hidden group">
                 {/* Gradient background */}
@@ -179,7 +199,6 @@ export function SectionShowreel({ onOpenModal }) {
                   className="relative overflow-hidden group px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-deepInk text-offWhite shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all duration-200 inline-flex items-center justify-center"
                 >
                   <span className="relative z-10">View Site</span>
-                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-shimmer-auto" />
                 </a>
                 <span className="px-2 py-1 md:px-3 md:py-1 rounded-full bg-neonMint text-deepInk border border-deepInk/20">
                   Live
@@ -190,7 +209,7 @@ export function SectionShowreel({ onOpenModal }) {
 
           {/* ETC... Card */}
           <article
-            className="reel-card shrink-0 w-[82vw] sm:w-[320px] md:w-[360px] lg:w-[420px] bg-deepInk border-2 border-deepInk rounded-[24px] md:rounded-[28px] shadow-[6px_8px_0_0_rgba(11,42,27,0.2)] md:shadow-[10px_12px_0_0_rgba(11,42,27,0.2)] overflow-hidden will-change-transform flex flex-col items-center justify-center text-center p-6 md:p-8 snap-start"
+            className="reel-card shrink-0 w-[82vw] sm:w-[320px] md:w-[360px] lg:w-[420px] bg-deepInk border-2 border-deepInk rounded-[24px] md:rounded-[28px] shadow-[6px_8px_0_0_rgba(11,42,27,0.2)] md:shadow-[10px_12px_0_0_rgba(11,42,27,0.2)] overflow-hidden flex flex-col items-center justify-center text-center p-6 md:p-8 snap-start"
           >
             <div className="text-offWhite space-y-4">
               <h3 className="text-3xl md:text-5xl font-display font-bold">And Etc...</h3>
@@ -211,12 +230,27 @@ export function SectionShowreel({ onOpenModal }) {
         </div>
 
         {/* Slider dots */}
-        <div className="flex items-center justify-center gap-2 mt-4 px-4">
-          {reels.map((_, idx) => (
-            <span
+        <div className="flex items-center justify-center gap-2 mt-4 px-4" role="tablist" aria-label="Portfolio slides">
+          {reels.map((item, idx) => (
+            <button
               key={idx}
-              className={`w-2 h-2 rounded-full transition-colors duration-200 ${activeIndex === idx ? "bg-deepInk" : "bg-deepInk/20"}`}
-            />
+              type="button"
+              role="tab"
+              aria-selected={activeIndex === idx}
+              aria-label={`Slide ${idx + 1}: ${item.title}`}
+              onClick={() => {
+                const container = containerRef.current;
+                if (!container) return;
+                const firstCard = container.querySelector(".reel-card");
+                if (!firstCard) return;
+                const cardWidth = firstCard.getBoundingClientRect().width;
+                const gap = parseFloat(getComputedStyle(container).columnGap || getComputedStyle(container).gap || "0");
+                container.scrollTo({ left: idx * (cardWidth + gap), behavior: "smooth" });
+              }}
+              className={`rounded-full transition-all duration-200 ${activeIndex === idx ? "w-3 h-3 bg-deepInk" : "w-2 h-2 bg-deepInk/20"} min-w-[44px] min-h-[44px] flex items-center justify-center`}
+            >
+              <span className={`block rounded-full ${activeIndex === idx ? "w-3 h-3 bg-deepInk" : "w-2 h-2 bg-deepInk/20"}`} />
+            </button>
           ))}
         </div>
       </div>

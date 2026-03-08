@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -6,7 +6,16 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function SectionLighter() {
     const rootRef = useRef(null);
-    const isMobileView = typeof window !== "undefined" ? window.matchMedia("(max-width: 767px)").matches : false;
+    const [isMobileView, setIsMobileView] = useState(
+        typeof window !== "undefined" ? window.matchMedia("(max-width: 767px)").matches : false
+    );
+
+    useEffect(() => {
+        const mql = window.matchMedia("(max-width: 767px)");
+        const handler = (e) => setIsMobileView(e.matches);
+        mql.addEventListener("change", handler);
+        return () => mql.removeEventListener("change", handler);
+    }, []);
 
     useLayoutEffect(() => {
         if (!rootRef.current) return;
@@ -100,6 +109,7 @@ export function SectionLighter() {
     return (
         <section
             ref={rootRef}
+            aria-label="Projects should feel lighter"
             className="bg-creamWhite flex flex-col md:flex-row items-start md:items-center justify-start md:justify-center px-4 md:px-20 pt-16 pb-10 md:pt-20 md:pb-20 gap-6 md:gap-12 overflow-hidden min-h-screen"
             style={{ perspective: "1200px" }}
         >

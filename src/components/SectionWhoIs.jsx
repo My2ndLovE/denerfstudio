@@ -174,6 +174,7 @@ export function SectionWhoIs() {
   return (
     <section
       ref={rootRef}
+      aria-label="Who Denerf is for"
       className="min-h-screen bg-mintGreen flex items-center justify-center px-4 overflow-hidden"
       style={{ perspective: "1500px" }}
     >

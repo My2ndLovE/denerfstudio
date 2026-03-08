@@ -12,7 +12,7 @@ export function SectionProcess() {
   ];
 
   return (
-    <section className="bg-gradient-to-b from-creamWhite to-mintGreen/25 px-4 py-16 md:py-24 flex justify-center">
+    <section aria-label="Our process" className="bg-gradient-to-b from-creamWhite to-mintGreen/25 px-4 py-16 md:py-24 flex justify-center">
       <div className="w-full max-w-5xl space-y-10">
         <div className="text-center space-y-3">
           <p className="text-xs uppercase tracking-[0.3em] font-semibold text-deepInk/60">How we work</p>

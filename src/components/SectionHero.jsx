@@ -1,7 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Sparkles, Play, ArrowRight } from "lucide-react";
+import { Sparkles, Play, ArrowRight, Pause } from "lucide-react";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,6 +20,8 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
 
   const isMounted = useRef(false);
   const [headlineIndex, setHeadlineIndex] = useState(0);
+  const [isRotationPaused, setIsRotationPaused] = useState(false);
+  const isRotationPausedRef = useRef(false);
   const headlines = [
     { line1: "Free demo.", line2: "Zero risk." },
     { line1: "Min cost.", line2: "Max quality." }
@@ -28,6 +31,7 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      if (isRotationPausedRef.current) return;
       if (verbRef.current) {
         gsap.to(verbRef.current, {
           y: -20,
@@ -70,6 +74,7 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      if (isRotationPausedRef.current) return;
       const tl = gsap.timeline({
         onComplete: () => setHeadlineIndex(prev => (prev + 1) % headlines.length)
       });
@@ -78,6 +83,12 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
     }, 4000);
     return () => clearInterval(interval);
   }, []);
+
+  const toggleRotation = () => {
+    const next = !isRotationPausedRef.current;
+    isRotationPausedRef.current = next;
+    setIsRotationPaused(next);
+  };
 
   useLayoutEffect(() => {
     if (!rootRef.current) return;
@@ -215,15 +226,6 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
     };
   }, []);
 
-  useEffect(() => {
-    const existingScript = document.querySelector("script[src='https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.5/dist/dotlottie-wc.js']");
-    if (existingScript) return;
-
-    const script = document.createElement("script");
-    script.src = "https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.5/dist/dotlottie-wc.js";
-    script.type = "module";
-    document.head.appendChild(script);
-  }, []);
 
   const handleMagnetMove = (e) => {
     if (!prefersFinePointer.current) return;
@@ -252,6 +254,7 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
   return (
     <section
       ref={rootRef}
+      aria-label="Hero"
       className="min-h-screen bg-gradient-to-br from-creamWhite via-mintGreen/30 to-skyBlue/40 flex flex-col items-center justify-center px-4 overflow-hidden relative perspective-1000"
     >
       {/* Multi-Layer Parallax Blobs */}
@@ -272,16 +275,26 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
       ></div>
 
       {/* Scribble accent for logo anim hook */}
-      <svg className="logo-scribble absolute top-4 left-5 w-12 h-6 text-deepInk/60 pointer-events-none" viewBox="0 0 100 40" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round">
+      <svg className="logo-scribble absolute top-4 left-5 w-12 h-6 text-deepInk/60 pointer-events-none" viewBox="0 0 100 40" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" aria-hidden="true">
         <path d="M5 25 C25 5, 45 35, 65 12 S95 30, 85 20" />
       </svg>
 
       <div className="z-10 text-center max-w-5xl mx-auto flex flex-col items-center gap-8">
 
         <div className="hero-content-wrapper space-y-6 flex flex-col items-center will-change-transform">
-          <div className="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold tracking-wide text-deepInk bg-white/60 rounded-full backdrop-blur-md border border-deepInk/10 shadow-sm hover:scale-105 transition-transform cursor-default">
-            <Sparkles className="w-4 h-4 text-neonMint fill-deepInk" />
-            ZERO RISK · PAY ONLY IF YOU LOVE IT
+          <div className="flex items-center gap-2">
+            <div className="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold tracking-wide text-deepInk bg-white/60 rounded-full backdrop-blur-md border border-deepInk/10 shadow-sm hover:scale-105 transition-transform cursor-default">
+              <Sparkles className="w-4 h-4 text-neonMint fill-deepInk" />
+              ZERO RISK · PAY ONLY IF YOU LOVE IT
+            </div>
+            <button
+              type="button"
+              onClick={toggleRotation}
+              className="p-2 rounded-full bg-white/60 backdrop-blur-md border border-deepInk/10 text-deepInk hover:bg-white/80 transition-colors"
+              aria-label={isRotationPaused ? "Play auto-rotating text" : "Pause auto-rotating text"}
+            >
+              {isRotationPaused ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
+            </button>
           </div>
 
           {/* Auto-Rotating Headline */}
@@ -290,7 +303,7 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
               {headlines[headlineIndex].line1}
             </div>
             <br />
-            <div className="hero-line-2 inline-block text-transparent bg-clip-text bg-gradient-to-r from-deepInk to-deepInk/80">
+            <div className="hero-line-2 inline-block text-deepInk">
               {headlines[headlineIndex].line2}
             </div>
           </h1>
@@ -309,16 +322,17 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
         </div>
 
         <div className="relative w-full flex items-center justify-center pt-0 -mt-16 sm:-mt-8 h-[300px] sm:h-[320px] md:h-[340px]">
-          <div className="hero-lottie absolute inset-x-0 bottom-[-80px] sm:bottom-[-48px] md:bottom-[-20px] flex items-center justify-center pointer-events-none will-change-transform">
-            <dotlottie-wc
+          <div className="hero-lottie absolute inset-x-0 bottom-[-80px] sm:bottom-[-48px] md:bottom-[-20px] flex items-center justify-center pointer-events-none will-change-transform" aria-hidden="true">
+            <DotLottieReact
               src="https://lottie.host/5d0fa4c5-4ca6-4419-8117-0c2d62fdf8d6/VOhL48A5qp.lottie"
+              loop
+              autoplay
+              renderConfig={{ autoResize: true }}
               style={{
                 width: "clamp(240px, 76vw, 440px)",
                 height: "clamp(180px, 62vw, 300px)"
               }}
-              autoplay
-              loop
-            ></dotlottie-wc>
+            />
           </div>
           <div className="relative z-10 hero-ctas flex flex-col sm:flex-row gap-5 items-center justify-center -translate-y-[212px] sm:-translate-y-32 md:-translate-y-20 will-change-transform">
             <div className="hero-btn-wrapper">
@@ -345,7 +359,6 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
                   <Play className="w-5 h-5 fill-current" />
                   See it in action
                 </span>
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-deepInk/10 to-transparent -translate-x-full animate-shimmer-auto" />
               </button>
             </div>
           </div>

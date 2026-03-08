@@ -28,7 +28,7 @@ export function SectionFaq({ onOpenModal }) {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="bg-offWhite px-4 py-16 md:py-24 flex justify-center">
+    <section aria-label="Frequently asked questions" className="bg-offWhite px-4 py-16 md:py-24 flex justify-center">
       <div className="w-full max-w-4xl space-y-8">
         <div className="text-center space-y-3">
           <p className="text-xs uppercase tracking-[0.3em] font-semibold text-deepInk/60">FAQ</p>
@@ -41,19 +41,28 @@ export function SectionFaq({ onOpenModal }) {
         <div className="space-y-3">
           {faqs.map((item, idx) => {
             const isOpen = idx === openIndex;
+            const panelId = `faq-panel-${idx}`;
+            const buttonId = `faq-button-${idx}`;
             return (
               <div key={item.q} className="border-2 border-deepGreenText bg-white rounded-2xl shadow-[6px_6px_0px_0px_rgba(0,77,51,0.2)] overflow-hidden">
                 <button
+                  id={buttonId}
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? -1 : idx)}
                   className="w-full px-5 py-4 flex items-center justify-between text-left"
                   aria-expanded={isOpen}
+                  aria-controls={panelId}
                 >
                   <span className="text-base md:text-lg font-display font-bold text-deepInk">{item.q}</span>
                   <ChevronDown className={`w-5 h-5 text-deepInk transition-transform ${isOpen ? "rotate-180" : ""}`} />
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-5 text-sm md:text-base text-deepInk/80 border-t border-deepGreenText/10">
+                  <div
+                    id={panelId}
+                    role="region"
+                    aria-labelledby={buttonId}
+                    className="px-5 pb-5 text-sm md:text-base text-deepInk/80 border-t border-deepGreenText/10"
+                  >
                     {item.a}
                   </div>
                 )}

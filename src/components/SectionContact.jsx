@@ -158,6 +158,7 @@ export function SectionContact() {
   return (
     <section
       ref={rootRef}
+      aria-label="Contact us"
       className="min-h-screen bg-gradient-to-b from-offWhite via-mintGreen/25 to-skyBlue/25 px-4 py-16 flex items-center justify-center"
       style={{ perspective: "1200px" }}
     >
@@ -229,7 +230,7 @@ export function SectionContact() {
                 <a
                   key={action.label}
                   href={action.href}
-                  className="quick-action-btn inline-flex items-center gap-2 px-4 py-2 rounded-full bg-offWhite/10 border border-offWhite/20 hover:bg-offWhite/20 hover:scale-105 transition-all text-sm font-semibold will-change-transform"
+                  className="quick-action-btn inline-flex items-center gap-2 px-4 py-2 rounded-full bg-offWhite/10 border border-offWhite/20 hover:bg-offWhite/20 hover:scale-105 transition-all text-sm font-semibold"
                 >
                   <action.icon className="w-4 h-4" />
                   {action.label}

@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SmilePlus } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -8,6 +9,7 @@ export function SectionTrust({ onOpenModal }) {
     const rootRef = useRef(null);
     const progressRef = useRef(null);
     const [showConfetti, setShowConfetti] = useState(false);
+    const showConfettiRef = useRef(false);
 
     useLayoutEffect(() => {
         if (!rootRef.current) return;
@@ -26,15 +28,16 @@ export function SectionTrust({ onOpenModal }) {
                 scrollTrigger: {
                     trigger: rootRef.current,
                     start: "top top",
-                    end: scrollDistance, // Pin long enough for the content height
+                    end: scrollDistance,
                     pin: true,
                     scrub: 1,
                     anticipatePin: 1,
                     onUpdate: (self) => {
-                        // Trigger confetti near end of pin
-                        if (self.progress >= 0.9 && !showConfetti) {
+                        if (self.progress >= 0.9 && !showConfettiRef.current) {
+                            showConfettiRef.current = true;
                             setShowConfetti(true);
-                        } else if (self.progress < 0.8 && showConfetti) {
+                        } else if (self.progress < 0.8 && showConfettiRef.current) {
+                            showConfettiRef.current = false;
                             setShowConfetti(false);
                         }
                     }
@@ -172,7 +175,7 @@ export function SectionTrust({ onOpenModal }) {
             }
             ctx.revert();
         };
-    }, [showConfetti]);
+    }, []);
 
     // Confetti particles
     const confettiColors = ["#FFE86B", "#77F0A0", "#FFB6D5", "#8DEBFF", "#7CFFB2"];
@@ -180,6 +183,7 @@ export function SectionTrust({ onOpenModal }) {
     return (
         <section
             ref={rootRef}
+            aria-label="Work first, pay later"
             className="min-h-screen bg-creamWhite flex flex-col items-center justify-center px-4 overflow-hidden relative"
             style={{ perspective: "1200px" }}
         >
@@ -189,7 +193,7 @@ export function SectionTrust({ onOpenModal }) {
                     {[...Array(30)].map((_, i) => (
                         <div
                             key={i}
-                            className="confetti-particle animate-bounce"
+                            className="confetti-particle"
                             style={{
                                 left: `${Math.random() * 100}%`,
                                 top: `-20px`,
@@ -215,7 +219,7 @@ export function SectionTrust({ onOpenModal }) {
 
             <div ref={progressRef} className="w-full max-w-4xl mb-12 md:mb-16 relative px-2">
                 {/* Progress Bar Background */}
-                <div className="w-full h-3 md:h-4 bg-gray-200 rounded-full overflow-hidden shadow-inner">
+                <div className="w-full h-3 md:h-4 bg-deepInk/10 rounded-full overflow-hidden shadow-inner">
                     <div className="progress-bar-fill w-0 h-full bg-gradient-to-r from-lemonYellow via-neonMint to-lemonYellow relative">
                         {/* Shimmer effect */}
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-pulse"></div>
@@ -246,7 +250,7 @@ export function SectionTrust({ onOpenModal }) {
                 style={{ transformStyle: "preserve-3d" }}
             >
                 <p className="text-xl md:text-2xl font-bold text-deepGreenText flex items-center gap-3 md:gap-4">
-                    <span className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full border-2 border-deepGreenText flex items-center justify-center text-xl md:text-2xl group-hover:scale-125 transition-transform duration-300">😊</span>
+                    <span className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full border-2 border-deepGreenText flex items-center justify-center group-hover:scale-125 transition-transform duration-300"><SmilePlus className="w-5 h-5 md:w-6 md:h-6 text-deepGreenText" /></span>
                     <span>Satisfaction Guaranteed</span>
                 </p>
             </div>
@@ -261,19 +265,6 @@ export function SectionTrust({ onOpenModal }) {
                 </button>
             </div>
 
-            {/* CSS for confetti animation */}
-            <style>{`
-                @keyframes fall {
-                    0% {
-                        transform: translateY(0) rotate(0deg);
-                        opacity: 1;
-                    }
-                    100% {
-                        transform: translateY(100vh) rotate(720deg);
-                        opacity: 0;
-                    }
-                }
-            `}</style>
         </section>
     );
 }
