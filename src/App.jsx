@@ -153,13 +153,18 @@ function App() {
     const html = document.documentElement;
     const prevScrollBehavior = html.style.scrollBehavior;
 
-    // Force an immediate jump to the real top (some pinned ScrollTriggers + CSS smooth scroll
-    // can otherwise "step" back through sections).
+    // Disable all ScrollTriggers so pinned sections don't fight the scroll position
+    ScrollTrigger.getAll().forEach((st) => st.disable(false));
+
     html.style.scrollBehavior = "auto";
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    html.scrollTop = 0;
+    document.body.scrollTop = 0;
 
+    // Re-enable ScrollTriggers after the scroll position has settled
     window.requestAnimationFrame(() => {
       html.style.scrollBehavior = prevScrollBehavior;
+      ScrollTrigger.getAll().forEach((st) => st.enable());
       ScrollTrigger.refresh();
     });
   };
