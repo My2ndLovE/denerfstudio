@@ -158,7 +158,7 @@ export function SectionToolbelt() {
                                 className="absolute top-1/2 left-1/2 w-0 h-0"
                                 style={{ transform: `rotate(${angle}deg)` }}
                             >
-                                <div className="tool-icon-glow absolute -top-8 -left-8 w-16 h-16 bg-white border-2 border-deepGreenText rounded-full flex items-center justify-center shadow-lg translate-x-[40vw] md:translate-x-[280px] will-change-transform transition-shadow duration-[--duration-chill]">
+                                <div className="tool-icon-glow absolute -top-8 -left-8 w-16 h-16 bg-white border-2 border-deepGreenText rounded-full flex items-center justify-center shadow-lg translate-x-[40vw] md:translate-x-[280px] will-change-transform">
                                     <div className="icon-inner">
                                         <Icon className="w-8 h-8 text-deepGreenText" />
                                     </div>
@@ -178,7 +178,7 @@ export function SectionToolbelt() {
                                 className="absolute top-1/2 left-1/2 w-0 h-0"
                                 style={{ transform: `rotate(${angle}deg)` }}
                             >
-                                <div className="tool-icon-glow absolute -top-6 -left-6 w-12 h-12 bg-lemonYellow border-2 border-deepGreenText rounded-full flex items-center justify-center shadow-md translate-x-[25vw] md:translate-x-[180px] will-change-transform transition-shadow duration-[--duration-chill]">
+                                <div className="tool-icon-glow absolute -top-6 -left-6 w-12 h-12 bg-lemonYellow border-2 border-deepGreenText rounded-full flex items-center justify-center shadow-md translate-x-[25vw] md:translate-x-[180px] will-change-transform">
                                     <div className="icon-inner">
                                         <Icon className="w-6 h-6 text-deepGreenText" />
                                     </div>
@@ -190,7 +190,7 @@ export function SectionToolbelt() {
 
                 {/* Central Card */}
                 <div
-                    className="tool-card w-48 h-48 md:w-64 md:h-64 bg-mintGreen rounded-3xl border-4 border-deepGreenText shadow-[--shadow-brutal-lg] z-10 relative group will-change-transform transition-shadow duration-500"
+                    className="tool-card w-48 h-48 md:w-64 md:h-64 bg-mintGreen rounded-3xl border-4 border-deepGreenText shadow-[--shadow-brutal-lg] z-10 relative group will-change-transform"
                     style={{ transformStyle: "preserve-3d" }}
                 >
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--color-skyBlue)_0%,_transparent_70%)] opacity-0 group-hover:opacity-50 transition-opacity duration-500 rounded-3xl"></div>

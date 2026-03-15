@@ -44,12 +44,12 @@ export function SectionBlob() {
                 // Lottie appears with the blob (no scale to avoid buffer mismatch)
                 .fromTo(".lottie-container",
                     { y: 50, autoAlpha: 0 },
-                    { y: 0, autoAlpha: 1, duration: 1.2, ease: "back.out(2)" },
+                    { y: 0, autoAlpha: 1, duration: 1.2, ease: "back.out(1.4)" },
                     "-=1.5"
                 )
                 .fromTo(".tech-icon",
                     { scale: 0, autoAlpha: 0, rotation: -180 },
-                    { scale: 1, autoAlpha: 1, rotation: 0, duration: 1.2, stagger: 0.1, ease: "back.out(2)" },
+                    { scale: 1, autoAlpha: 1, rotation: 0, duration: 1.2, stagger: 0.1, ease: "back.out(1.4)" },
                     "-=1"
                 );
 

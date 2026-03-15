@@ -2,23 +2,26 @@
 
 import { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
+import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SectionHero } from "@/components/sections/SectionHero";
-import { SectionWithDenerf } from "@/components/sections/SectionWithDenerf";
-import { SectionBlob } from "@/components/sections/SectionBlob";
-import { SectionLighter } from "@/components/sections/SectionLighter";
-import { SectionWhoIs } from "@/components/sections/SectionWhoIs";
-import { SectionShowreel } from "@/components/sections/SectionShowreel";
-import { SectionToolbelt } from "@/components/sections/SectionToolbelt";
-import { SectionTrust } from "@/components/sections/SectionTrust";
-import { SectionContact } from "@/components/sections/SectionContact";
-import { SectionProcess } from "@/components/sections/SectionProcess";
-import { SectionFaq } from "@/components/sections/SectionFaq";
-import { SectionFooter } from "@/components/sections/SectionFooter";
 import { MobileQuickBar } from "@/components/MobileQuickBar";
 import { ContactModal } from "@/components/ContactModal";
 import { ArrowDown, ArrowUp } from "lucide-react";
+
+// Lazy-load below-fold sections to reduce initial bundle
+const SectionWithDenerf = dynamic(() => import("@/components/sections/SectionWithDenerf").then(m => m.SectionWithDenerf ? { default: m.SectionWithDenerf } : m), { ssr: false });
+const SectionBlob = dynamic(() => import("@/components/sections/SectionBlob").then(m => m.SectionBlob ? { default: m.SectionBlob } : m), { ssr: false });
+const SectionLighter = dynamic(() => import("@/components/sections/SectionLighter").then(m => m.SectionLighter ? { default: m.SectionLighter } : m), { ssr: false });
+const SectionWhoIs = dynamic(() => import("@/components/sections/SectionWhoIs").then(m => m.SectionWhoIs ? { default: m.SectionWhoIs } : m), { ssr: false });
+const SectionShowreel = dynamic(() => import("@/components/sections/SectionShowreel").then(m => m.SectionShowreel ? { default: m.SectionShowreel } : m), { ssr: false });
+const SectionToolbelt = dynamic(() => import("@/components/sections/SectionToolbelt").then(m => m.SectionToolbelt ? { default: m.SectionToolbelt } : m), { ssr: false });
+const SectionTrust = dynamic(() => import("@/components/sections/SectionTrust").then(m => m.SectionTrust ? { default: m.SectionTrust } : m), { ssr: false });
+const SectionContact = dynamic(() => import("@/components/sections/SectionContact").then(m => m.SectionContact ? { default: m.SectionContact } : m), { ssr: false });
+const SectionProcess = dynamic(() => import("@/components/sections/SectionProcess").then(m => m.SectionProcess ? { default: m.SectionProcess } : m), { ssr: false });
+const SectionFaq = dynamic(() => import("@/components/sections/SectionFaq").then(m => m.SectionFaq ? { default: m.SectionFaq } : m), { ssr: false });
+const SectionFooter = dynamic(() => import("@/components/sections/SectionFooter").then(m => m.SectionFooter ? { default: m.SectionFooter } : m), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -112,27 +115,30 @@ export default function HomepageClient() {
 
     if (!sections.length) return;
 
+    // Batch-read layout properties once to avoid repeated reflows
+    const sectionRects = sections.map((s) => ({ top: s.offsetTop, height: s.offsetHeight }));
+
     const scrollMid = window.scrollY + window.innerHeight / 2;
 
-    let currentIndex = sections.findIndex((section) => {
-      const start = section.offsetTop;
-      const end = section.offsetTop + section.offsetHeight;
+    let currentIndex = sectionRects.findIndex((rect) => {
+      const start = rect.top;
+      const end = rect.top + rect.height;
       return scrollMid >= start && scrollMid < end;
     });
 
     if (currentIndex === -1) {
-      currentIndex = sections.reduce((idx, section, i) => {
-        return section.offsetTop <= scrollMid ? i : idx;
+      currentIndex = sectionRects.reduce((idx, rect, i) => {
+        return rect.top <= scrollMid ? i : idx;
       }, -1);
     }
 
-    const nextSection = sections[currentIndex + 1];
-    if (!nextSection) return;
+    const nextRect = sectionRects[currentIndex + 1];
+    if (!nextRect) return;
 
-    const sectionTop = nextSection.offsetTop;
-    const sectionEnd = sectionTop + nextSection.offsetHeight;
+    const sectionTop = nextRect.top;
+    const sectionEnd = sectionTop + nextRect.height;
 
-    const desired = sectionTop + nextSection.offsetHeight * 0.6;
+    const desired = sectionTop + nextRect.height * 0.6;
     const clampEnd = sectionEnd - window.innerHeight * 0.5;
     const targetOffset = Math.max(sectionTop, Math.min(desired, clampEnd));
 
@@ -192,7 +198,7 @@ export default function HomepageClient() {
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <main id="main-content" className="w-full overflow-hidden">
         {/* Hanging logo plaque (non-blocking) */}
-        <div className="brand-plaque fixed top-1 left-2 md:top-4 md:left-4 z-[40] scale-100 md:scale-[1.15] origin-top-left">
+        <div aria-hidden="true" className="brand-plaque fixed top-1 left-2 md:top-4 md:left-4 z-[40] scale-100 md:scale-[1.15] origin-top-left">
           <div className="rope left"></div>
           <div className="rope right"></div>
           <div className="knot left"></div>
@@ -254,7 +260,7 @@ export default function HomepageClient() {
       {isMounted && typeof document !== "undefined" && createPortal(
         <>
           {!isAtEnd && (
-            <div className="scroll-signal fixed left-3 bottom-4 md:left-1/2 md:bottom-6 md:-translate-x-1/2 z-[28]">
+            <div aria-hidden="true" className="scroll-signal fixed left-3 bottom-4 md:left-1/2 md:bottom-6 md:-translate-x-1/2 z-[28]">
               <div className={`capsule ${isScrolling ? "running" : "idle"} flex items-center gap-2 bg-white/95 backdrop-blur-lg rounded-full px-3 py-1.5 shadow-[2px_2px_0px_0px_rgba(0,77,51,0.18)] md:gap-2`}>
                 <div className="wagon">
                   <div className="wheels">
@@ -265,7 +271,7 @@ export default function HomepageClient() {
                 <div className="flex items-center gap-1.5 pr-1">
                   {!isScrolling && <ArrowDown className="arrow" />}
                   {isScrolling && <span className="dot"></span>}
-                  <span className="label select-none">
+                  <span aria-live="polite" className="label select-none">
                     {isScrolling ? "Keep rolling!" : "Scroll to reveal"}
                   </span>
                 </div>

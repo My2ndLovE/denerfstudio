@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useLayoutEffect, useState } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -71,6 +72,17 @@ export function SectionShowreel({ onOpenModal }) {
   const containerRef = useRef(null);
   const headerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const lastScrollUpdate = useRef(0);
+
+  const getCardMetrics = () => {
+    const container = containerRef.current;
+    const firstCard = container?.querySelector(".reel-card");
+    if (!firstCard || !container) return { cardWidth: 0, gap: 0, segment: 0 };
+    const cardWidth = firstCard.getBoundingClientRect().width;
+    const gap = parseFloat(getComputedStyle(container).columnGap || getComputedStyle(container).gap || "0");
+    const segment = cardWidth + gap;
+    return { cardWidth, gap, segment };
+  };
 
   // Scroll-triggered entrance
   useLayoutEffect(() => {
@@ -124,11 +136,10 @@ export function SectionShowreel({ onOpenModal }) {
     if (!container) return;
 
     const handleScroll = () => {
-      const firstCard = container.querySelector(".reel-card");
-      if (!firstCard) return;
-      const cardWidth = firstCard.getBoundingClientRect().width;
-      const gap = parseFloat(getComputedStyle(container).columnGap || getComputedStyle(container).gap || "0");
-      const segment = cardWidth + gap;
+      const now = Date.now();
+      if (now - lastScrollUpdate.current < 100) return;
+      lastScrollUpdate.current = now;
+      const { segment } = getCardMetrics();
       const idx = Math.round(container.scrollLeft / (segment || 1));
       setActiveIndex(Math.min(reels.length - 1, Math.max(0, idx)));
     };
@@ -172,15 +183,12 @@ export function SectionShowreel({ onOpenModal }) {
           ref={containerRef}
           role="region"
           aria-label="Portfolio projects"
+          aria-live="polite"
           tabIndex={0}
           onKeyDown={(e) => {
             const container = containerRef.current;
             if (!container) return;
-            const firstCard = container.querySelector(".reel-card");
-            if (!firstCard) return;
-            const cardWidth = firstCard.getBoundingClientRect().width;
-            const gap = parseFloat(getComputedStyle(container).columnGap || getComputedStyle(container).gap || "0");
-            const segment = cardWidth + gap;
+            const { segment } = getCardMetrics();
             if (e.key === "ArrowRight") {
               e.preventDefault();
               container.scrollBy({ left: segment, behavior: "smooth" });
@@ -206,13 +214,14 @@ export function SectionShowreel({ onOpenModal }) {
                 <div className="absolute inset-0" style={{ background: item.gradient }}></div>
 
                 {/* Image */}
-                <img
+                <Image
                   className="reel-image absolute inset-0 w-full h-full object-cover mix-blend-overlay transition-transform duration-[--duration-chill] group-hover:scale-110"
                   src={item.image}
                   alt={`${item.title} ${item.type} preview`}
-                  width="900"
-                  height="1200"
+                  width={900}
+                  height={1200}
                   loading="lazy"
+                  sizes="(max-width: 768px) 80vw, 33vw"
                 />
 
                 {/* Overlay gradient */}
@@ -248,7 +257,8 @@ export function SectionShowreel({ onOpenModal }) {
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-deepInk text-offWhite shadow-[--shadow-brutal-sm-ink] hover:shadow-[--shadow-brutal-sm] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all duration-[--duration-snappy] inline-flex items-center justify-center"
+                  aria-label={"View " + item.title + " website"}
+                  className="px-4 py-2.5 md:px-4 md:py-2 min-h-[44px] rounded-full bg-deepInk text-offWhite shadow-[--shadow-brutal-sm-ink] hover:shadow-[--shadow-brutal-sm] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all duration-[--duration-snappy] inline-flex items-center justify-center"
                 >
                   View Site
                 </a>
@@ -292,11 +302,8 @@ export function SectionShowreel({ onOpenModal }) {
               onClick={() => {
                 const container = containerRef.current;
                 if (!container) return;
-                const firstCard = container.querySelector(".reel-card");
-                if (!firstCard) return;
-                const cardWidth = firstCard.getBoundingClientRect().width;
-                const gap = parseFloat(getComputedStyle(container).columnGap || getComputedStyle(container).gap || "0");
-                container.scrollTo({ left: idx * (cardWidth + gap), behavior: "smooth" });
+                const { segment } = getCardMetrics();
+                container.scrollTo({ left: idx * segment, behavior: "smooth" });
               }}
               className={`rounded-full transition-all duration-[--duration-snappy] ${activeIndex === idx ? "w-3 h-3 bg-deepInk" : "w-2 h-2 bg-deepInk/20"} min-w-[44px] min-h-[44px] flex items-center justify-center`}
             >

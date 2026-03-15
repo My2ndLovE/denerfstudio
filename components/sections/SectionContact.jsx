@@ -195,6 +195,7 @@ export function SectionContact() {
                 <a
                   className="inline-flex items-center gap-2 text-sm font-bold text-deepInk group-hover:translate-x-2 transition-transform"
                   href="mailto:sam@denerf.studio?subject=Project%20brief&body=Tell%20us%20a%20bit%20about%20your%20project%2C%20timeline%2C%20and%20budget."
+                  aria-label={"Start brief for " + option.title}
                 >
                   Start this brief
                   <span aria-hidden="true" className="text-lg">↗</span>
@@ -232,7 +233,8 @@ export function SectionContact() {
                 <a
                   key={action.label}
                   href={action.href}
-                  className="quick-action-btn inline-flex items-center gap-2 px-4 py-2 rounded-full bg-offWhite/10 border border-offWhite/20 hover:bg-offWhite/20 hover:scale-105 transition-all text-sm font-semibold"
+                  className="quick-action-btn inline-flex items-center gap-2 px-4 py-3 min-h-[44px] rounded-full bg-offWhite/10 border border-offWhite/20 hover:bg-offWhite/20 hover:scale-105 transition-all text-sm font-semibold"
+                  aria-label={"Contact via " + action.label}
                 >
                   <action.icon className="w-4 h-4" />
                   {action.label}
@@ -262,9 +264,11 @@ export function SectionContact() {
               href="https://wa.me/60165271501?text=I'd%20like%20to%20book%20a%2015-min%20intro%20call%20with%20Denerf%20Studio."
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Book a calendar slot"
             >
               Book a slot
             </a>
+
           </div>
         </div>
       </div>

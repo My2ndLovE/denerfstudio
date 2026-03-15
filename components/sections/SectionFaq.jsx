@@ -117,7 +117,7 @@ export function SectionFaq({ onOpenModal }) {
                   id={buttonId}
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? -1 : idx)}
-                  className="w-full px-5 py-4 flex items-center justify-between text-left"
+                  className="w-full px-5 py-4 flex items-center justify-between text-left focus-visible:ring-2 focus-visible:ring-deepGreenText focus-visible:ring-offset-2"
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                 >
@@ -151,6 +151,7 @@ export function SectionFaq({ onOpenModal }) {
             type="button"
             onClick={onOpenModal}
             className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-neonMint text-deepInk font-bold border-2 border-deepGreenText hover:-translate-y-1 transition-transform shadow-[--shadow-brutal-sm]"
+            aria-label="Start a chat with Denerf Studio"
           >
             <MessageCircle className="w-5 h-5" />
             Start a chat

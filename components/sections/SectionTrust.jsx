@@ -60,7 +60,7 @@ export function SectionTrust({ onOpenModal }) {
 
             // 2. PROGRESS BAR FILL (Scrubbed)
             tl.to(".progress-bar-fill", {
-                width: "100%",
+                scaleX: 1,
                 duration: 3, // Takes up significant portion of scroll
                 ease: "none"
             });
@@ -77,7 +77,7 @@ export function SectionTrust({ onOpenModal }) {
                         scale: 1,
                         opacity: 1,
                         duration: 0.5,
-                        ease: "back.out(2)"
+                        ease: "back.out(1.4)"
                     },
                     position
                 );
@@ -132,25 +132,31 @@ export function SectionTrust({ onOpenModal }) {
         // 3D Tilt for Pay Later Card
         const card = rootRef.current.querySelector(".pay-later-card");
 
+        let ticking = false;
         const handleCardMove = (e) => {
-            if (window.matchMedia("(hover: none)").matches) return;
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+                if (window.matchMedia("(hover: none)").matches) { ticking = false; return; }
 
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
 
-            const rotateX = ((y - centerY) / centerY) * -15;
-            const rotateY = ((x - centerX) / centerX) * 15;
+                const rotateX = ((y - centerY) / centerY) * -15;
+                const rotateY = ((x - centerX) / centerX) * 15;
 
-            gsap.to(card, {
-                rotationX: rotateX,
-                rotationY: rotateY,
-                scale: 1.05,
-                duration: 0.4,
-                ease: "power2.out",
-                transformPerspective: 1000
+                gsap.to(card, {
+                    rotationX: rotateX,
+                    rotationY: rotateY,
+                    scale: 1.05,
+                    duration: 0.4,
+                    ease: "power2.out",
+                    transformPerspective: 1000
+                });
+                ticking = false;
             });
         };
 
@@ -161,7 +167,7 @@ export function SectionTrust({ onOpenModal }) {
                 scale: 1,
                 rotation: 2,
                 duration: 0.5,
-                ease: "elastic.out(1, 0.5)"
+                ease: "power3.out"
             });
         };
 
@@ -180,7 +186,13 @@ export function SectionTrust({ onOpenModal }) {
     }, []);
 
     // Confetti particles
-    const confettiColors = ["#FFE86B", "#77F0A0", "#FFB6D5", "#8DEBFF", "#7CFFB2"];
+    const confettiColors = [
+        getComputedStyle(document.documentElement).getPropertyValue("--color-lemonYellow").trim() || "#FFE86B",
+        getComputedStyle(document.documentElement).getPropertyValue("--color-mintGreen").trim() || "#77F0A0",
+        getComputedStyle(document.documentElement).getPropertyValue("--color-bubblePink").trim() || "#FFB6D5",
+        getComputedStyle(document.documentElement).getPropertyValue("--color-skyBlue").trim() || "#8DEBFF",
+        getComputedStyle(document.documentElement).getPropertyValue("--color-neonMint").trim() || "#7CFFB2",
+    ];
 
     const confettiParticles = useMemo(() =>
         [...Array(30)].map(() => ({
@@ -235,9 +247,7 @@ export function SectionTrust({ onOpenModal }) {
             <div ref={progressRef} className="w-full max-w-4xl mb-12 md:mb-16 relative px-2">
                 {/* Progress Bar Background */}
                 <div className="w-full h-3 md:h-4 bg-deepInk/10 rounded-full overflow-hidden shadow-inner">
-                    <div className="progress-bar-fill w-0 h-full bg-gradient-to-r from-lemonYellow via-neonMint to-lemonYellow relative">
-                        {/* Shimmer effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-pulse"></div>
+                    <div className="progress-bar-fill w-full origin-left scale-x-0 h-full bg-gradient-to-r from-lemonYellow via-neonMint to-lemonYellow">
                     </div>
                 </div>
 
@@ -250,7 +260,7 @@ export function SectionTrust({ onOpenModal }) {
                         { step: "4", label: "Launch & Pay" }
                     ].map((item, i) => (
                         <div key={i} className="progress-step flex flex-col items-center gap-2 will-change-transform">
-                            <div className="step-circle w-8 h-8 md:w-12 md:h-12 bg-white border-2 md:border-4 border-deepGreenText rounded-full flex items-center justify-center font-bold text-deepGreenText z-10 shadow-sm text-sm md:text-base transition-shadow duration-[--duration-chill]">
+                            <div className="step-circle w-8 h-8 md:w-12 md:h-12 bg-white border-2 md:border-4 border-deepGreenText rounded-full flex items-center justify-center font-bold text-deepGreenText z-10 shadow-sm text-sm md:text-base">
                                 {item.step}
                             </div>
                             <span className="text-[10px] md:text-sm font-bold text-deepGreenText bg-white/90 px-1 md:px-2 py-0.5 md:py-1 rounded backdrop-blur-sm whitespace-nowrap shadow-sm">
@@ -274,7 +284,8 @@ export function SectionTrust({ onOpenModal }) {
                 <button
                     type="button"
                     onClick={onOpenModal}
-                    className="group relative trust-cta px-8 py-4 md:px-12 md:py-6 bg-lemonYellow border-4 border-deepGreenText text-xl md:text-2xl font-bold text-deepGreenText rounded-full shadow-[--shadow-brutal-sm] md:shadow-[--shadow-brutal-md] hover:shadow-[--shadow-brutal-lg] md:hover:shadow-[--shadow-brutal-xl] hover:-translate-x-1 hover:-translate-y-1 active:shadow-[--shadow-brutal-xs] active:translate-x-1 active:translate-y-1 transition-all duration-[--duration-snappy] will-change-transform glow-pulse overflow-hidden"
+                    aria-label="Start a free demo project"
+                    className="group relative trust-cta px-8 py-4 md:px-12 md:py-6 bg-lemonYellow border-4 border-deepGreenText text-xl md:text-2xl font-bold text-deepGreenText rounded-full shadow-[--shadow-brutal-sm] md:shadow-[--shadow-brutal-md] hover:shadow-[--shadow-brutal-lg] md:hover:shadow-[--shadow-brutal-xl] hover:-translate-x-1 hover:-translate-y-1 active:shadow-[--shadow-brutal-xs] active:translate-x-1 active:translate-y-1 transition-all duration-[--duration-snappy] will-change-transform overflow-hidden"
                 >
                     <span className="relative z-10">Start free demo</span>
                     <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer-auto" />

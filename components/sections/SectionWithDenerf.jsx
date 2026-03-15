@@ -132,38 +132,44 @@ export function SectionWithDenerf() {
         // --- Interactive 3D Tilt & Glare ---
         const cards = document.querySelectorAll(".feature-card");
 
+        let ticking = false;
         const handleCardMove = (e) => {
-            if (window.matchMedia("(hover: none)").matches) return;
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+                if (window.matchMedia("(hover: none)").matches) { ticking = false; return; }
 
-            const card = e.currentTarget;
-            const glare = card.querySelector(".card-glare");
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
+                const card = e.currentTarget;
+                const glare = card.querySelector(".card-glare");
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
 
-            const rotateX = ((y - centerY) / centerY) * -18;
-            const rotateY = ((x - centerX) / centerX) * 18;
+                const rotateX = ((y - centerY) / centerY) * -18;
+                const rotateY = ((x - centerX) / centerX) * 18;
 
-            gsap.to(card, {
-                rotationX: rotateX,
-                rotationY: rotateY,
-                scale: 1.08,
-                z: 50,
-                duration: 0.4,
-                ease: "power2.out",
-                transformPerspective: 1000
-            });
-
-            if (glare) {
-                gsap.to(glare, {
-                    x: (x - centerX) * 0.8,
-                    y: (y - centerY) * 0.8,
-                    opacity: 0.7,
-                    duration: 0.4
+                gsap.to(card, {
+                    rotationX: rotateX,
+                    rotationY: rotateY,
+                    scale: 1.08,
+                    z: 50,
+                    duration: 0.4,
+                    ease: "power2.out",
+                    transformPerspective: 1000
                 });
-            }
+
+                if (glare) {
+                    gsap.to(glare, {
+                        x: (x - centerX) * 0.8,
+                        y: (y - centerY) * 0.8,
+                        opacity: 0.7,
+                        duration: 0.4
+                    });
+                }
+                ticking = false;
+            });
         };
 
         const handleCardLeave = (e) => {
@@ -176,7 +182,7 @@ export function SectionWithDenerf() {
                 scale: 1,
                 z: 0,
                 duration: 0.6,
-                ease: "elastic.out(1, 0.5)"
+                ease: "power3.out"
             });
 
             if (glare) {
@@ -218,10 +224,10 @@ export function SectionWithDenerf() {
             className="min-h-screen bg-mintGreen flex items-start md:items-center justify-center px-4 pt-16 md:pt-0 overflow-hidden relative"
         >
             {/* Background Doodles */}
-            <svg className="doodle-svg absolute top-10 left-10 w-32 h-32 opacity-40 pointer-events-none will-change-transform" viewBox="0 0 100 100" aria-hidden="true">
+            <svg className="doodle-svg absolute top-10 left-10 w-32 h-32 opacity-40 pointer-events-none" viewBox="0 0 100 100" aria-hidden="true">
                 <path className="doodle-path" d="M10,50 Q30,10 50,50 T90,50" fill="none" stroke="#004D33" strokeWidth="3" strokeLinecap="round" />
             </svg>
-            <svg className="doodle-svg absolute bottom-20 right-10 w-40 h-40 opacity-40 pointer-events-none will-change-transform" viewBox="0 0 100 100" aria-hidden="true">
+            <svg className="doodle-svg absolute bottom-20 right-10 w-40 h-40 opacity-40 pointer-events-none" viewBox="0 0 100 100" aria-hidden="true">
                 <circle className="doodle-path" cx="50" cy="50" r="40" fill="none" stroke="#004D33" strokeWidth="3" strokeDasharray="10 5" />
             </svg>
 
@@ -273,10 +279,10 @@ export function SectionWithDenerf() {
                         { text: "Smart Code", Icon: Bot, color: "bg-skyBlue" },
                         { text: "Affordable", Icon: Coins, color: "bg-creamWhite" }
                     ].map((item, i) => (
-                        <div key={i} className={`emoji-pill px-3 py-2 md:px-8 md:py-4 ${item.color} border-2 border-deepGreenText rounded-full text-deepGreenText font-bold shadow-[--shadow-brutal-xs] md:shadow-[--shadow-brutal-sm] hover:scale-110 hover:-rotate-3 transition-all duration-[--duration-chill] cursor-pointer flex items-center gap-2 md:gap-3 will-change-transform`}>
+                        <button type="button" key={i} aria-label={item.text} className={`emoji-pill px-4 py-3 md:px-8 md:py-4 min-h-[44px] ${item.color} border-2 border-deepGreenText rounded-full text-deepGreenText font-bold shadow-[--shadow-brutal-xs] md:shadow-[--shadow-brutal-sm] hover:scale-110 hover:-rotate-3 transition-all duration-[--duration-chill] cursor-pointer flex items-center gap-2 md:gap-3 will-change-transform`}>
                             <item.Icon className="w-4 h-4 md:w-6 md:h-6 text-deepGreenText" />
                             <span className="text-xs md:text-base tracking-wide">{item.text}</span>
-                        </div>
+                        </button>
                     ))}
                 </div>
             </div>
