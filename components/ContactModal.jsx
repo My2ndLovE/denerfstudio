@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef } from "react";
 import { X, Mail, MessageCircle } from "lucide-react";
 import gsap from "gsap";

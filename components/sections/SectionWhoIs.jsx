@@ -1,3 +1,5 @@
+"use client";
+
 import { useLayoutEffect, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -57,14 +59,14 @@ export function SectionWhoIs() {
           opacity: 1,
           rotateX: 0,
           duration: 1,
-          ease: "bounce.out"
+          ease: "power3.out"
         },
         "0"
       );
 
       // 2. PILLS STAGGER (Scrubbed)
       const pills = gsap.utils.toArray(".who-pill");
-      pills.forEach((pill, i) => {
+      pills.forEach((pill) => {
         tl.fromTo(pill,
           {
             x: -100,
@@ -131,20 +133,26 @@ export function SectionWhoIs() {
   useEffect(() => {
     const pills = Array.from(document.querySelectorAll(".who-pill"));
 
+    let ticking = false;
     const handlePillMove = (e) => {
-      if (window.matchMedia("(hover: none)").matches) return;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        if (window.matchMedia("(hover: none)").matches) { ticking = false; return; }
 
-      const pill = e.currentTarget;
-      const rect = pill.getBoundingClientRect();
-      const x = e.clientX - (rect.left + rect.width / 2);
-      const y = e.clientY - (rect.top + rect.height / 2);
+        const pill = e.currentTarget;
+        const rect = pill.getBoundingClientRect();
+        const x = e.clientX - (rect.left + rect.width / 2);
+        const y = e.clientY - (rect.top + rect.height / 2);
 
-      gsap.to(pill, {
-        x: x * 0.25,
-        y: y * 0.25,
-        rotation: x * 0.02,
-        duration: 0.3,
-        ease: "power2.out"
+        gsap.to(pill, {
+          x: x * 0.25,
+          y: y * 0.25,
+          rotation: x * 0.02,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+        ticking = false;
       });
     };
 
@@ -154,7 +162,7 @@ export function SectionWhoIs() {
         y: 0,
         rotation: 0,
         duration: 0.5,
-        ease: "elastic.out(1, 0.5)"
+        ease: "power3.out"
       });
     };
 
@@ -208,6 +216,7 @@ export function SectionWhoIs() {
         <button
           type="button"
           onClick={handleSeeProjects}
+          aria-label="See example projects in portfolio"
           className="who-cta group px-8 py-4 bg-deepGreenText text-white font-bold rounded-full hover:scale-105 transition-transform flex items-center gap-2 shadow-[--shadow-brutal-sm-yellow] will-change-transform"
         >
           See example projects

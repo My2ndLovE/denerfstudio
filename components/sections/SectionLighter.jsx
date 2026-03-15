@@ -1,3 +1,5 @@
+"use client";
+
 import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -80,18 +82,24 @@ export function SectionLighter() {
                 ease: "elastic.out(1, 0.5)"
             }, 1);
 
-            tl.fromTo(".hiring-badge", { x: 50, y: -30, rotation: -10, scale: 0 }, { x: 0, y: 0, rotation: 0, scale: 1, duration: 0.8, ease: "back.out(2)" }, 1.5);
+            tl.fromTo(".hiring-badge", { x: 50, y: -30, rotation: -10, scale: 0 }, { x: 0, y: 0, rotation: 0, scale: 1, duration: 0.8, ease: "back.out(1.4)" }, 1.5);
 
             // Hover parallax for desktops only
+            let ticking = false;
             const handleMouseMove = (e) => {
-                if (window.matchMedia("(hover: none)").matches) return;
-                const x = (e.clientX / window.innerWidth - 0.5) * 25;
-                const y = (e.clientY / window.innerHeight - 0.5) * 25;
-                gsap.to(".team-avatar", {
-                    x: (i) => x * ((i + 1) * 0.4),
-                    y: (i) => y * ((i + 1) * 0.4),
-                    duration: 1,
-                    ease: "power2.out"
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(() => {
+                    if (window.matchMedia("(hover: none)").matches) { ticking = false; return; }
+                    const x = (e.clientX / window.innerWidth - 0.5) * 25;
+                    const y = (e.clientY / window.innerHeight - 0.5) * 25;
+                    gsap.to(".team-avatar", {
+                        x: (i) => x * ((i + 1) * 0.4),
+                        y: (i) => y * ((i + 1) * 0.4),
+                        duration: 1,
+                        ease: "power2.out"
+                    });
+                    ticking = false;
                 });
             };
 

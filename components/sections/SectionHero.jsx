@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -189,32 +191,38 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
     }, rootRef);
 
     // === MOUSE PARALLAX (Desktop only) ===
+    let ticking = false;
     const handleMouseMove = (e) => {
-      if (window.matchMedia("(hover: none)").matches) return;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        if (window.matchMedia("(hover: none)").matches) { ticking = false; return; }
 
-      const xNorm = (e.clientX / window.innerWidth - 0.5);
-      const yNorm = (e.clientY / window.innerHeight - 0.5);
+        const xNorm = (e.clientX / window.innerWidth - 0.5);
+        const yNorm = (e.clientY / window.innerHeight - 0.5);
 
-      // Different layers move at different intensities
-      gsap.to(".blob-layer-1", {
-        x: xNorm * 30,
-        y: yNorm * 30,
-        duration: 1.2,
-        ease: "power2.out"
-      });
+        // Different layers move at different intensities
+        gsap.to(".blob-layer-1", {
+          x: xNorm * 30,
+          y: yNorm * 30,
+          duration: 1.2,
+          ease: "power2.out"
+        });
 
-      gsap.to(".blob-layer-2", {
-        x: xNorm * 50,
-        y: yNorm * 50,
-        duration: 1,
-        ease: "power2.out"
-      });
+        gsap.to(".blob-layer-2", {
+          x: xNorm * 50,
+          y: yNorm * 50,
+          duration: 1,
+          ease: "power2.out"
+        });
 
-      gsap.to(".blob-layer-3", {
-        x: xNorm * 20,
-        y: yNorm * 20,
-        duration: 1.5,
-        ease: "power2.out"
+        gsap.to(".blob-layer-3", {
+          x: xNorm * 20,
+          y: yNorm * 20,
+          duration: 1.5,
+          ease: "power2.out"
+        });
+        ticking = false;
       });
     };
 
@@ -247,7 +255,7 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
       x: 0,
       y: 0,
       duration: 0.4,
-      ease: "elastic.out(1, 0.4)"
+      ease: "power3.out"
     });
   };
 
@@ -281,7 +289,7 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
 
       <div className="z-10 text-center max-w-5xl mx-auto flex flex-col items-center gap-8">
 
-        <div className="hero-content-wrapper space-y-6 flex flex-col items-center will-change-transform">
+        <div className="hero-content-wrapper space-y-6 flex flex-col items-center will-change-transform" aria-live="polite" aria-atomic="true">
           <div className="inline-flex items-center gap-2 sm:gap-2.5 px-4 py-2.5 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-bold tracking-wide text-deepInk bg-white/60 rounded-full backdrop-blur-md border border-deepInk/10 shadow-sm hover:scale-105 transition-transform cursor-default">
             <Sparkles className="w-4 h-4 sm:w-4 sm:h-4 text-neonMint fill-deepInk shrink-0" />
             <span className="whitespace-nowrap">ZERO RISK · PAY ONLY IF YOU LOVE IT</span>
@@ -340,6 +348,7 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
                 onMouseMove={handleMagnetMove}
                 onMouseLeave={resetMagnet}
                 onClick={onOpenModal}
+                aria-label="Start a free demo project"
                 className="group relative px-10 py-5 bg-deepInk text-offWhite font-bold text-lg rounded-full border-2 border-deepInk shadow-[8px_8px_0px_0px_rgba(11,42,27,0.3)] hover:shadow-[12px_12px_0px_0px_rgba(11,42,27,0.3)] hover:-translate-x-1 hover:-translate-y-1 active:shadow-[4px_4px_0px_0px_rgba(11,42,27,0.3)] active:translate-x-1 active:translate-y-1 transition-all duration-[--duration-snappy] overflow-hidden"
               >
                 <span className="relative z-10 flex items-center gap-3">
@@ -353,6 +362,7 @@ export function SectionHero({ onOpenModal, onSeeAction }) {
               <button
                 type="button"
                 onClick={onSeeAction}
+                aria-label="See portfolio showcase"
                 className="group relative flex items-center gap-3 px-10 py-5 bg-white text-deepInk font-bold text-lg rounded-full border-2 border-deepInk shadow-[--shadow-brutal-lg-yellow] hover:shadow-[--shadow-brutal-xl-yellow] hover:-translate-x-1 hover:-translate-y-1 active:shadow-[--shadow-brutal-sm-yellow] active:translate-x-1 active:translate-y-1 transition-all duration-[--duration-snappy] overflow-hidden"
               >
                 <span className="relative z-10 flex items-center gap-3">

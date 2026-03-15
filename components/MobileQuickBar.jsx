@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { MessageCircle, ChevronDown } from "lucide-react";
 
@@ -9,6 +11,8 @@ export function MobileQuickBar() {
       <div className="mobile-quick-bar fixed right-4 bottom-4 z-40 will-change-transform transition-all duration-[--duration-chill] ease-in-out">
         <button
           onClick={() => setIsMinimized(false)}
+          aria-label="Toggle contact options"
+          aria-expanded={false}
           className="relative overflow-hidden group flex items-center gap-2 px-5 py-3 rounded-full bg-deepInk text-offWhite shadow-[4px_6px_0_0_rgba(11,42,27,0.45)] border-2 border-deepInk font-bold text-sm hover:shadow-[6px_8px_0_0_rgba(11,42,27,0.45)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-[2px_4px_0_0_rgba(11,42,27,0.45)] active:translate-x-0.5 active:translate-y-0.5 transition-all duration-[--duration-snappy]"
         >
           <span className="relative z-10 flex items-center gap-2">
@@ -46,12 +50,14 @@ export function MobileQuickBar() {
           <a
             href="https://wa.me/60165271501"
             className="flex-1 px-3 py-2.5 rounded-xl bg-offWhite text-deepInk text-xs font-bold border border-offWhite/40 text-center hover:bg-white transition-colors"
+            aria-label="Contact via WhatsApp"
           >
             WhatsApp
           </a>
           <a
             href="mailto:sam@denerf.studio"
             className="flex-1 px-3 py-2.5 rounded-xl bg-neonMint text-deepInk text-xs font-bold border border-deepInk text-center hover:bg-neonMint/90 transition-colors"
+            aria-label="Send email to Denerf Studio"
           >
             Email
           </a>
@@ -60,6 +66,7 @@ export function MobileQuickBar() {
         <a
           href="mailto:sam@denerf.studio"
           className="block w-full py-3 bg-offWhite text-deepInk font-bold text-center tracking-wide hover:bg-creamWhite transition-colors border-t border-deepInk/10"
+          aria-label="Start your project with Denerf Studio"
         >
           Start your project
         </a>

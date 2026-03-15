@@ -1,17 +1,5 @@
 @import "tailwindcss";
 
-:root {
-  --color-mint-green: #77F0A0;
-  --color-sky-blue: #8DEBFF;
-  --color-bubble-pink: #FFB6D5;
-  --color-lemon-yellow: #FFE86B;
-  --color-cream-white: #F9F7F3;
-  --color-deep-green-text: #004D33;
-  --color-deep-ink: #0B2A1B;
-  --color-dark-teal: #006666;
-  --color-soft-gray-text: #304037;
-}
-
 @theme {
   --color-mintGreen: #77F0A0;
   --color-skyBlue: #8DEBFF;
@@ -25,8 +13,8 @@
   --color-darkTeal: #006666;
   --color-softGrayText: #304037;
 
-  --font-display: "Bricolage Grotesque", "Fredoka", system-ui, -apple-system, sans-serif;
-  --font-body: "Space Grotesk", "Nunito", system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-bricolage, "Bricolage Grotesque"), "Fredoka", system-ui, -apple-system, sans-serif;
+  --font-body: var(--font-space-grotesk, "Space Grotesk"), "Nunito", system-ui, -apple-system, sans-serif;
 
   /* Ambient shadows */
   --shadow-lift: 0 14px 40px -10px rgba(0, 77, 51, 0.28);
@@ -245,11 +233,12 @@
 
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(124, 255, 178, 0.3);
+    filter: drop-shadow(0 0 20px color-mix(in srgb, var(--color-neonMint) 30%, transparent));
   }
 
   50% {
-    box-shadow: 0 0 40px rgba(124, 255, 178, 0.6), 0 0 60px rgba(124, 255, 178, 0.3);
+    filter: drop-shadow(0 0 40px color-mix(in srgb, var(--color-neonMint) 60%, transparent))
+           drop-shadow(0 0 60px color-mix(in srgb, var(--color-neonMint) 30%, transparent));
   }
 }
 
@@ -337,7 +326,7 @@ body:not(.hide-mobile-bar) .mobile-quick-bar {
 .scroll-signal .capsule.idle { transform: translateY(0); }
 .scroll-signal .capsule.running {
   transform: translateY(-2px);
-  background: linear-gradient(120deg, rgba(255,232,107,0.9), rgba(124,255,178,0.9));
+  background: linear-gradient(120deg, color-mix(in srgb, var(--color-lemonYellow) 90%, transparent), color-mix(in srgb, var(--color-neonMint) 90%, transparent));
   box-shadow: 0 10px 18px rgba(0,0,0,0.12);
 }
 .scroll-signal .wagon {
