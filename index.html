@@ -14,49 +14,32 @@
     <meta property="og:title" content="Denerf Studio — Bold motion-first product design" />
     <meta property="og:description" content="We craft playful, high-converting digital experiences with scroll magic, Lottie, and rapid MVP builds. Pay only if you love it." />
     <meta property="og:url" content="https://denerf.studio/" data-dynamic-og-url />
-    <meta property="og:image" content="/og-cover.svg" />
+    <meta property="og:image" content="https://denerf.studio/og-cover.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Denerf Studio — Bold motion-first product design" />
     <meta name="twitter:description" content="Playful, motion-led product design, MVP previews, and scroll stories you only pay for if you love." />
-    <meta name="twitter:image" content="/og-cover.svg" />
+    <meta name="twitter:image" content="https://denerf.studio/og-cover.png" />
     <link rel="canonical" href="https://denerf.studio/" data-dynamic-canonical />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <title>DENERF Studio</title>
-    <script type="application/ld+json" id="org-jsonld"></script>
-    <script type="application/ld+json" id="faq-jsonld"></script>
-    <script type="module">
-      const envUrl = (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_SITE_URL)
-        ? import.meta.env.VITE_SITE_URL
-        : undefined;
-      const siteUrl = (envUrl || window.location.origin || "").replace(/\/+$/, "");
-      const canonicalHref = siteUrl ? `${siteUrl}/` : "/";
-
-      document.querySelectorAll("[data-dynamic-og-url]").forEach((el) => {
-        el.setAttribute("content", canonicalHref);
-      });
-      const canonicalLink = document.querySelector("[data-dynamic-canonical]");
-      if (canonicalLink) canonicalLink.setAttribute("href", canonicalHref);
-
-      const jsonLd = {
+    <script type="application/ld+json">
+      {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Denerf Studio",
-        "url": canonicalHref,
-        "logo": siteUrl ? `${siteUrl}/og-cover.svg` : "/og-cover.svg",
+        "url": "https://denerf.studio/",
+        "logo": "https://denerf.studio/og-cover.png",
         "description": "Denerf Studio designs joyful, high-converting product experiences with bold motion systems and rapid MVP previews.",
         "address": {
           "@type": "PostalAddress",
           "addressCountry": "MY"
         }
-      };
-      const jsonLdEl = document.getElementById("org-jsonld");
-      if (jsonLdEl) {
-        jsonLdEl.textContent = JSON.stringify(jsonLd);
       }
-
-      const faqJsonLd = {
+    </script>
+    <script type="application/ld+json">
+      {
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
@@ -101,17 +84,33 @@
             }
           }
         ]
-      };
-      const faqEl = document.getElementById("faq-jsonld");
-      if (faqEl) faqEl.textContent = JSON.stringify(faqJsonLd);
+      }
     </script>
   </head>
   <body>
     <div id="root"></div>
     <noscript>
-      <div style="text-align:center;padding:4rem 2rem;font-family:sans-serif">
-        <h1>Denerf Studio</h1>
-        <p>JavaScript is required to view this site. Contact us at <a href="mailto:sam@denerf.studio">sam@denerf.studio</a> or <a href="https://wa.me/60165271501">WhatsApp</a>.</p>
+      <div style="max-width:720px;margin:0 auto;padding:4rem 2rem;font-family:sans-serif;line-height:1.6">
+        <h1>Denerf Studio — Bold Motion-First Product Design</h1>
+        <p>Denerf Studio builds joyful, high-converting product experiences with bold motion, award-winning scroll stories, and fast MVP previews you only pay for if you love.</p>
+        <h2>Services</h2>
+        <ul>
+          <li>Product &amp; UI/UX Design</li>
+          <li>Motion Design &amp; Scroll Animations (GSAP, Lottie)</li>
+          <li>MVP &amp; Prototype Builds</li>
+          <li>Web Development (React, Tailwind)</li>
+          <li>Brand Identity &amp; Visual Systems</li>
+        </ul>
+        <h2>How It Works</h2>
+        <ol>
+          <li><strong>Brief</strong> — Share your vision in a short call or async brief.</li>
+          <li><strong>AI Prototype</strong> — We deliver an interactive prototype in 2 days.</li>
+          <li><strong>Build &amp; Polish</strong> — Full build with motion polish in 5–9 days.</li>
+          <li><strong>Pay Only If You Love It</strong> — No upfront fees. You pay after approval.</li>
+        </ol>
+        <h2>Contact</h2>
+        <p>Email: <a href="mailto:sam@denerf.studio">sam@denerf.studio</a> | <a href="https://wa.me/60165271501">WhatsApp</a></p>
+        <p>Based in Malaysia (003751888-X)</p>
       </div>
     </noscript>
     <script type="module" src="/src/main.jsx"></script>

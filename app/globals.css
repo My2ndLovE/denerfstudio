@@ -1,0 +1,464 @@
+@import "tailwindcss";
+
+:root {
+  --color-mint-green: #77F0A0;
+  --color-sky-blue: #8DEBFF;
+  --color-bubble-pink: #FFB6D5;
+  --color-lemon-yellow: #FFE86B;
+  --color-cream-white: #F9F7F3;
+  --color-deep-green-text: #004D33;
+  --color-deep-ink: #0B2A1B;
+  --color-dark-teal: #006666;
+  --color-soft-gray-text: #304037;
+}
+
+@theme {
+  --color-mintGreen: #77F0A0;
+  --color-skyBlue: #8DEBFF;
+  --color-bubblePink: #FFB6D5;
+  --color-lemonYellow: #FFE86B;
+  --color-creamWhite: #F9F7F3;
+  --color-offWhite: #F9F7F3;
+  --color-deepGreenText: #004D33;
+  --color-deepInk: #0B2A1B;
+  --color-neonMint: #7CFFB2;
+  --color-darkTeal: #006666;
+  --color-softGrayText: #304037;
+
+  --font-display: "Bricolage Grotesque", "Fredoka", system-ui, -apple-system, sans-serif;
+  --font-body: "Space Grotesk", "Nunito", system-ui, -apple-system, sans-serif;
+
+  /* Ambient shadows */
+  --shadow-lift: 0 14px 40px -10px rgba(0, 77, 51, 0.28);
+  --shadow-neon: 0 0 0 2px #0B2A1B, 0 0 24px rgba(124, 255, 178, 0.65);
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  /* Neo-brutalist offset shadows — deepGreenText solid */
+  --shadow-brutal-xs: 2px 2px 0px 0px rgba(0, 77, 51, 1);
+  --shadow-brutal-sm: 4px 4px 0px 0px rgba(0, 77, 51, 1);
+  --shadow-brutal-md: 6px 6px 0px 0px rgba(0, 77, 51, 1);
+  --shadow-brutal-lg: 8px 8px 0px 0px rgba(0, 77, 51, 1);
+  --shadow-brutal-xl: 10px 12px 0px 0px rgba(0, 77, 51, 1);
+
+  /* Neo-brutalist offset shadows — subtle (20% opacity) */
+  --shadow-brutal-xs-subtle: 2px 2px 0px 0px rgba(0, 77, 51, 0.2);
+  --shadow-brutal-sm-subtle: 4px 4px 0px 0px rgba(0, 77, 51, 0.2);
+  --shadow-brutal-md-subtle: 6px 6px 0px 0px rgba(0, 77, 51, 0.2);
+  --shadow-brutal-lg-subtle: 8px 8px 0px 0px rgba(0, 77, 51, 0.2);
+  --shadow-brutal-xl-subtle: 10px 12px 0px 0px rgba(0, 77, 51, 0.2);
+
+  /* Neo-brutalist offset shadows — deepInk for dark-border components */
+  --shadow-brutal-sm-ink: 4px 4px 0px 0px rgba(11, 42, 27, 0.25);
+  --shadow-brutal-md-ink: 6px 8px 0px 0px rgba(11, 42, 27, 0.2);
+  --shadow-brutal-lg-ink: 10px 12px 0px 0px rgba(11, 42, 27, 0.2);
+
+  /* Neo-brutalist offset shadows — accent (lemonYellow solid) */
+  --shadow-brutal-sm-yellow: 4px 4px 0px 0px rgba(255, 232, 107, 1);
+  --shadow-brutal-lg-yellow: 8px 8px 0px 0px rgba(255, 232, 107, 1);
+  --shadow-brutal-xl-yellow: 12px 12px 0px 0px rgba(255, 232, 107, 1);
+
+  /* Portfolio card overlay gradients */
+  --gradient-portfolio-1: linear-gradient(to bottom right, rgba(0, 77, 51, 0.6), rgba(11, 42, 27, 0.5));
+  --gradient-portfolio-2: linear-gradient(to bottom right, rgba(0, 102, 102, 0.7), rgba(0, 77, 51, 0.6));
+  --gradient-portfolio-3: linear-gradient(to bottom right, rgba(11, 42, 27, 0.7), rgba(11, 42, 27, 0.85));
+  --gradient-portfolio-4: linear-gradient(to bottom right, rgba(0, 77, 51, 0.7), rgba(11, 42, 27, 0.7));
+  --gradient-portfolio-5: linear-gradient(to bottom right, rgba(255, 232, 107, 0.6), rgba(255, 182, 213, 0.5));
+  --gradient-portfolio-6: linear-gradient(to bottom right, rgba(119, 240, 160, 0.7), rgba(0, 77, 51, 0.7));
+
+  /* Border radius tokens */
+  --radius-pill: 9999px;
+  --radius-card: 24px;
+  --radius-card-lg: 32px;
+  --radius-card-xl: 48px;
+
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-squish: cubic-bezier(0.7, -0.4, 0.2, 1.4);
+  --duration-snappy: 180ms;
+  --duration-chill: 380ms;
+}
+
+@utility perspective-1000 {
+  perspective: 1000px;
+}
+
+@utility transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth bg-creamWhite h-full;
+  }
+
+  body {
+    @apply font-body text-softGrayText bg-creamWhite antialiased min-h-screen;
+    color: var(--color-deepInk);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display;
+    color: var(--color-deepInk);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    * {
+      animation: none !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -999px;
+    top: 8px;
+    background: var(--color-deep-ink, #0B2A1B);
+    color: var(--color-cream-white, #F9F7F3);
+    padding: 10px 14px;
+    border-radius: 9999px;
+    border: 2px solid var(--color-lemon-yellow, #FFE86B);
+    z-index: 9999;
+    transition: left 0.2s var(--ease-soft), transform 0.2s var(--ease-soft);
+  }
+
+  .skip-link:focus {
+    left: 12px;
+    transform: translateY(0);
+    outline: 3px solid var(--color-lemon-yellow);
+    outline-offset: 2px;
+  }
+}
+
+/* ========================================
+   AWARD-WINNING SCROLL ANIMATION UTILITIES
+   ======================================== */
+
+/* GPU-Accelerated Animation Layers */
+@utility will-change-transform {
+  will-change: transform;
+}
+
+@utility will-change-opacity {
+  will-change: opacity;
+}
+
+@utility will-change-all {
+  will-change: transform, opacity, clip-path;
+}
+
+/* Clip-Path Reveal Utilities */
+@utility clip-hidden-bottom {
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+}
+
+@utility clip-hidden-left {
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+}
+
+@utility clip-hidden-circle {
+  clip-path: circle(0% at 50% 50%);
+}
+
+@utility clip-visible {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+@utility clip-circle-full {
+  clip-path: circle(75% at 50% 50%);
+}
+
+/* Blur Animation States */
+@utility blur-entrance {
+  filter: blur(20px);
+  opacity: 0;
+}
+
+@utility blur-none {
+  filter: blur(0);
+  opacity: 1;
+}
+
+/* Parallax Depth Layers */
+@utility parallax-slow {
+  --parallax-speed: 0.3;
+}
+
+@utility parallax-medium {
+  --parallax-speed: 0.6;
+}
+
+@utility parallax-fast {
+  --parallax-speed: 1.2;
+}
+
+/* Scroll-Linked Custom Properties (updated via JS) */
+:root {
+  --scroll-progress: 0;
+  --section-progress: 0;
+  --scroll-velocity: 0;
+}
+
+/* Text Split Animation Containers */
+@utility split-text-container {
+  overflow: hidden;
+  display: inline-block;
+}
+
+/* Morphing Blob SVG Container */
+@utility morph-container {
+  transition: d 0.3s ease-out;
+}
+
+/* Horizontal Scroll Section */
+@utility horizontal-scroll-section {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Glow/Pulse Effects */
+@utility glow-pulse {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(124, 255, 178, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(124, 255, 178, 0.6), 0 0 60px rgba(124, 255, 178, 0.3);
+  }
+}
+
+/* Confetti/Particle Base */
+@utility confetti-particle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 2px;
+}
+
+/* Smooth Scrub Easing */
+@utility scrub-smooth {
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Mobile Quick Bar Visibility Control */
+body.hide-mobile-bar .mobile-quick-bar {
+  transform: translateY(150%);
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition-delay: 0s;
+  /* Hide immediately */
+}
+
+body:not(.hide-mobile-bar) .mobile-quick-bar {
+  transform: translateY(0);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition-delay: 0s;
+  /* Show immediately */
+}
+
+/* Continuous Button Animations */
+@keyframes shimmer-auto {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  40% {
+    transform: translateX(200%);
+  }
+
+  /* Slower pass */
+  100% {
+    transform: translateX(200%);
+  }
+
+  /* Wait */
+}
+
+@utility animate-shimmer-auto {
+  animation: shimmer-auto 4s ease-in-out infinite;
+}
+
+@keyframes float-gentle {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@utility animate-float {
+  animation: float-gentle 3s ease-in-out infinite;
+}
+
+/* ========================================
+   FLOATING NAV & SCROLL SIGNAL
+   ======================================== */
+.floating-nav-container { pointer-events: none; }
+.floating-nav-container button,
+.floating-nav-container .hint { pointer-events: auto; }
+
+.scroll-signal { pointer-events: none; }
+.scroll-signal .capsule {
+  pointer-events: auto;
+  background: white;
+  border: 2px solid var(--color-deepInk, #0B2A1B);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  transition: transform 0.25s var(--ease-soft), box-shadow 0.25s var(--ease-soft), background 0.25s var(--ease-soft);
+}
+.scroll-signal .capsule.idle { transform: translateY(0); }
+.scroll-signal .capsule.running {
+  transform: translateY(-2px);
+  background: linear-gradient(120deg, rgba(255,232,107,0.9), rgba(124,255,178,0.9));
+  box-shadow: 0 10px 18px rgba(0,0,0,0.12);
+}
+.scroll-signal .wagon {
+  display: flex; align-items: center; gap: 6px;
+  animation: wagon-bob 1.8s ease-in-out infinite;
+}
+.scroll-signal .capsule.running .wagon { animation: wagon-run 0.7s ease-in-out infinite; }
+.scroll-signal .wheels { display: flex; gap: 4px; }
+.scroll-signal .wheel {
+  width: 9px; height: 9px;
+  border-radius: 999px;
+  border: 2px solid var(--color-deepInk, #0B2A1B);
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, rgba(0,77,51,0.2) 35%, transparent 36%);
+}
+.scroll-signal .wheel::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 999px;
+  border: 2px solid rgba(0,77,51,0.4);
+}
+.scroll-signal .capsule.running .wheel { animation: wheel-spin 0.5s linear infinite; }
+.scroll-signal .capsule.idle .wheel { animation: wheel-spin 2.4s linear infinite; opacity: 0.8; }
+.scroll-signal .arrow {
+  width: 14px; height: 14px;
+  color: var(--color-deepInk, #0B2A1B);
+  animation: arrow-bounce 1.8s ease-in-out infinite;
+}
+.scroll-signal .label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-deepInk, #0B2A1B);
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.scroll-signal .dot {
+  width: 6px; height: 6px; border-radius: 999px;
+  background: var(--color-bubble-pink, #FFB6D5);
+  box-shadow: 0 0 0 5px rgba(124,255,178,0.12);
+}
+
+@keyframes wheel-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes wagon-bob {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes wagon-run {
+  0%,100% { transform: translateY(-1px); }
+  50% { transform: translateY(1px); }
+}
+@keyframes arrow-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(3px); opacity: 1; }
+}
+
+/* ========================================
+   BRAND PLAQUE
+   ======================================== */
+.brand-plaque { pointer-events: none; transform: rotate(-1.2deg); }
+.brand-plaque .tag {
+  box-shadow: 0 8px 18px rgba(0,77,51,0.14), 0 2px 0 rgba(0,77,51,0.16), 0 0 0 1px rgba(0,77,51,0.08);
+}
+.brand-plaque .rope {
+  position: absolute; width: 3px;
+  background: linear-gradient(180deg, var(--color-deepInk, #0B2A1B), var(--color-deepInk, #0B2A1B));
+  border-radius: 99px;
+}
+.brand-plaque .rope.left { left: 10px; top: -16px; height: 24px; }
+.brand-plaque .rope.right { right: 14px; top: -28px; height: 38px; }
+.brand-plaque .knot {
+  position: absolute; width: 9px; height: 9px;
+  background: var(--color-deepInk, #0B2A1B);
+  border-radius: 99px;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.1);
+}
+.brand-plaque .knot.left { left: 6px; top: -19px; }
+.brand-plaque .knot.right { right: 9px; top: -31px; }
+.brand-plaque .wood {
+  background: linear-gradient(90deg, rgba(255,232,189,0.95), rgba(255,248,220,0.95));
+}
+.brand-plaque .grain {
+  background-image: repeating-linear-gradient(90deg, rgba(0,77,51,0.05) 0, rgba(0,77,51,0.05) 4px, transparent 4px, transparent 10px);
+  mix-blend-mode: multiply;
+}
+.brand-plaque .sticker {
+  position: absolute; width: 11px; height: 11px; border-radius: 999px;
+  display: grid; place-items: center; font-size: 8px; font-weight: 800;
+}
+.brand-plaque .sticker.star {
+  top: 4px; right: 6px;
+  background: var(--color-bubble-pink, #FFB6D5);
+  color: var(--color-deepInk, #0B2A1B);
+  box-shadow: 0 2px 0 rgba(0,77,51,0.18);
+}
+.brand-plaque .sticker.heart {
+  bottom: 4px; left: 6px;
+  background: var(--color-sky-blue, #8DEBFF);
+  color: var(--color-deepInk, #0B2A1B);
+  box-shadow: 0 2px 0 rgba(0,77,51,0.18);
+}
+@media (max-width: 767px) {
+  .brand-plaque { transform: scale(0.9) rotate(-1deg); }
+}
+
+/* ========================================
+   CONFETTI ANIMATION
+   ======================================== */
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
